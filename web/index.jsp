@@ -43,15 +43,17 @@
                     <div class="btn-group align-bottom mb-4">
                         
                         <s:form action="irLogin"><button type="submit" class="btn btn-light">Login</button></s:form>
-                         <s:form action="irRegistro"><button type="submit" class="btn btn-dark">Registro</button></s:form>
+                        <s:form action="irRegistro"><button type="submit" class="btn btn-dark">Registro</button></s:form>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-    
-    <h1>EDWARD MCWENDALL    </h1>
+    <s:form action="buscar">
+        <s:textfield name="busqueda"/>
+        <s:submit value="Buscar"/>
+    </s:form>
     
     
 </body>
