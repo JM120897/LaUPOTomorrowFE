@@ -20,6 +20,7 @@
             <s:textfield key="Contraseña" name="password" value="%{password}"> </s:textfield>
             <s:textfield key="Email" name="email" value="%{email}"> </s:textfield>
             <s:textfield key="Localizacacion" name="localizacion" value="%{localizacion}"> </s:textfield>
+            <s:hidden name="rol" value="%{rol}"> </s:hidden>
             <s:submit name="Modificar" value="Modificar"></s:submit>
         </s:form>
     </body>

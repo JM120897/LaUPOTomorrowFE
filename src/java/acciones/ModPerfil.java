@@ -41,6 +41,7 @@ public class ModPerfil extends ActionSupport {
         usu.setNombreReal(nombreReal);
         usu.setNombreUsuario(nombreUsuario);
         usu.setPassword(password);
+        usu.setRol(rol);
         ur.edit_XML(usu, nombreUsuario);
 
         return SUCCESS;
