@@ -1,2 +1,2 @@
-# LaUPOTomorrowFinal
-Trabajo de IT
+# LaUPOTomorrowFE
+Front End web app "La UPO Tomorrow"
