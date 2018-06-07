@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jun-2018 11:59:54 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="classes.Historia" table="historia" catalog="aplicacion_noticias" optimistic-lock="version">
+        <id name="idHistoria" type="java.lang.Integer">
+            <column name="id_historia" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="usuario" class="classes.Usuario" fetch="select">
+            <column name="nombre_usuario" length="75" />
+        </many-to-one>
+        <property name="tituloHistoria" type="string">
+            <column name="titulo_historia" length="65535" not-null="true" />
+        </property>
+        <property name="subtituloHistoria" type="string">
+            <column name="subtitulo_historia" length="65535" not-null="true" />
+        </property>
+        <property name="fechaHistoria" type="timestamp">
+            <column name="fecha_historia" length="19" not-null="true" />
+        </property>
+        <set name="noticias" table="noticia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_historia" />
+            </key>
+            <one-to-many class="classes.Noticia" />
+        </set>
+    </class>
+</hibernate-mapping>

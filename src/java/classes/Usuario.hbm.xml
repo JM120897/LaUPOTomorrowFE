@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jun-2018 11:59:54 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="classes.Usuario" table="usuario" catalog="aplicacion_noticias" optimistic-lock="version">
+        <id name="nombreUsuario" type="string">
+            <column name="nombre_usuario" length="75" />
+            <generator class="assigned" />
+        </id>
+        <property name="password" type="string">
+            <column name="password" length="75" not-null="true" />
+        </property>
+        <property name="nombreReal" type="string">
+            <column name="nombre_real" length="100" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" not-null="true" />
+        </property>
+        <property name="localizacion" type="string">
+            <column name="localizacion" length="100" not-null="true" />
+        </property>
+        <property name="rol" type="string">
+            <column name="rol" length="75" not-null="true" />
+        </property>
+        <set name="noticias" table="noticia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="nombre_usuario" length="75" />
+            </key>
+            <one-to-many class="classes.Noticia" />
+        </set>
+        <set name="historias" table="historia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="nombre_usuario" length="75" />
+            </key>
+            <one-to-many class="classes.Historia" />
+        </set>
+        <set name="notificacions" table="notificacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="nombre_usuario" length="75" not-null="true" />
+            </key>
+            <one-to-many class="classes.Notificacion" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jun-2018 11:59:54 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="classes.Comentario" table="comentario" catalog="aplicacion_noticias" optimistic-lock="version">
+        <id name="idComentario" type="java.lang.Integer">
+            <column name="id_comentario" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="noticia" class="classes.Noticia" fetch="select">
+            <column name="id_noticia" not-null="true" />
+        </many-to-one>
+        <property name="nombreUsuario" type="string">
+            <column name="nombre_usuario" length="75" not-null="true" />
+        </property>
+        <property name="idPadre" type="java.lang.Integer">
+            <column name="id_padre" />
+        </property>
+        <property name="fechaComentario" type="timestamp">
+            <column name="fecha_comentario" length="19" not-null="true" />
+        </property>
+        <property name="mensaje" type="string">
+            <column name="mensaje" length="65535" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jun-2018 11:59:54 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="classes.Noticia" table="noticia" catalog="aplicacion_noticias" optimistic-lock="version">
+        <id name="idNoticia" type="java.lang.Integer">
+            <column name="id_noticia" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="categoria" class="classes.Categoria" fetch="select">
+            <column name="nombre_categoria" length="75" />
+        </many-to-one>
+        <many-to-one name="historia" class="classes.Historia" fetch="select">
+            <column name="id_historia" />
+        </many-to-one>
+        <many-to-one name="usuario" class="classes.Usuario" fetch="select">
+            <column name="nombre_usuario" length="75" />
+        </many-to-one>
+        <property name="tituloNoticia" type="string">
+            <column name="titulo_noticia" length="65535" not-null="true" />
+        </property>
+        <property name="subtituloNoticia" type="string">
+            <column name="subtitulo_noticia" length="65535" not-null="true" />
+        </property>
+        <property name="cuerpoNoticia" type="string">
+            <column name="cuerpo_noticia" length="65535" not-null="true" />
+        </property>
+        <property name="fechaNoticia" type="timestamp">
+            <column name="fecha_noticia" length="19" not-null="true" />
+        </property>
+        <property name="localizacion" type="string">
+            <column name="localizacion" length="100" not-null="true" />
+        </property>
+        <property name="imagen" type="string">
+            <column name="imagen" length="250" not-null="true" />
+        </property>
+        <set name="comentarios" table="comentario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_noticia" not-null="true" />
+            </key>
+            <one-to-many class="classes.Comentario" />
+        </set>
+        <set name="tags" table="tag" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_noticia" not-null="true" />
+            </key>
+            <one-to-many class="classes.Tag" />
+        </set>
+    </class>
+</hibernate-mapping>
