@@ -5,7 +5,7 @@
 <struts>
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default">
-         <action name="">
+        <action name="">
             <result type="chain">
                 <param name="actionName">index</param>
             </result>
@@ -38,6 +38,22 @@
                 <param name="actionName">index</param>
             </result>
             <result name="error">/registro.jsp</result>
+        </action>
+        
+        <action name="logout" class="acciones.Logout">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="irPerfil" class="acciones.IrPerfil">
+            <result name="success">/perfil.jsp</result>
+        </action>
+        <action name="irModPerfil" class="acciones.IrModPerfil">
+            <result name="success">/formModPerfil.jsp</result>
+        </action>
+        <action name="modPerfil" class="acciones.ModPerfil">
+            <result type="chain">
+                <param name="actionName">irPerfil</param>
+            </result>
+            <result name="input">/formModPerfil.jsp</result>
         </action>
         
     </package>

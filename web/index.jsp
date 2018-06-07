@@ -41,9 +41,13 @@
                 </div>
                 <div class="col-md-4 text-center align-self-end">
                     <div class="btn-group align-bottom mb-4">
-                        
+                        <s:if test="%{#session.usuario == null}">
                         <s:form action="irLogin"><button type="submit" class="btn btn-light">Login</button></s:form>
                          <s:form action="irRegistro"><button type="submit" class="btn btn-dark">Registro</button></s:form>
+                        </s:if><s:else>
+                            <s:form action="irPerfil"><button type="submit" class="btn btn-light">Ver Perfil</button></s:form>
+                         <s:form action="logout"><button type="submit" class="btn btn-dark">Logout</button></s:form>
+                        </s:else>
                     </div>
                 </div>
 
