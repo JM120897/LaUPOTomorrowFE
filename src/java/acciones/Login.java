@@ -6,7 +6,9 @@
 package acciones;
 
 import classes.Usuario;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.Map;
 import persistencia.FachadaUsuario;
 
 
@@ -39,6 +41,9 @@ public class Login extends ActionSupport {
             return ERROR;
         } else {
             if (password.equals(u.getPassword())) {
+                Map session = (Map) ActionContext.getContext().get("session");
+                session.put("usuario", usuario);
+                session.put("rol", u.getRol());
                 return SUCCESS;
             } else {
                 mensajeError = "La contraseña no coincide";
