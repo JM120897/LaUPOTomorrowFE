@@ -7,7 +7,8 @@ package acciones;
 
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionSupport;
-import persistencia.FachadaUsuario;
+import javax.ws.rs.core.GenericType;
+import persistencia.UsuarioREST;
 
 
 /**
@@ -38,12 +39,18 @@ public class Registrar extends ActionSupport {
         u1.setRol("lector");
         Usuario u2 = null;
         //Primero hay que ver si no existe el usuario ya
-       FachadaUsuario fu = new FachadaUsuario();
-            u2 = fu.readUsuario(nombre_usuario);
+        UsuarioREST ur = new UsuarioREST();
+        GenericType<Usuario> gt = new GenericType<Usuario>(){};
+        try{
+            u2 = ur.find_XML(gt,nombre_usuario);
+        }catch(javax.ws.rs.InternalServerErrorException E){
+            error = true;
+            mensajeError = "Internal server error: contactar con el admin";
+        }catch(javax.ws.rs.NotFoundException E){
+            error = true;
+            mensajeError = "El usuario no existe";
+        }
         
-            
-        
-
         if (u2 != null) {
             error = true;
             mensajeError = "Ese usuario ya existe";
@@ -55,7 +62,15 @@ public class Registrar extends ActionSupport {
             
         } else {
 
-            fu.addUsuario(u1);
+            try{
+                ur.create_XML(u1);
+            }catch(javax.ws.rs.InternalServerErrorException E){
+                error = true;
+                mensajeError = "Internal server error: contactar con el admin";
+            }catch(javax.ws.rs.NotFoundException E){
+                error = true;
+                mensajeError = "El usuario no existe";
+            }
 
             
             if(!error){

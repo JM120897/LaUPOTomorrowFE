@@ -9,7 +9,8 @@ import classes.Usuario;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.Map;
-import persistencia.FachadaUsuario;
+import javax.ws.rs.core.GenericType;
+import persistencia.UsuarioREST;
 
 
 /**
@@ -27,8 +28,20 @@ public class Login extends ActionSupport {
     
     public String execute() throws Exception {
         boolean error = false;
-        FachadaUsuario fu = new FachadaUsuario();
-        Usuario  u = fu.readUsuario(usuario);
+        UsuarioREST ur = new UsuarioREST();
+        GenericType<Usuario> gt = new GenericType<Usuario>(){};
+        Usuario u = null;
+        
+        
+        try{ 
+            u = ur.find_XML(gt, usuario);
+        }catch(javax.ws.rs.InternalServerErrorException E){
+            error = true;
+            mensajeError = "Internal server error: contactar con el admin";
+        }catch(javax.ws.rs.NotFoundException E){
+            error = true;
+            mensajeError = "El usuario no existe";
+        }
        
                 
         

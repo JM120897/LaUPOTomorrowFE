@@ -41,9 +41,13 @@
                 </div>
                 <div class="col-md-4 text-center align-self-end">
                     <div class="btn-group align-bottom mb-4">
-                        
+                        <s:if test="%{#session.usuario == null}">
                         <s:form action="irLogin"><button type="submit" class="btn btn-light">Login</button></s:form>
-                        <s:form action="irRegistro"><button type="submit" class="btn btn-dark">Registro</button></s:form>
+                         <s:form action="irRegistro"><button type="submit" class="btn btn-dark">Registro</button></s:form>
+                        </s:if><s:else>
+                            <s:form action="irPerfil"><button type="submit" class="btn btn-light">Ver Perfil</button></s:form>
+                         <s:form action="logout"><button type="submit" class="btn btn-dark">Logout</button></s:form>
+                        </s:else>
                     </div>
                 </div>
 
@@ -54,6 +58,16 @@
         <s:textfield name="busqueda"/>
         <s:submit value="Buscar"/>
     </s:form>
+    <s:if test="%{mensajeError != null}">
+        <div class="container my-4">
+            <div class="alert alert-danger" role="alert">
+                <s:property value="mensajeError"></s:property>
+            </div>
+        </div>
+    </s:if>
+    <s:iterator value="coincidencias" var="noticia">
+        <s:property value="tituloNoticia"></s:property>
+    </s:iterator>
     
     
 </body>
