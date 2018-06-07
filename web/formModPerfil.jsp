@@ -14,6 +14,13 @@
     </head>
     <body>
         <h1>Hasdasdasda!</h1>
-        <s:form action="modPerfil"><button type="submit" class="btn btn-light">modPerfil</button></s:form>
+       <s:form action="modPerfil">
+            <s:hidden name="nombreUsuario" value="%{nombreUsuario}"> </s:hidden>
+            <s:textfield key="Nombre y Apellidos" name="nombreReal" value="%{nombreReal}"> </s:textfield>
+            <s:textfield key="Contraseña" name="password" value="%{password}"> </s:textfield>
+            <s:textfield key="Email" name="email" value="%{email}"> </s:textfield>
+            <s:textfield key="Localizacacion" name="localizacion" value="%{localizacion}"> </s:textfield>
+            <s:submit name="Modificar" value="Modificar"></s:submit>
+        </s:form>
     </body>
 </html>

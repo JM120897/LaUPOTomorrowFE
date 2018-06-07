@@ -22,33 +22,44 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        NoticiaREST ur = new NoticiaREST();
-        GenericType<List<Noticia>> gt = new GenericType<List<Noticia>>(){};
-        List<Noticia> todas = ur.findAll_XML(gt);
-        List<Noticia> coincidencias = new ArrayList<>();
-        addCoincidencias(coincidencias, todas, "RA PeDRO");
-        if(coincidencias.size() == 0){
-            System.out.println("NINGUNA " + coincidencias);
-        }else{
-            System.out.println("ALGUNAS " + coincidencias);
-        }
-        
-        
-       
+        System.out.println("Modificacando");
+        modUsu();
     }
-    
+
     private static void addCoincidencias(List<Noticia> coincidencias, List<Noticia> noticias, String busqueda) {
         String[] params = busqueda.split(" ");
-        
-        for(Noticia n : noticias){
+
+        for (Noticia n : noticias) {
             System.out.println("NOTICIA " + n.getTituloNoticia());
-            for(String param : params){
+            for (String param : params) {
                 System.out.println("\tPARAM: " + param);
-                if(n.getTituloNoticia().toLowerCase().contains(param.toLowerCase())){
+                if (n.getTituloNoticia().toLowerCase().contains(param.toLowerCase())) {
                     coincidencias.add(n);
                 }
             }
         }
     }
-    
+
+
+    private static void modUsu() {
+        UsuarioREST ur = new UsuarioREST();
+
+        
+        String email = "ferasd@gmail.com";
+        String localizacion = "micasa";
+        String nombreReal ="fernando";
+        String nombreUsuario = "fer";
+        String password = "1234";
+     
+        
+        Usuario usu = new Usuario();
+        usu.setEmail(email);
+        usu.setLocalizacion(localizacion);
+        usu.setNombreReal(nombreReal);
+        usu.setNombreUsuario(nombreUsuario);
+        usu.setPassword(password);
+        
+        ur.edit_XML(usu, nombreUsuario);
+        
+    }
 }
