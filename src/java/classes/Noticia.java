@@ -62,27 +62,32 @@ public class Noticia implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "subtitulo_noticia")
     private String subtituloNoticia;
+    
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "cuerpo_noticia")
     private String cuerpoNoticia;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_noticia")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaNoticia;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "localizacion")
     private String localizacion;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
     @Column(name = "imagen")
     private String imagen;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idNoticia")
     private Collection<Tag> tagCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idNoticia")
