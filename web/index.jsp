@@ -47,6 +47,9 @@
                         </s:if><s:else>
                             <s:form action="irPerfil"><button type="submit" class="btn btn-light">Ver Perfil</button></s:form>
                          <s:form action="logout"><button type="submit" class="btn btn-dark">Logout</button></s:form>
+                         <s:if test="%{#session.rol == \"redactor\"}">
+                             <s:form action="irRedactar"><button type="submit" class="btn btn-primary">Redactar</button></s:form>
+                         </s:if>
                         </s:else>
                     </div>
                 </div>

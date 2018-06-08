@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 import javax.ws.rs.core.GenericType;
 import persistencia.NoticiaREST;
+import persistencia.TagREST;
 
 /**
  *
@@ -33,8 +34,7 @@ public class Busqueda extends ActionSupport {
     public String execute() throws Exception {
         boolean error = false;
         NoticiaREST nr = new NoticiaREST();
-        GenericType<List<Noticia>> gt = new GenericType<List<Noticia>>() {
-        };
+        GenericType<List<Noticia>> gt = new GenericType<List<Noticia>>() {};
         List<Noticia> noticias = null;
         try {
             noticias = nr.findAll_XML(gt);
@@ -97,6 +97,14 @@ public class Busqueda extends ActionSupport {
             for (String param : params) {
                 if (!coincidencias.contains(n) && n.getTituloNoticia().toLowerCase().contains(param.toLowerCase())) {
                     coincidencias.add(n);
+                }
+                TagREST tr = new TagREST();
+                GenericType<List<Tag>> gt = new GenericType<List<Tag>>(){};
+                List<Tag> l = tr.findAll_XML(gt);
+                for(Tag t : l){
+                    if(!coincidencias.contains(n) && t.getIdNoticia().getIdNoticia() == n.getIdNoticia() && t.getNombreTag().equalsIgnoreCase(param)){
+                        coincidencias.add(n);
+                    }
                 }
             }
         }

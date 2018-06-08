@@ -15,7 +15,7 @@ import javax.ws.rs.core.GenericType;
  * [modelo.usuario]<br>
  * USAGE:
  * <pre>
- *        UsuarioREST client = new UsuarioREST();
+ *        UsuariOREST client = new UsuariOREST();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
