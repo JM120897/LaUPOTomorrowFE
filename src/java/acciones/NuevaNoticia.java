@@ -10,9 +10,11 @@ import classes.Historia;
 import classes.Noticia;
 import classes.Tag;
 import classes.Usuario;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.HistoriaREST;
@@ -43,7 +45,8 @@ public class NuevaNoticia extends ActionSupport {
     public String execute() throws Exception {
         UsuarioREST ur = new UsuarioREST();
         GenericType<Usuario> gt = new GenericType<Usuario>(){};
-        Usuario u = ur.find_XML(gt, usuario);
+         Map session = (Map) ActionContext.getContext().get("session");
+        Usuario u = ur.find_XML(gt, (String)session.get("usuario"));
         
         CategoriaREST cr = new CategoriaREST();
         GenericType<Categoria> gt2 = new GenericType<Categoria>(){};

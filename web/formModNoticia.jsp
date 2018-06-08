@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -74,14 +75,16 @@
                 <div class="col-md-10">
                     <s:form action="modNoticia">
                         <s:hidden name="idNoticia" value="%{idNoticia}"> </s:hidden>
-                    <h2 class="my-3"> <s:textfield key="Titulo" name="tituloNoticia" value="%{tituloNoticia}"> </s:textfield></h2>
-                    <h4 class="my-3"><s:textfield key="Subtitulo" name="subtituloNoticia" value="%{subtituloNoticia}"> </s:textfield></h4>
-                      <h4 class="my-3"><s:property value="nombreCategoria"></s:property></h4>
+                    <h2 class="my-3"> <s:textfield label="Titulo" name="tituloNoticia" value="%{tituloNoticia}"> </s:textfield></h2>
+                    <h4 class="my-3"><s:textfield label="Subtitulo" name="subtituloNoticia" value="%{subtituloNoticia}"> </s:textfield></h4>
+                    <h4 class="my-3"><s:select list="listaCat" headerKey="%{nombreCat}" headerValue="%{nombreCat}" listKey="%{nombreCategoria}"  listValue="nombreCategoria"  ></s:select></h4>
+                   <h4 class="my-3"><s:select list="listaHistoriasUsuario" headerKey="%{idHistori}" headerValue="%{tituloHist}" listKey="%{idHistoria}" listValue="%{tituloHistoria}"  ></s:select></h4>
                     <div class="text-muted"><s:property value="nombreUsuario"></s:property> - <s:property value="fechaNoticia"></s:property></div>
-                        <image></image>
+                    <s:textfield label="Imagen" name="imagen" value="%{imagen}"></s:textfield>
                         <hr class="my-4">
-                            <p class="my-3"><s:textarea key="Cuerpo" name="cuerpoNoticia" value="%{cuerpoNoticia}"> </s:textarea></p>
-                    
+                            <p class="my-3"><s:textarea label="Cuerpo" name="cuerpoNoticia" value="%{cuerpoNoticia}"> </s:textarea></p>
+                    <h4 class="my-3"> <s:textfield label="Tag" name="tags" value="%{tags}"> </s:textfield></h4>
+                     <h4 class="my-3"> <s:textfield label="Localizacion" name="localizacion" value="%{localizacion}"> </s:textfield></h4>
                         <span class="badge badge-secondary"></span> 
                     <s:submit name="modificar" value="Modificar Noticia"></s:submit>
                         </s:form>

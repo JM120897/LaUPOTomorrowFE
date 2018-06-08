@@ -31,7 +31,7 @@
             </s:select>
             <s:select list="historias" name="historia" listValue="tituloHistoria" listKey="idHistoria" headerValue="Ninguna" headerKey="-1">
             </s:select>
-            <s:hidden name="nombreUsuario" value="%{nombreUsuario}"></s:hidden>
+            <s:hidden name="usuario" value="%{nombreUsuario}"></s:hidden>
             <s:submit value="Enviar"></s:submit>
         </s:form>
     </body>
