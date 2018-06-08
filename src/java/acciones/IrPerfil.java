@@ -5,12 +5,17 @@
  */
 package acciones;
 
+import classes.Noticia;
 import classes.Usuario;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.NoticiaREST;
 import persistencia.UsuarioREST;
 
 /**
@@ -18,31 +23,63 @@ import persistencia.UsuarioREST;
  * @author ferna
  */
 public class IrPerfil extends ActionSupport {
-    
-   public IrPerfil() {
-    }
-    
-      String nombreUsuario;
-      String password;
-      String nombreReal;
-      String email;
-      String localizacion;
-      String rol;
 
+    public IrPerfil() {
+    }
+
+    String nombreUsuario;
+    String password;
+    String nombreReal;
+    String email;
+    String localizacion;
+    String rol;
+    List<Noticia> listaNoticia = new ArrayList<Noticia>();
+     
+    
     public String execute() throws Exception {
-       UsuarioREST ur = new UsuarioREST();
+
         Map session = (Map) ActionContext.getContext().get("session");
-       GenericType<Usuario> gt = new GenericType<Usuario>(){};
-       Usuario usu;
-       usu = ur.find_XML(gt, (String) session.get("usuario"));
-       
-        
+        UsuarioREST ur = new UsuarioREST();
+        GenericType<Usuario> gt = new GenericType<Usuario>() {
+        };
+        Usuario usu;
+        usu = ur.find_XML(gt, (String) session.get("usuario"));
+
         nombreUsuario = usu.getNombreUsuario();
         nombreReal = usu.getNombreReal();
         email = usu.getEmail();
         localizacion = usu.getLocalizacion();
         rol = usu.getRol();
+
+        if (session.get("rol").equals("redactor")) {
+            List<Noticia> l;
+            NoticiaREST nr = new NoticiaREST();
+            GenericType<List<Noticia>> gtn = new GenericType<List<Noticia>>() {
+            };
+            l = nr.findAll_XML(gtn);
+            Iterator<Noticia> it = l.iterator();
+           
+            while (it.hasNext()) {
+                Noticia n = it.next();
+               
+                if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
+                    
+                    listaNoticia.add(n);
+                }
+            }
+
+        }
         return SUCCESS;
+    }
+
+    
+
+    public List<Noticia> getListaNoticia() {
+        return listaNoticia;
+    }
+
+    public void setListaNoticia(List<Noticia> listaNoticia) {
+        this.listaNoticia = listaNoticia;
     }
 
     public String getNombreUsuario() {
@@ -92,5 +129,5 @@ public class IrPerfil extends ActionSupport {
     public void setRol(String rol) {
         this.rol = rol;
     }
-    
+
 }

@@ -60,6 +60,17 @@
             <result name="success">/index.jsp</result>
             <result name="error">/index.jsp</result>
         </action>
-        
+        <action name="irNoticia" class="acciones.IrNoticia">
+            <result name="success">/noticia.jsp</result>
+        </action>
+        <action name="irModNot" class="acciones.irModNot">
+            <result name="success">/formModNoticia.jsp</result>
+        </action>
+        <action name="modNoticia" class="acciones.ModNoticia">
+            <result type="chain">
+                <param name="actionName">irNoticia</param>
+            </result>
+            <result name="input">/formModNoticia.jsp</result>
+        </action>
     </package>
 </struts>

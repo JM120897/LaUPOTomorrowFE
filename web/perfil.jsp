@@ -53,11 +53,27 @@
                 </div>
             </div>
             <div>
-            Nombre Usuario: <s:property value="nombreUsuario"></s:property>
+                Nombre Usuario: <s:property value="nombreUsuario"></s:property>
             Nombre y Apellidos: <s:property value="nombreReal"></s:property>
             Email:<s:property value="email"></s:property>
             Localizacion: <s:property value="localizacion"></s:property>
             Rol: <s:property value="rol"></s:property>
+            </div>
+            <div>
+            <s:if test="%{#session.rol=='redactor'}">
+                
+                <s:iterator value="listaNoticia" var="noticia" >
+                    
+                    <s:url action="irNoticia" var="idNoticia" >
+                        <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                    </s:url>
+                    <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
+                   <br>
+                    
+                   
+                </s:iterator>
+               
+            </s:if>
         </div>
 
 
