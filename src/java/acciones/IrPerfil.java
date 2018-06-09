@@ -5,6 +5,7 @@
  */
 package acciones;
 
+import classes.Historia;
 import classes.Noticia;
 import classes.Usuario;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -15,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.HistoriaREST;
 import persistencia.NoticiaREST;
 import persistencia.UsuarioREST;
 
@@ -34,7 +36,7 @@ public class IrPerfil extends ActionSupport {
     String localizacion;
     String rol;
     List<Noticia> listaNoticia = new ArrayList<Noticia>();
-     
+     List<Historia> listaHistoriasUsuario = new ArrayList();
     
     public String execute() throws Exception {
 
@@ -67,8 +69,27 @@ public class IrPerfil extends ActionSupport {
                 }
             }
 
+            List<Historia> listaHistoria;
+            HistoriaREST hr = new HistoriaREST();
+            GenericType<List<Historia>> gth = new GenericType<List<Historia>>(){};
+            listaHistoria=hr.findAll_XML(gth);
+            
+            for(Historia h: listaHistoria){
+                if(h.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))){
+                    listaHistoriasUsuario.add(h);
+                }
+            }
+            
         }
         return SUCCESS;
+    }
+
+    public List<Historia> getListaHistoriasUsuario() {
+        return listaHistoriasUsuario;
+    }
+
+    public void setListaHistoriasUsuario(List<Historia> listaHistoriasUsuario) {
+        this.listaHistoriasUsuario = listaHistoriasUsuario;
     }
 
     

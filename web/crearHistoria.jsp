@@ -48,43 +48,19 @@
                             </s:else>
                         </div>
                     </div>
-                    <s:form action="irModPerfil"><button type="submit" class="btn btn-light">Mod Perfil</button></s:form>
-                    </div>
+                    
                 </div>
             </div>
-            <div>
-                Nombre Usuario: <s:property value="nombreUsuario"></s:property>
-            Nombre y Apellidos: <s:property value="nombreReal"></s:property>
-            Email:<s:property value="email"></s:property>
-            Localizacion: <s:property value="localizacion"></s:property>
-            Rol: <s:property value="rol"></s:property>
-            </div>
-            <div>
-            <s:if test="%{#session.rol=='redactor'}">
-                <h2>Noticias</h2>
-                <s:iterator value="listaNoticia" var="noticia" >
-                    
-                    <s:url action="irNoticia" var="idNoticia" >
-                        <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
-                    </s:url>
-                    <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
-                   <br>
-                    
-                   
-                </s:iterator>
-                   <h2>Historias</h2>
-               <s:iterator value="listaHistoriasUsuario" var="historia" >
-                    
-                    <s:url action="irHistoria" var="idHistoria" >
-                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
-                    </s:url>
-                    <a href="<s:property value="#idHistoria" />" > <s:property value="tituloHistoria"></s:property> </a>
-                   <br>
-                    
-                   
-                </s:iterator>
-            </s:if>
+        
+              
         </div>
+        <div>
+                        <s:form action="crearHistoria">
+                            <s:textfield name="tituloHistoria" label="Titulo"></s:textfield>
+                            <s:textfield name="subtituloHistoria" label="Subtitulo Historia"></s:textfield>
+                            <s:submit name="crearHistoria" value="Crear Historia"></s:submit>
+                        </s:form>
+                    </div>
 
 
 
