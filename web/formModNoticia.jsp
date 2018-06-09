@@ -75,6 +75,7 @@
                 <div class="col-md-10">
                     <s:form action="modNoticia">
                         <s:hidden name="idNoticia" value="%{idNoticia}"> </s:hidden>
+                        <s:hidden name="fechaNoticia" value="%{fechaNoticia}"></s:hidden>
                     <h2 class="my-3"> <s:textfield label="Titulo" name="tituloNoticia" value="%{tituloNoticia}"> </s:textfield></h2>
                     <h4 class="my-3"><s:textfield label="Subtitulo" name="subtituloNoticia" value="%{subtituloNoticia}"> </s:textfield></h4>
                     <h4 class="my-3"><s:select label="Categoria" name="nombreCategoria" list="listaCat" headerKey="%{nombreCat}" headerValue="%{nombreCat}" listKey="%{nombreCategoria}"  listValue="nombreCategoria"  ></s:select></h4>

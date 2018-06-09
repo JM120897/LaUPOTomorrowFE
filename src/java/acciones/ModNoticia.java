@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.HistoriaREST;
 import persistencia.NoticiaREST;
 import persistencia.UsuarioREST;
@@ -57,10 +58,15 @@ public class ModNoticia extends ActionSupport {
         Map session = (Map) ActionContext.getContext().get("session");
         Noticia n = new Noticia();
         n.setIdNoticia(idNoticia);
+        n.setTituloNoticia(tituloNoticia);
         n.setSubtituloNoticia(subtituloNoticia);
 
-        categoria.setNombreCategoria(nombreCategoria);
-        n.setNombreCategoria(categoria);
+        CategoriaREST cr = new CategoriaREST();
+        GenericType<Categoria> gt2 = new GenericType<Categoria>(){};
+        Categoria c = cr.find_XML(gt2, nombreCategoria);
+        
+        
+        n.setNombreCategoria(c);
 
         UsuarioREST ur = new UsuarioREST();
         GenericType<Usuario> gt = new GenericType<Usuario>() {
@@ -68,7 +74,7 @@ public class ModNoticia extends ActionSupport {
         Usuario usu;
         usu = ur.find_XML(gt, (String) session.get("usuario"));
         n.setNombreUsuario(usu);
-
+      
         n.setFechaNoticia(fechaNoticia);
         n.setCuerpoNoticia(cuerpoNoticia);
         n.setImagen(imagen);
@@ -85,25 +91,68 @@ public class ModNoticia extends ActionSupport {
             n.setIdHistoria(null);
         }
        
+        nr.edit_XML(n, idNoticia.toString());
+        
         TagREST tar = new TagREST();
         GenericType<List<Tag>> glt = new GenericType<List<Tag>>() {
         };
         List<Tag> lt = new ArrayList();
         lt = tar.findAll_XML(glt);
-
-        String[] listaTags = tags.split(" ");
-        for (String t : listaTags) {
-            for(Tag tg: lt){
-                if(tg.getNombreTag().equals(t) && !tg.getIdNoticia().equals(idNoticia)){
-                    
-                }
-                
+        List<Tag> tagsNoticia = new ArrayList();
+        for(Tag t: lt){
+            if(t.getIdNoticia().getIdNoticia()==idNoticia){
+                tagsNoticia.add(t);
             }
+        }
+        
+        for(Tag te:tagsNoticia){
+            tar.remove(te.getIdTag().toString());
+        }
+        
+        String[] listaTags = tags.split(" ");
+       for(String tag: listaTags){
+           Tag taga = new Tag();
+           taga.setIdNoticia(n);
+           taga.setNombreTag(tag);
+           tar.create_XML(taga);
+       }
            
             
-        }
+        
 
         return SUCCESS;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Integer getHistoria() {
+        return historia;
+    }
+
+    public void setHistoria(Integer historia) {
+        this.historia = historia;
+    }
+
+    public Historia getH() {
+        return h;
+    }
+
+    public void setH(Historia h) {
+        this.h = h;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public Integer getIdNoticia() {

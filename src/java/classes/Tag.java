@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,11 +30,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t")
+    , @NamedQuery(name = "Tag.findByIdTag", query = "SELECT t FROM Tag t WHERE t.idTag = :idTag")
     , @NamedQuery(name = "Tag.findByNombreTag", query = "SELECT t FROM Tag t WHERE t.nombreTag = :nombreTag")})
 public class Tag implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_tag")
+    private Integer idTag;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 75)
@@ -45,8 +52,21 @@ public class Tag implements Serializable {
     public Tag() {
     }
 
-    public Tag(String nombreTag) {
+    public Tag(Integer idTag) {
+        this.idTag = idTag;
+    }
+
+    public Tag(Integer idTag, String nombreTag) {
+        this.idTag = idTag;
         this.nombreTag = nombreTag;
+    }
+
+    public Integer getIdTag() {
+        return idTag;
+    }
+
+    public void setIdTag(Integer idTag) {
+        this.idTag = idTag;
     }
 
     public String getNombreTag() {
@@ -68,7 +88,7 @@ public class Tag implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (nombreTag != null ? nombreTag.hashCode() : 0);
+        hash += (idTag != null ? idTag.hashCode() : 0);
         return hash;
     }
 
@@ -79,7 +99,7 @@ public class Tag implements Serializable {
             return false;
         }
         Tag other = (Tag) object;
-        if ((this.nombreTag == null && other.nombreTag != null) || (this.nombreTag != null && !this.nombreTag.equals(other.nombreTag))) {
+        if ((this.idTag == null && other.idTag != null) || (this.idTag != null && !this.idTag.equals(other.idTag))) {
             return false;
         }
         return true;
@@ -87,7 +107,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return "classes.Tag[ nombreTag=" + nombreTag + " ]";
+        return "classes.Tag[ idTag=" + idTag + " ]";
     }
     
 }

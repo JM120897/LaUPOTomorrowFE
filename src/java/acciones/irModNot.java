@@ -64,9 +64,7 @@ public class irModNot extends ActionSupport {
         this.nombreUsuario = n.getNombreUsuario().getNombreUsuario();
         this.nombreCat = n.getNombreCategoria().getNombreCategoria();
         this.localizacion = n.getLocalizacion();
-        Historia hn = n.getIdHistoria();
-        this.idHistori = hn.getIdHistoria();
-        tituloHist = hn.getTituloHistoria();
+
         CategoriaREST nc = new CategoriaREST();
 
         GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>() {
@@ -81,6 +79,19 @@ public class irModNot extends ActionSupport {
         if (i != -1) {
 
             listaCat.remove(i);
+        }
+
+        Historia hn = n.getIdHistoria();
+
+        if (hn != null) {
+            this.idHistori = hn.getIdHistoria();
+            this.tituloHist = hn.getTituloHistoria();
+        } else {
+            Historia hVacia = new Historia();
+            hVacia.setIdHistoria(-1);
+            hVacia.setTituloHistoria("Ninguna");
+            this.idHistori = hVacia.getIdHistoria();
+            this.tituloHist = hVacia.getTituloHistoria();
         }
 
         HistoriaREST hr = new HistoriaREST();
@@ -100,11 +111,9 @@ public class irModNot extends ActionSupport {
 
             listaHistoriasUsuario.remove(j);
         }
-        Historia hVacia = new Historia();
-        hVacia.setIdHistoria(-1);
-        hVacia.setTituloHistoria("Ninguna");
-        listaHistoriasUsuario.add(hVacia);
+
         
+
         TagREST tr = new TagREST();
         GenericType<List<Tag>> gtag = new GenericType<List<Tag>>() {
         };
