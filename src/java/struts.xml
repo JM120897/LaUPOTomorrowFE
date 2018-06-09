@@ -85,5 +85,38 @@
             </result>
         </action>
         
+        <action name="irCrearHistoria">
+            <result name="success">/crearHistoria.jsp</result>
+        </action>
+        <action name="crearHistoria" class="acciones.CrearHistoria">
+            <result type="chain">
+                <param name="actionName">index</param>
+            </result>
+            <result name="input">/crearHistoria.jsp</result>
+        </action>
+        <action name="irHistoria" class="acciones.IrHistoria">
+            <result name="success">historia.jsp</result>
+        </action>
+        <action name="irModHis" class="acciones.IrModHistoria">
+            <result name="success">formModHistoria.jsp</result>
+        </action>
+        <action name="modHistoria" class="acciones.ModHistoria">
+            <result type="chain">
+                <param name="actionName">irHistoria</param>
+            </result>
+            <result name="input">formModHistoria.jsp</result>
+        </action>
+        <action name="borrarNot" class="acciones.BorrarNoticia">
+            <result type="chain">
+                <param name="actionName">irPerfil</param>
+                
+            </result>
+        </action>
+        <action name="borrarHist" class="acciones.BorrarHistoria">
+             <result type="chain">
+                <param name="actionName">irPerfil</param>
+                
+            </result>
+        </action>
     </package>
 </struts>

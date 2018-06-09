@@ -48,44 +48,46 @@
                             </s:else>
                         </div>
                     </div>
-                    <s:form action="irModPerfil"><button type="submit" class="btn btn-light">Mod Perfil</button></s:form>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <h2 class="my-3"><s:property value="tituloHistoria"></s:property>.</h2>
+                    <h4 class="my-3"><s:property value="subtituloHistoria"></s:property>.</h4>
+                    <h4 class="my-3"><s:property value="fechaHistoria"></s:property></h4>
+                    <s:if test="%{#session.usuario == nombreUsuario}">
+                        <s:form action="irModHis">
+                            <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
+                            <s:submit  value="Modificar Historia"></s:submit>
+
+                        </s:form>
+                        <s:form action="borrarHist">
+                        <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
+                        <s:submit  name="borrarNoticia" value="Borrar Historia"></s:submit>
+
+                    </s:form>
+                    </s:if>
+                    <h2>Noticias</h2>
+                    <div class="col-md-1">
+
+                        <s:iterator value="listaNoticiasHistoria" var="historia" >
+
+                            <s:url action="irNoticia" var="idNoticia" >
+                                <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                            </s:url>
+                            <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
+                                <br>
+
+                        </s:iterator>
                     </div>
                 </div>
             </div>
-            <div>
-                Nombre Usuario: <s:property value="nombreUsuario"></s:property>
-            Nombre y Apellidos: <s:property value="nombreReal"></s:property>
-            Email:<s:property value="email"></s:property>
-            Localizacion: <s:property value="localizacion"></s:property>
-            Rol: <s:property value="rol"></s:property>
-            </div>
-            <div>
-            <s:if test="%{#session.rol=='redactor'}">
-                <h2>Noticias</h2>
-                <s:iterator value="listaNoticia" var="noticia" >
-                    
-                    <s:url action="irNoticia" var="idNoticia" >
-                        <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
-                    </s:url>
-                    <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
-                   <br>
-                    
-                   
-                </s:iterator>
-                   <h2>Historias</h2>
-               <s:iterator value="listaHistoriasUsuario" var="historia" >
-                    
-                    <s:url action="irHistoria" var="idHistoria" >
-                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
-                    </s:url>
-                    <a href="<s:property value="#idHistoria" />" > <s:property value="tituloHistoria"></s:property> </a>
-                   <br>
-                                       
-                </s:iterator>
-            </s:if>
-        </div>
-
 
 
     </body>
 </html>
+

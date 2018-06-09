@@ -6,3 +6,4 @@ web/WEB-INF/
 build.xml
 catalog.xml
 src/java/persistencia
+/dist/

@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -72,39 +73,20 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
-                    <h2 class="my-3"><s:property value="tituloNoticia"></s:property>.</h2>
-                    <h4 class="my-3"><s:property value="subtituloNoticia"></s:property>.</h4>
-                     <h4 class="my-3"><s:property value="nombreCategoria"></s:property></h4>
-                    <div class="text-muted"><s:property value="nombreUsuario"></s:property> - <s:property value="fechaNoticia"></s:property></div>
-                        <image></image>
-                        <hr class="my-4">
-                            <p class="my-3"><s:property value="cuerpoNoticia"></s:property></p>
+                    <s:form action="modHistoria">
+                        <s:hidden name="idHistoria" value="%{idHistoria}"> </s:hidden>
+                        <s:hidden name="fechaHistoria" value="%{fechaHistoria}"> </s:hidden>
+                        <s:hidden name="nombreUsuario" value="%{nombreUsuario}"> </s:hidden>
+                    <h2 class="my-3"> <s:textfield label="Titulo" name="tituloHistoria" value="%{tituloHistoria}"> </s:textfield></h2>
+                    <h4 class="my-3"><s:textfield label="Subtitulo" name="subtituloHistoria" value="%{subtituloHistoria}"> </s:textfield></h4>
+                   
                         <span class="badge badge-secondary"></span> 
+                    <s:submit name="modificar" value="Modificar Noticia"></s:submit>
+                        </s:form>
                     </div>
-                <s:if test="%{#session.usuario == nombreUsuario}">
-                    <s:form action="irModNot">
-                        <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
-                        <s:submit  value="Modificar Noticia"></s:submit>
-
-                    </s:form>
-                    <s:form action="borrarNot">
-                        <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
-                        <s:submit  name="borrarNoticia" value="Borrar Noticia"></s:submit>
-
-                    </s:form>
-                </s:if>
                 
-                <s:if test="%{#session.usuario != null}">
-                <s:form action="comentar" theme="simple"> 
-                    <s:textarea name="mensaje">
-                    </s:textarea>
-                    <s:hidden name="nombreUsuario" value="%{#session.usuario}"></s:hidden>
-                    <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
-                    <s:submit value="Enviar"></s:submit>
-                </s:form>
-                </s:if>       
                 <div class="col-md-1">
-                
+
                 </div>
             </div>
         </div>
