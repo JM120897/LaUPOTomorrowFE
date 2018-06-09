@@ -87,6 +87,11 @@
                         <s:submit  value="Modificar Noticia"></s:submit>
 
                     </s:form>
+                    <s:form action="borrarNot">
+                        <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
+                        <s:submit  name="borrarNoticia" value="Borrar Noticia"></s:submit>
+
+                    </s:form>
                 </s:if>
                 <div class="col-md-1">
 

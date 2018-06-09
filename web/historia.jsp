@@ -65,6 +65,11 @@
                             <s:submit  value="Modificar Historia"></s:submit>
 
                         </s:form>
+                        <s:form action="borrarHist">
+                        <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
+                        <s:submit  name="borrarNoticia" value="Borrar Historia"></s:submit>
+
+                    </s:form>
                     </s:if>
                     <h2>Noticias</h2>
                     <div class="col-md-1">

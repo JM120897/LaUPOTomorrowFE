@@ -101,5 +101,17 @@
             </result>
             <result name="input">formModHistoria.jsp</result>
         </action>
+        <action name="borrarNot" class="acciones.BorrarNoticia">
+            <result type="chain">
+                <param name="actionName">irPerfil</param>
+                
+            </result>
+        </action>
+        <action name="borrarHist" class="acciones.BorrarHistoria">
+             <result type="chain">
+                <param name="actionName">irPerfil</param>
+                
+            </result>
+        </action>
     </package>
 </struts>
