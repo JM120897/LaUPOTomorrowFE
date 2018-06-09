@@ -79,6 +79,11 @@
         <action name="nuevaNoticia" class="acciones.NuevaNoticia">
             <result name="success">/index.jsp</result>
         </action>
+        <action name="comentar" class="acciones.Comentar">
+            <result name="success" type="chain">
+                <param name="actionName">irNoticia</param>
+            </result>
+        </action>
         
     </package>
 </struts>

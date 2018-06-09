@@ -88,8 +88,18 @@
 
                     </s:form>
                 </s:if>
+                
+                <s:if test="%{#session.usuario != null}">
+                <s:form action="comentar" theme="simple"> 
+                    <s:textarea name="mensaje">
+                    </s:textarea>
+                    <s:hidden name="nombreUsuario" value="%{#session.usuario}"></s:hidden>
+                    <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
+                    <s:submit value="Enviar"></s:submit>
+                </s:form>
+                </s:if>       
                 <div class="col-md-1">
-
+                
                 </div>
             </div>
         </div>

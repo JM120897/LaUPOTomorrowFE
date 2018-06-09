@@ -68,6 +68,17 @@
             </div>
         </div>
     </s:if>
+    <s:iterator value="coincidencias" var="noticia" >
+                    
+                    <s:url action="irNoticia" var="idNoticia" >
+                        <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                    </s:url>
+                    <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
+                   <br>
+                    
+                   
+    </s:iterator>
+                   
     <s:iterator value="coincidencias" var="noticia">
         <s:property value="tituloNoticia"></s:property>
     </s:iterator>
