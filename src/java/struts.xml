@@ -89,5 +89,17 @@
             </result>
             <result name="input">/crearHistoria.jsp</result>
         </action>
+        <action name="irHistoria" class="acciones.IrHistoria">
+            <result name="success">historia.jsp</result>
+        </action>
+        <action name="irModHis" class="acciones.IrModHistoria">
+            <result name="success">formModHistoria.jsp</result>
+        </action>
+        <action name="modHistoria" class="acciones.ModHistoria">
+            <result type="chain">
+                <param name="actionName">irHistoria</param>
+            </result>
+            <result name="input">formModHistoria.jsp</result>
+        </action>
     </package>
 </struts>
