@@ -77,8 +77,8 @@
                         <s:hidden name="idNoticia" value="%{idNoticia}"> </s:hidden>
                     <h2 class="my-3"> <s:textfield label="Titulo" name="tituloNoticia" value="%{tituloNoticia}"> </s:textfield></h2>
                     <h4 class="my-3"><s:textfield label="Subtitulo" name="subtituloNoticia" value="%{subtituloNoticia}"> </s:textfield></h4>
-                    <h4 class="my-3"><s:select list="listaCat" headerKey="%{nombreCat}" headerValue="%{nombreCat}" listKey="%{nombreCategoria}"  listValue="nombreCategoria"  ></s:select></h4>
-                   <h4 class="my-3"><s:select list="listaHistoriasUsuario" headerKey="%{idHistori}" headerValue="%{tituloHist}" listKey="%{idHistoria}" listValue="%{tituloHistoria}"  ></s:select></h4>
+                    <h4 class="my-3"><s:select label="Categoria" name="nombreCategoria" list="listaCat" headerKey="%{nombreCat}" headerValue="%{nombreCat}" listKey="%{nombreCategoria}"  listValue="nombreCategoria"  ></s:select></h4>
+                   <h4 class="my-3"><s:select label="Historia" name="historia" list="listaHistoriasUsuario" headerKey="%{idHistori}" headerValue="%{tituloHist}" listKey="%{idHistoria}" listValue="%{tituloHistoria}"  ></s:select></h4>
                     <div class="text-muted"><s:property value="nombreUsuario"></s:property> - <s:property value="fechaNoticia"></s:property></div>
                     <s:textfield label="Imagen" name="imagen" value="%{imagen}"></s:textfield>
                         <hr class="my-4">

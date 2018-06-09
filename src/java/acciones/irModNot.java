@@ -100,6 +100,11 @@ public class irModNot extends ActionSupport {
 
             listaHistoriasUsuario.remove(j);
         }
+        Historia hVacia = new Historia();
+        hVacia.setIdHistoria(-1);
+        hVacia.setTituloHistoria("Ninguna");
+        listaHistoriasUsuario.add(hVacia);
+        
         TagREST tr = new TagREST();
         GenericType<List<Tag>> gtag = new GenericType<List<Tag>>() {
         };

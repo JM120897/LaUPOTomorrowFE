@@ -5,51 +5,112 @@
  */
 package acciones;
 
+import classes.Categoria;
+import classes.Historia;
 import classes.Noticia;
+import classes.Tag;
+import classes.Usuario;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import javax.ws.rs.core.GenericType;
+import persistencia.HistoriaREST;
 import persistencia.NoticiaREST;
+import persistencia.UsuarioREST;
+import persistencia.TagREST;
 
 /**
  *
  * @author ferna
  */
 public class ModNoticia extends ActionSupport {
-    
+
     public ModNoticia() {
     }
-    
-     String idNoticia;
-    String imagen;
-    String localizacion;
-    Date fechaNoticia;
-    String cuerpoNoticia;
-    String subtituloNoticia;
+
+    Integer idNoticia;
     String tituloNoticia;
-    String nombreRealUsuario;
-    String nombreUsuario;
+    String subtituloNoticia;
+
+    Categoria categoria;
     String nombreCategoria;
+
+    Integer historia;
+    Historia h;
+
+    String nombreUsuario;
+    Date fechaNoticia;
+    String imagen;
+    String cuerpoNoticia;
+
     String tag;
-    
+
+    String tags;
+
+    String localizacion;
+
     public String execute() throws Exception {
         NoticiaREST nr = new NoticiaREST();
+        Map session = (Map) ActionContext.getContext().get("session");
         Noticia n = new Noticia();
-        n.setCuerpoNoticia(cuerpoNoticia);
-        n.setFechaNoticia(fechaNoticia);
-        n.setIdNoticia(Integer.parseInt(idNoticia));
-        n.setImagen(imagen);
-        n.setLocalizacion(localizacion);
-      
+        n.setIdNoticia(idNoticia);
         n.setSubtituloNoticia(subtituloNoticia);
-        n.setTituloNoticia(tituloNoticia);
+
+        categoria.setNombreCategoria(nombreCategoria);
+        n.setNombreCategoria(categoria);
+
+        UsuarioREST ur = new UsuarioREST();
+        GenericType<Usuario> gt = new GenericType<Usuario>() {
+        };
+        Usuario usu;
+        usu = ur.find_XML(gt, (String) session.get("usuario"));
+        n.setNombreUsuario(usu);
+
+        n.setFechaNoticia(fechaNoticia);
+        n.setCuerpoNoticia(cuerpoNoticia);
+        n.setImagen(imagen);
+
+        n.setLocalizacion(localizacion);
+
+        if (historia != -1) {
+            HistoriaREST hr = new HistoriaREST();
+            GenericType<Historia> gh = new GenericType<Historia>() {
+            };
+            Historia h = hr.find_XML(gh, historia.toString());
+            n.setIdHistoria(h);
+        } else {
+            n.setIdHistoria(null);
+        }
+       
+        TagREST tar = new TagREST();
+        GenericType<List<Tag>> glt = new GenericType<List<Tag>>() {
+        };
+        List<Tag> lt = new ArrayList();
+        lt = tar.findAll_XML(glt);
+
+        String[] listaTags = tags.split(" ");
+        for (String t : listaTags) {
+            for(Tag tg: lt){
+                if(tg.getNombreTag().equals(t) && !tg.getIdNoticia().equals(idNoticia)){
+                    
+                }
+                
+            }
+           
+            
+        }
+
         return SUCCESS;
     }
 
-    public String getIdNoticia() {
+    public Integer getIdNoticia() {
         return idNoticia;
     }
 
-    public void setIdNoticia(String idNoticia) {
+    public void setIdNoticia(Integer idNoticia) {
         this.idNoticia = idNoticia;
     }
 
@@ -101,14 +162,6 @@ public class ModNoticia extends ActionSupport {
         this.tituloNoticia = tituloNoticia;
     }
 
-    public String getNombreRealUsuario() {
-        return nombreRealUsuario;
-    }
-
-    public void setNombreRealUsuario(String nombreRealUsuario) {
-        this.nombreRealUsuario = nombreRealUsuario;
-    }
-
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -132,5 +185,5 @@ public class ModNoticia extends ActionSupport {
     public void setTag(String tag) {
         this.tag = tag;
     }
-    
+
 }
