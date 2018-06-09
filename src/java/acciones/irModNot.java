@@ -65,8 +65,12 @@ public class irModNot extends ActionSupport {
         this.nombreCat = n.getNombreCategoria().getNombreCategoria();
         this.localizacion = n.getLocalizacion();
         Historia hn = n.getIdHistoria();
-        this.idHistori = hn.getIdHistoria();
-        tituloHist = hn.getTituloHistoria();
+        
+        if(hn != null){
+            this.idHistori = hn.getIdHistoria();
+            tituloHist = hn.getTituloHistoria();
+        }
+        
         CategoriaREST nc = new CategoriaREST();
 
         GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>() {

@@ -54,8 +54,7 @@ public class IrPerfil extends ActionSupport {
         if (session.get("rol").equals("redactor")) {
             List<Noticia> l;
             NoticiaREST nr = new NoticiaREST();
-            GenericType<List<Noticia>> gtn = new GenericType<List<Noticia>>() {
-            };
+            GenericType<List<Noticia>> gtn = new GenericType<List<Noticia>>(){};
             l = nr.findAll_XML(gtn);
             Iterator<Noticia> it = l.iterator();
            

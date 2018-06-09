@@ -17,12 +17,12 @@ import persistencia.HistoriaREST;
  *
  * @author Juanma
  */
-public class Redactar extends ActionSupport {
+public class IrRedactar extends ActionSupport {
     
     List<Categoria> categorias;
     List<Historia> historias;
 
-    public Redactar() {
+    public IrRedactar() {
         
     }
     

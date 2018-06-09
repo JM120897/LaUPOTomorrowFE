@@ -23,7 +23,7 @@
         <action name="irRegistro">
             <result name="success">/registro.jsp</result>
         </action>
-        <action name="irRedactar" class="acciones.Redactar">
+        <action name="irRedactar" class="acciones.IrRedactar">
             <result name="success">/redactar.jsp</result>
         </action>
         

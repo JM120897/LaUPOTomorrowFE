@@ -19,7 +19,7 @@ public class ModNoticia extends ActionSupport {
     public ModNoticia() {
     }
     
-     String idNoticia;
+    String idNoticia;
     String imagen;
     String localizacion;
     Date fechaNoticia;
