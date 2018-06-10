@@ -72,6 +72,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
+                    <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
                     <h2 class="my-3"><s:property value="tituloNoticia"></s:property>.</h2>
                     <h4 class="my-3"><s:property value="subtituloNoticia"></s:property>.</h4>
                     <h4 class="my-3"><s:property value="nombreCategoria"></s:property></h4>
@@ -107,15 +108,30 @@
             </div>
             <div>
 
-               
+
 
                 Comentarios<br>
+
                 <s:iterator value="listaComentarios" var="comentario">
-                  <s:url action="irModCom" var="idComentario" >
-                    <s:param name="idComentario"><s:property value="idComentario"></s:property></s:param>
-                </s:url>
+                    <s:url action="irModCom" var="idComentario" >
+                        <s:param name="idComentario"><s:property value="idComentario"></s:property></s:param>
+                    </s:url>
                     <a href="<s:property value="#idComentario" />" > <s:property value="mensaje"></s:property></a> - <s:property value="fechaComentario"></s:property> 
+                   
+                    <s:form action="borrarCom">
+                        <s:hidden name="idNoticia"  value="%{idNoticia2}"></s:hidden>
+                        <s:hidden name="idComentario" value="%{idComentario}"></s:hidden>
+                        <s:submit name="borrarComentario" value="borrarComentario"></s:submit>
+                    </s:form>
+                    
+                     <%--
+                    <s:url action="borrarCom" var="idComentario" >
+                        <s:param name="idComentario"><s:property value="idComentario"></s:property></s:param>
+                        <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                    </s:url>
+                    <a href="<s:property value="#idComentario" />" >BorrarComentario</a> 
                     <br>
+                     --%>
                 </s:iterator>
             </div>
 

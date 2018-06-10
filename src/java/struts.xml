@@ -137,6 +137,12 @@
             </result>
             <result name="input">/formModNoticia.jsp</result>
         </action>
+        <action name="borrarCom" class="acciones.borrarCom">
+            <result type="chain">
+                <param name="actionName">irNoticia</param>
+            </result>
+              
+        </action>
         <action name="borrarCategoria" class="acciones.BorrarCategoria">
             <result type="chain">
                 <param name="actionName">irAdmin</param>
