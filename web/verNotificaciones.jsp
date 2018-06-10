@@ -71,7 +71,7 @@
             </s:iterator>
                 
         </s:if><s:else>
-            No tienes notificaciones PORQUE TUS NOTICIAS SON UNA MIERDA Y NO LE IMPORTAN A NADIE
+            No tienes notificaciones <b>PORQUE TUS NOTICIAS SON UNA MIERDA Y NO LE IMPORTAN A NADIE</b>
         </s:else>
         
 
