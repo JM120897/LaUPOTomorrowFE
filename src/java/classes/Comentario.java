@@ -51,22 +51,27 @@ public class Comentario implements Serializable {
     @Size(min = 1, max = 75)
     @Column(name = "nombre_usuario")
     private String nombreUsuario;
+    
     @Column(name = "id_padre")
     private Integer idPadre;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_comentario")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaComentario;
+    
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "mensaje")
     private String mensaje;
+    
     @JoinColumn(name = "id_noticia", referencedColumnName = "id_noticia")
     @ManyToOne(optional = false)
     private Noticia idNoticia;
+    
 
     public Comentario() {
     }

@@ -74,7 +74,7 @@
                 <div class="col-md-10">
                     <h2 class="my-3"><s:property value="tituloNoticia"></s:property>.</h2>
                     <h4 class="my-3"><s:property value="subtituloNoticia"></s:property>.</h4>
-                     <h4 class="my-3"><s:property value="nombreCategoria"></s:property></h4>
+                    <h4 class="my-3"><s:property value="nombreCategoria"></s:property></h4>
                     <div class="text-muted"><s:property value="nombreUsuario"></s:property> - <s:property value="fechaNoticia"></s:property></div>
                         <image></image>
                         <hr class="my-4">
@@ -93,20 +93,32 @@
 
                     </s:form>
                 </s:if>
-                
+
                 <s:if test="%{#session.usuario != null}">
-                <s:form action="comentar" theme="simple"> 
-                    <s:textarea name="mensaje">
-                    </s:textarea>
-                    <s:hidden name="nombreUsuario" value="%{#session.usuario}"></s:hidden>
-                    <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
-                    <s:submit value="Enviar"></s:submit>
-                </s:form>
+                    <s:form action="comentar" theme="simple"> 
+                        <s:textarea name="mensaje">
+                        </s:textarea>
+                        <s:hidden name="nombreUsuario" value="%{#session.usuario}"></s:hidden>
+                        <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
+                        <s:submit value="Enviar"></s:submit>
+                    </s:form>
                 </s:if>       
-                <div class="col-md-1">
-                
-                </div>
+
             </div>
+            <div>
+
+               
+
+                Comentarios<br>
+                <s:iterator value="listaComentarios" var="comentario">
+                  <s:url action="irModCom" var="idComentario" >
+                    <s:param name="idComentario"><s:property value="idComentario"></s:property></s:param>
+                </s:url>
+                    <a href="<s:property value="#idComentario" />" > <s:property value="mensaje"></s:property></a> - <s:property value="fechaComentario"></s:property> 
+                    <br>
+                </s:iterator>
+            </div>
+
         </div>
     </body>
 </html>

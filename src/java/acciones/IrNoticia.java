@@ -5,13 +5,16 @@
  */
 package acciones;
 
+import classes.Comentario;
 import classes.Noticia;
 import classes.Tag;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
+import persistencia.ComentarioREST;
 import persistencia.NoticiaREST;
 
 /**
@@ -23,7 +26,7 @@ public class IrNoticia extends ActionSupport {
     public IrNoticia() {
     }
 
-    String idNoticia;
+    Integer idNoticia;
     String imagen;
     String localizacion;
     Date fechaNoticia;
@@ -35,11 +38,12 @@ public class IrNoticia extends ActionSupport {
     String nombreCategoria;
     String tag;
     
+    List<Comentario> listaComentarios = new ArrayList();
     public String execute() throws Exception {
         NoticiaREST nr = new NoticiaREST();
         GenericType<Noticia> gt = new GenericType<Noticia>() {
         };
-        Noticia n = nr.find_XML(gt, idNoticia);
+        Noticia n = nr.find_XML(gt, idNoticia.toString());
         this.cuerpoNoticia = n.getCuerpoNoticia();
         this.fechaNoticia = n.getFechaNoticia();
         this.imagen = n.getImagen();
@@ -50,7 +54,32 @@ public class IrNoticia extends ActionSupport {
         this.nombreCategoria = n.getNombreCategoria().getNombreCategoria();
         this.localizacion =n.getLocalizacion();
        
+        ComentarioREST cr = new ComentarioREST();
+        GenericType<List<Comentario>> gc = new GenericType<List<Comentario>>(){};
+        List<Comentario> list = cr.findAll_XML(gc);
+        
+        for(Comentario c: list){
+            if(c.getIdNoticia().getIdNoticia().equals(idNoticia)){
+                listaComentarios.add(c);
+            }
+        }
         return SUCCESS;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public List<Comentario> getListaComentarios() {
+        return listaComentarios;
+    }
+
+    public void setListaComentarios(List<Comentario> listaComentarios) {
+        this.listaComentarios = listaComentarios;
     }
 
     public String getNombreRealUsuario() {
@@ -77,11 +106,11 @@ public class IrNoticia extends ActionSupport {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getIdNoticia() {
+    public Integer getIdNoticia() {
         return idNoticia;
     }
 
-    public void setIdNoticia(String idNoticia) {
+    public void setIdNoticia(Integer idNoticia) {
         this.idNoticia = idNoticia;
     }
 

@@ -124,6 +124,15 @@
         <action name="limpiarNotifi" class="acciones.LimpiarNotificaciones">
             <result name="success">/verNotificaciones.jsp</result>
         </action> 
+        <action name="irModCom" class="acciones.irModCom">
+            <result name="success">/formModCom.jsp</result>
+        </action>
+        <action name="modCom" class="acciones.modCom">
+            <result type="chain">
+                <param name="actionName">irNoticia</param>
+            </result>
+            <result name="input">/formModNoticia.jsp</result>
+        </action>
         
     </package>
 </struts>
