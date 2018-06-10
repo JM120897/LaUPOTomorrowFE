@@ -54,9 +54,9 @@ public class Busqueda extends ActionSupport {
                 error = true;
             } else {
                 //ORDENAR POR FECHA.
-                noticias.sort(new Comparator<Noticia>() {
+                coincidencias.sort(new Comparator<Noticia>() {
                     public int compare(Noticia o1, Noticia o2) {
-                        return o1.getFechaNoticia().compareTo(o2.getFechaNoticia());
+                        return o2.getFechaNoticia().compareTo(o1.getFechaNoticia());
                     }
                 });
             }

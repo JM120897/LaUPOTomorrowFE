@@ -26,7 +26,7 @@ public class ModRol extends ActionSupport {
         UsuarioREST ur = new UsuarioREST();
         GenericType<Usuario> gt = new GenericType<Usuario>(){};
         Usuario u = ur.find_XML(gt, nombreUsuario);
-        
+         
         u.setRol(rol);
         ur.edit_XML(u, nombreUsuario);
         

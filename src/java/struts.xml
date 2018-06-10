@@ -16,6 +16,9 @@
         <action name="index" class="acciones.Indice">
             <result name="success">/index.jsp</result>
         </action>
+        <action name="irCategoria" class="acciones.Indice" method="cambiarCategoria">
+            <result name="success">/index.jsp</result>
+        </action> 
         
         <action name="irLogin">
             <result name="success">/login.jsp</result>
