@@ -118,5 +118,12 @@
                 
             </result>
         </action>
+        <action name="irNotificaciones" class="acciones.irNotificaciones">
+            <result name="success">/verNotificaciones.jsp</result>
+        </action>
+        <action name="limpiarNotifi" class="acciones.LimpiarNotificaciones">
+            <result name="success">/verNotificaciones.jsp</result>
+        </action> 
+        
     </package>
 </struts>

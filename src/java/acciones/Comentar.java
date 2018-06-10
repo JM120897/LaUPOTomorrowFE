@@ -7,6 +7,7 @@ package acciones;
 
 import classes.Comentario;
 import classes.Noticia;
+import classes.Notificacion;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -16,6 +17,7 @@ import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.ComentarioREST;
 import persistencia.NoticiaREST;
+import persistencia.NotificacionREST;
 import persistencia.UsuarioREST;
 
 /**
@@ -51,7 +53,12 @@ public class Comentar extends ActionSupport {
         ComentarioREST cr = new ComentarioREST();
         GenericType<Comentario> gt3 = new GenericType<Comentario>(){};
         cr.create_XML(c);
-        
+        NotificacionREST notifir = new NotificacionREST(); 
+        Notificacion notifi = new Notificacion();
+        notifi.setFechaNotifiacion(fechaComentario);
+        notifi.setMensaje("Nuevo Comentario en la Noticia: " + n.getTituloNoticia());
+        notifi.setNombreUsuario(n.getNombreUsuario());
+        notifir.create_XML(notifi);
         return SUCCESS;
         
     }

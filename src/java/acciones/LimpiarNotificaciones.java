@@ -16,40 +16,35 @@ import persistencia.NotificacionREST;
 
 /**
  *
- * @author Juanma
+ * @author ferna
  */
-public class Indice extends ActionSupport {
-
-    public Indice() {
-
+public class LimpiarNotificaciones extends ActionSupport {
+    
+    public LimpiarNotificaciones() {
     }
-
-    List<Notificacion> list = new ArrayList();
+     List<String> nombres = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-
     public String execute() throws Exception {
-        NotificacionREST nr = new NotificacionREST();
+         NotificacionREST nr = new NotificacionREST();
         GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
         };
         Map session = (Map) ActionContext.getContext().get("session");
-        list = nr.findAll_XML(gt);
+        List<Notificacion> list = nr.findAll_XML(gt);
         for (Notificacion n : list) {
             if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
-                listaNotifi.add(n);
+               nr.remove(n.getIdNotificacion().toString());
             }
 
         }
-        numNoti = listaNotifi.size();
-        return SUCCESS;
+       return SUCCESS;
     }
 
-    public List<Notificacion> getList() {
-        return list;
+    public List<String> getNombres() {
+        return nombres;
     }
 
-    public void setList(List<Notificacion> list) {
-        this.list = list;
+    public void setNombres(List<String> nombres) {
+        this.nombres = nombres;
     }
 
     public List<Notificacion> getListaNotifi() {
@@ -59,13 +54,5 @@ public class Indice extends ActionSupport {
     public void setListaNotifi(List<Notificacion> listaNotifi) {
         this.listaNotifi = listaNotifi;
     }
-
-    public int getNumNoti() {
-        return numNoti;
-    }
-
-    public void setNumNoti(int numNoti) {
-        this.numNoti = numNoti;
-    }
-
+    
 }

@@ -50,7 +50,7 @@
                                 <s:if test="%{#session.rol == \"redactor\"}">
                                     <s:form action="irRedactar"><button type="submit" class="btn btn-primary">Redactar</button></s:form>
                                     <s:form action="irCrearHistoria"><button type="submit" class="btn btn-primary">Crear Historia</button></s:form>
-                                    <s:form action="irNotificaciones"><button type="submit" class="btn btn-warning"><s:property value="numNoti"></s:property>  </button></s:form>
+
                                 </s:if>
                             </s:else>
                         </div>
@@ -59,30 +59,21 @@
                 </div>
             </div>
         </div>
-        <s:form action="buscar">
-            <s:textfield name="busqueda"/>
-            <s:submit value="Buscar"/>
-        </s:form>
-        <s:if test="%{mensajeError != null}">
-            <div class="container my-4">
-                <div class="alert alert-danger" role="alert">
-                    <s:property value="mensajeError"></s:property>
-                    </div>
-                </div>
-        </s:if>
-        <s:iterator value="coincidencias" var="noticia" >
+        <s:if test="%{!listaNotifi.isEmpty()}">
+            <form action="limpiarNotifi">
+                <s:submit name="limpiarNotifi" value="Limpiar Notificaciones"></s:submit>
+                </form>
 
-            <s:url action="irNoticia" var="idNoticia" >
-                <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
-            </s:url>
-            <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
+            <s:iterator value="listaNotifi" var="notificacion">
+                <s:property value="%{mensaje}"></s:property>
+                <s:property value="%{fechaNotifiacion}"></s:property>
                 <br>
-
-
-        </s:iterator>
-
-       
-
+            </s:iterator>
+                
+        </s:if><s:else>
+            No tienes notificaciones PORQUE TUS NOTICIAS SON UNA MIERDA Y NO LE IMPORTAN A NADIE
+        </s:else>
+        
 
     </body>
 </html>
