@@ -52,6 +52,9 @@
                                     <s:form action="irCrearHistoria"><button type="submit" class="btn btn-primary">Crear Historia</button></s:form>
                                     <s:form action="irNotificaciones"><button type="submit" class="btn btn-warning"><s:property value="numNoti"></s:property>  </button></s:form>
                                 </s:if>
+                                <s:if test="%{#session.rol == \"admin\"}">
+                                    <s:form action="irAdmin"><button type="submit" class="btn btn-light">Panel Administración</button></s:form>
+                                </s:if>
                             </s:else>
                         </div>
                     </div>

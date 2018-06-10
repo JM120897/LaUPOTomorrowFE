@@ -24,6 +24,7 @@ import persistencia.TagREST;
  */
 public class Busqueda extends ActionSupport {
 
+    String categoria;
     String busqueda;
     String mensajeError;
     List<Noticia> coincidencias;
@@ -87,6 +88,14 @@ public class Busqueda extends ActionSupport {
         return coincidencias;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public void setCoincidencias(List<Noticia> coincidencias) {
         this.coincidencias = coincidencias;
     }
@@ -96,14 +105,22 @@ public class Busqueda extends ActionSupport {
         for (Noticia n : noticias) {
             for (String param : params) {
                 if (!coincidencias.contains(n) && n.getTituloNoticia().toLowerCase().contains(param.toLowerCase())) {
-                    coincidencias.add(n);
+                    if(categoria == null){
+                        coincidencias.add(n);
+                    }else if(categoria != null && n.getNombreCategoria().getNombreCategoria().equalsIgnoreCase(categoria)){
+                        coincidencias.add(n);
+                    }
                 }
                 TagREST tr = new TagREST();
                 GenericType<List<Tag>> gt = new GenericType<List<Tag>>(){};
                 List<Tag> l = tr.findAll_XML(gt);
                 for(Tag t : l){
                     if(!coincidencias.contains(n) && t.getIdNoticia().getIdNoticia() == n.getIdNoticia() && t.getNombreTag().equalsIgnoreCase(param)){
+                        if(categoria == null){
                         coincidencias.add(n);
+                        }else if(categoria != null && n.getNombreCategoria().getNombreCategoria().equalsIgnoreCase(categoria)){
+                            coincidencias.add(n);
+                        }
                     }
                 }
             }

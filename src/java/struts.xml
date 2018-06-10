@@ -69,6 +69,10 @@
         <action name="irModNot" class="acciones.irModNot">
             <result name="success">/formModNoticia.jsp</result>
         </action>
+        <action name="irAdmin" class="acciones.IrAdmin">
+            <result name="success">/administracion.jsp</result>
+        </action>
+        
         <action name="modNoticia" class="acciones.ModNoticia">
             <result type="chain">
                 <param name="actionName">irNoticia</param>
@@ -133,6 +137,22 @@
             </result>
             <result name="input">/formModNoticia.jsp</result>
         </action>
+        <action name="borrarCategoria" class="acciones.BorrarCategoria">
+            <result type="chain">
+                <param name="actionName">irAdmin</param>
+            </result>
+        </action>
+        <action name="crearCategoria" class="acciones.CrearCategoria">
+            <result type="chain">
+                <param name="actionName">irAdmin</param>
+            </result>
+        </action>
+        <action name="modRol" class="acciones.ModRol">
+            <result type="chain">
+                <param name="actionName">irAdmin</param>
+            </result>
+        </action>
+            
         
     </package>
 </struts>
