@@ -27,6 +27,7 @@ public class IrNoticia extends ActionSupport {
     }
 
     Integer idNoticia;
+    Integer idNoticia2;
     String imagen;
     String localizacion;
     Date fechaNoticia;
@@ -63,7 +64,16 @@ public class IrNoticia extends ActionSupport {
                 listaComentarios.add(c);
             }
         }
+        idNoticia2 = idNoticia;
         return SUCCESS;
+    }
+
+    public Integer getIdNoticia2() {
+        return idNoticia2;
+    }
+
+    public void setIdNoticia2(Integer idNoticia2) {
+        this.idNoticia2 = idNoticia2;
     }
 
     public String getTag() {

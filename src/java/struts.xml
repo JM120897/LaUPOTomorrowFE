@@ -133,6 +133,11 @@
             </result>
             <result name="input">/formModNoticia.jsp</result>
         </action>
-        
+        <action name="borrarCom" class="acciones.borrarCom">
+            <result type="chain">
+                <param name="actionName">irNoticia</param>
+            </result>
+              
+        </action>
     </package>
 </struts>
