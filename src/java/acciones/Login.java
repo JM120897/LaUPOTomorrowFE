@@ -5,11 +5,15 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.UsuarioREST;
 
 
@@ -22,6 +26,16 @@ public class Login extends ActionSupport {
     String usuario;
     String password;
     String mensajeError;
+     
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     
     public Login() {
     }
@@ -31,6 +45,10 @@ public class Login extends ActionSupport {
         UsuarioREST ur = new UsuarioREST();
         GenericType<Usuario> gt = new GenericType<Usuario>(){};
         Usuario u = null;
+          
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         
         
         try{ 

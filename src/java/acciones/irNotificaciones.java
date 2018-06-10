@@ -5,6 +5,7 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Noticia;
 import classes.Notificacion;
 import com.opensymphony.xwork2.ActionContext;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.NoticiaREST;
 import persistencia.NotificacionREST;
 
@@ -26,7 +28,16 @@ public class irNotificaciones extends ActionSupport {
     }
     List<String> nombres = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
+ List<Categoria> listaCategoriaMenu = new ArrayList();
 
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+    
     public String execute() throws Exception {
         NotificacionREST nr = new NotificacionREST();
         GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
@@ -39,7 +50,10 @@ public class irNotificaciones extends ActionSupport {
             }
 
         }
-     
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        
         
         return SUCCESS;
 

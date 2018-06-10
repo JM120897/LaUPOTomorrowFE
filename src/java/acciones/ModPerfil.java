@@ -5,12 +5,16 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Usuario;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.UsuarioREST;
 
 /**
@@ -28,11 +32,25 @@ public class ModPerfil extends ActionSupport {
     private String email;
     private String localizacion;
     private String rol;
+  
+    List<Categoria> listaCategoriaMenu = new ArrayList();
 
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+    
     public String execute() throws Exception {
         UsuarioREST ur = new UsuarioREST();
        
-    
+      
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        
       
       
         Usuario usu = new Usuario();

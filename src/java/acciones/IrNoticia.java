@@ -5,6 +5,7 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Comentario;
 import classes.Noticia;
 import classes.Tag;
@@ -14,8 +15,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.ComentarioREST;
 import persistencia.NoticiaREST;
+import persistencia.TagREST;
 
 /**
  *
@@ -37,13 +40,26 @@ public class IrNoticia extends ActionSupport {
     String nombreRealUsuario;
     String nombreUsuario;
     String nombreCategoria;
-    String tag;
+    List<Tag> tags = new ArrayList();
+     
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     
     List<Comentario> listaComentarios = new ArrayList();
     public String execute() throws Exception {
         NoticiaREST nr = new NoticiaREST();
         GenericType<Noticia> gt = new GenericType<Noticia>() {
         };
+         CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         Noticia n = nr.find_XML(gt, idNoticia.toString());
         this.cuerpoNoticia = n.getCuerpoNoticia();
         this.fechaNoticia = n.getFechaNoticia();
@@ -52,7 +68,9 @@ public class IrNoticia extends ActionSupport {
         this.tituloNoticia = n.getTituloNoticia();
         this.nombreRealUsuario=n.getNombreUsuario().getNombreReal();
         this.nombreUsuario = n.getNombreUsuario().getNombreUsuario();
-        this.nombreCategoria = n.getNombreCategoria().getNombreCategoria();
+        if(n.getNombreCategoria().getNombreCategoria() != null){
+            this.nombreCategoria = n.getNombreCategoria().getNombreCategoria();
+        }
         this.localizacion =n.getLocalizacion();
        
         ComentarioREST cr = new ComentarioREST();
@@ -62,6 +80,16 @@ public class IrNoticia extends ActionSupport {
         for(Comentario c: list){
             if(c.getIdNoticia().getIdNoticia().equals(idNoticia)){
                 listaComentarios.add(c);
+            }
+        }
+        TagREST tr = new TagREST();
+        GenericType<List<Tag>> gtag = new GenericType<List<Tag>>() {
+        };
+        List<Tag> listaTags = tr.findAll_XML(gtag);
+
+        for (Tag tg : listaTags) {
+            if (tg.getIdNoticia().getIdNoticia().equals(idNoticia)) {
+                tags.add(tg);
             }
         }
         idNoticia2 = idNoticia;
@@ -76,12 +104,12 @@ public class IrNoticia extends ActionSupport {
         this.idNoticia2 = idNoticia2;
     }
 
-    public String getTag() {
-        return tag;
+    public List getTags() {
+        return tags;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setTags(List tags) {
+        this.tags = tags;
     }
 
     public List<Comentario> getListaComentarios() {

@@ -5,16 +5,19 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Comentario;
 import classes.Noticia;
 import classes.Notificacion;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.ComentarioREST;
 import persistencia.NoticiaREST;
 import persistencia.NotificacionREST;
@@ -31,13 +34,23 @@ public class Comentar extends ActionSupport {
     String idNoticia;
     Date fechaComentario;
     String mensaje;
-    
+     List<Categoria> listaCategoria = new ArrayList();
+
+    public List<Categoria> getListaCategoria() {
+        return listaCategoria;
+    }
+
+    public void setListaCategoria(List<Categoria> listaCategoria) {
+        this.listaCategoria = listaCategoria;
+    }
     public Comentar() {
     }
     
     public String execute() throws Exception {
         fechaComentario = new Date();
-        
+         CategoriaREST categoriaRestr = new CategoriaREST();
+         GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>(){};
+        listaCategoria = categoriaRestr.findAll_XML(gc);
         NoticiaREST nr = new NoticiaREST();
         GenericType<Noticia> gt2 = new GenericType<Noticia>(){};
         Noticia n = nr.find_XML(gt2, idNoticia);

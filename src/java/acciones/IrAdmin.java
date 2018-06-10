@@ -8,6 +8,7 @@ package acciones;
 import classes.Categoria;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
@@ -26,11 +27,23 @@ public class IrAdmin extends ActionSupport {
         
     }
     
+     List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     public String execute() throws Exception {
         CategoriaREST cr = new CategoriaREST();
         GenericType<List<Categoria>> gt = new GenericType<List<Categoria>>(){};
         categorias = cr.findAll_XML(gt);
-        
+         
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         UsuarioREST ur = new UsuarioREST();
         GenericType<List<Usuario>> gt2 = new GenericType<List<Usuario>>(){};
         usuarios = ur.findAll_XML(gt2);

@@ -5,7 +5,12 @@
  */
 package acciones;
 
+import classes.Categoria;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.NoticiaREST;
 
 /**
@@ -18,11 +23,24 @@ public class BorrarNoticia extends ActionSupport {
     }
     
     Integer idNoticia;
-    
+    List<Categoria> listaCategoria = new ArrayList();
+
+    public List<Categoria> getListaCategoria() {
+        return listaCategoria;
+    }
+
+    public void setListaCategoria(List<Categoria> listaCategoria) {
+        this.listaCategoria = listaCategoria;
+    }
     public String execute() throws Exception {
         NoticiaREST nr = new NoticiaREST();
         
         nr.remove(idNoticia.toString());
+        
+         CategoriaREST cr = new CategoriaREST();
+         GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>(){};
+        listaCategoria = cr.findAll_XML(gc);
+        
         return SUCCESS;
     }
 

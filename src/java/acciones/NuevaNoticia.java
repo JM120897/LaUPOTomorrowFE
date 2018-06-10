@@ -12,6 +12,7 @@ import classes.Tag;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,16 @@ public class NuevaNoticia extends ActionSupport {
     String usuario;
     String localizacion;
     Date fecha;
+     
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     
     public NuevaNoticia() {
     }
@@ -51,7 +62,11 @@ public class NuevaNoticia extends ActionSupport {
         CategoriaREST cr = new CategoriaREST();
         GenericType<Categoria> gt2 = new GenericType<Categoria>(){};
         Categoria c = cr.find_XML(gt2, categoria);
-
+   
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        
         fecha = new Date();
         Noticia n = new Noticia();
         n.setTituloNoticia(tituloNoticia);
