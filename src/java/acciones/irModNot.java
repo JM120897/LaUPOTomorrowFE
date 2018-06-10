@@ -30,7 +30,17 @@ import persistencia.TagREST;
 public class irModNot extends ActionSupport {
 
     public irModNot() {
+    } 
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
     }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+    
     Integer idNoticia;
     String imagen;
     String localizacion;
@@ -64,7 +74,10 @@ public class irModNot extends ActionSupport {
         this.nombreUsuario = n.getNombreUsuario().getNombreUsuario();
         this.nombreCat = n.getNombreCategoria().getNombreCategoria();
         this.localizacion = n.getLocalizacion();
-
+   CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        
         CategoriaREST nc = new CategoriaREST();
 
         GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>() {

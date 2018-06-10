@@ -5,6 +5,7 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Historia;
 import classes.Noticia;
 import classes.Usuario;
@@ -16,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.HistoriaREST;
 import persistencia.NoticiaREST;
 import persistencia.UsuarioREST;
@@ -37,6 +39,16 @@ public class IrPerfil extends ActionSupport {
     String rol;
     List<Noticia> listaNoticia = new ArrayList<Noticia>();
      List<Historia> listaHistoriasUsuario = new ArrayList();
+     
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     
     public String execute() throws Exception {
 
@@ -46,7 +58,9 @@ public class IrPerfil extends ActionSupport {
         };
         Usuario usu;
         usu = ur.find_XML(gt, (String) session.get("usuario"));
-
+ CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         nombreUsuario = usu.getNombreUsuario();
         nombreReal = usu.getNombreReal();
         email = usu.getEmail();

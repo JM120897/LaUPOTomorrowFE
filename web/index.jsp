@@ -84,7 +84,9 @@
 
         </s:iterator>
 
-       
+       <s:iterator value="listaCategoriaMenu" var="nombreCategoria" >
+           <s:property value="nombreCategoria"></s:property>
+        </s:iterator>
 
 
     </body>

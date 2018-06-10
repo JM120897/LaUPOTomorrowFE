@@ -5,9 +5,13 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.UsuarioREST;
 
 /**
@@ -21,6 +25,16 @@ public class ModRol extends ActionSupport {
     
     public ModRol() {
     }
+     
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     
     public String execute() throws Exception {
         UsuarioREST ur = new UsuarioREST();
@@ -29,6 +43,10 @@ public class ModRol extends ActionSupport {
         
         u.setRol(rol);
         ur.edit_XML(u, nombreUsuario);
+          
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         
         return SUCCESS;
     }

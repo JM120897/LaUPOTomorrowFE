@@ -5,6 +5,7 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Historia;
 import classes.Noticia;
 import classes.Usuario;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.HistoriaREST;
 import persistencia.NoticiaREST;
 
@@ -32,8 +34,20 @@ public class IrHistoria extends ActionSupport {
      String nombreUsuario;
       List<Noticia> listNoticias = new ArrayList();
       List<Noticia> listaNoticiasHistoria = new ArrayList();
-      
+       List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     public String execute() throws Exception {
+         
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         Historia h = new Historia();
         HistoriaREST hr = new HistoriaREST();
         GenericType<Historia> gh = new GenericType<Historia>(){};

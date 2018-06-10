@@ -5,12 +5,15 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Comentario;
 import classes.Noticia;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.ComentarioREST;
 
 /**
@@ -28,11 +31,25 @@ public class irModCom extends ActionSupport {
     Date fechaComentario;
     String nombreUsuario;
     Integer idComentario;
+ 
+    List<Categoria> listaCategoriaMenu = new ArrayList();
 
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+    
     public String execute() throws Exception {
         ComentarioREST cr = new ComentarioREST();
         GenericType<Comentario> lc = new GenericType<Comentario>() {
-        };
+        }; 
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        
         Comentario c = cr.find_XML(lc, idComentario.toString());
         mensaje = c.getMensaje();
         idPadre = c.getIdPadre();

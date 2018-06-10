@@ -52,7 +52,17 @@ public class ModNoticia extends ActionSupport {
     String tags;
 
     String localizacion;
+  
+    List<Categoria> listaCategoriaMenu = new ArrayList();
 
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+    
     public String execute() throws Exception {
         NoticiaREST nr = new NoticiaREST();
         Map session = (Map) ActionContext.getContext().get("session");
@@ -64,6 +74,10 @@ public class ModNoticia extends ActionSupport {
         CategoriaREST cr = new CategoriaREST();
         GenericType<Categoria> gt2 = new GenericType<Categoria>(){};
         Categoria c = cr.find_XML(gt2, nombreCategoria);
+         
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         
         
         n.setNombreCategoria(c);

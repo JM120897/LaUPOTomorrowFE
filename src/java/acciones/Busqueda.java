@@ -5,6 +5,7 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Noticia;
 import classes.Tag;
 import com.opensymphony.xwork2.ActionSupport;
@@ -15,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.NoticiaREST;
 import persistencia.TagREST;
 
@@ -28,7 +30,15 @@ public class Busqueda extends ActionSupport {
     String busqueda;
     String mensajeError;
     List<Noticia> coincidencias;
+List<Categoria> listaCategoria = new ArrayList();
 
+    public List<Categoria> getListaCategoria() {
+        return listaCategoria;
+    }
+
+    public void setListaCategoria(List<Categoria> listaCategoria) {
+        this.listaCategoria = listaCategoria;
+    }
     public Busqueda() {
     }
 
@@ -37,6 +47,9 @@ public class Busqueda extends ActionSupport {
         NoticiaREST nr = new NoticiaREST();
         GenericType<List<Noticia>> gt = new GenericType<List<Noticia>>() {};
         List<Noticia> noticias = null;
+         CategoriaREST cr = new CategoriaREST();
+         GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>(){};
+        listaCategoria = cr.findAll_XML(gc);
         try {
             noticias = nr.findAll_XML(gt);
         } catch (javax.ws.rs.InternalServerErrorException E) {

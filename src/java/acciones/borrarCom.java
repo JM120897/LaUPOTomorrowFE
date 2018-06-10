@@ -5,7 +5,12 @@
  */
 package acciones;
 
+import classes.Categoria;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.ComentarioREST;
 
 /**
@@ -19,9 +24,22 @@ public class borrarCom extends ActionSupport {
     public borrarCom() {
     }
     
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     public String execute() throws Exception {
         ComentarioREST cr= new ComentarioREST();
-        cr.remove(idComentario.toString());
+        cr.remove(idComentario.toString());    
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        
         return SUCCESS;
     }
 

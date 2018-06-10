@@ -5,6 +5,7 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Notificacion;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.NotificacionREST;
 
 /**
@@ -19,6 +21,16 @@ import persistencia.NotificacionREST;
  * @author ferna
  */
 public class LimpiarNotificaciones extends ActionSupport {
+     
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     
     public LimpiarNotificaciones() {
     }
@@ -28,6 +40,9 @@ public class LimpiarNotificaciones extends ActionSupport {
          NotificacionREST nr = new NotificacionREST();
         GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
         };
+         CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         Map session = (Map) ActionContext.getContext().get("session");
         List<Notificacion> list = nr.findAll_XML(gt);
         for (Notificacion n : list) {

@@ -5,11 +5,15 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Historia;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.HistoriaREST;
 
 /**
@@ -25,6 +29,15 @@ public class IrModHistoria extends ActionSupport {
      String subtituloHistoria;
      Date fechaHistoria;
      String nombreUsuario;
+      List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     public String execute() throws Exception {
         Historia h = new Historia();
         HistoriaREST hr = new HistoriaREST();
@@ -35,6 +48,9 @@ public class IrModHistoria extends ActionSupport {
         fechaHistoria= h.getFechaHistoria();
         nombreUsuario=h.getNombreUsuario().getNombreUsuario();
         idHistoria= h.getIdHistoria();
+         CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         return SUCCESS;
     }
 

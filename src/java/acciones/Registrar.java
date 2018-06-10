@@ -5,9 +5,13 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.UsuarioREST;
 
 
@@ -28,6 +32,15 @@ public class Registrar extends ActionSupport {
 
     }
 
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     public String execute() throws Exception {
         boolean error = false;
         Usuario u1 = new Usuario();
@@ -38,6 +51,11 @@ public class Registrar extends ActionSupport {
         u1.setLocalizacion(localizacion);
         u1.setRol("lector");
         Usuario u2 = null;
+           
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        
         //Primero hay que ver si no existe el usuario ya
         UsuarioREST ur = new UsuarioREST();
         GenericType<Usuario> gt = new GenericType<Usuario>(){};

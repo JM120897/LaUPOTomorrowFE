@@ -5,6 +5,7 @@
  */
 package acciones;
 
+import classes.Categoria;
 import classes.Notificacion;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
+import persistencia.CategoriaREST;
 import persistencia.NotificacionREST;
 
 /**
@@ -27,11 +29,22 @@ public class Indice extends ActionSupport {
     List<Notificacion> list = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
     int numNoti = 0;
+ List<Categoria> listaCategoriaMenu = new ArrayList();
 
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
     public String execute() throws Exception {
         NotificacionREST nr = new NotificacionREST();
         GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
         };
+         CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         Map session = (Map) ActionContext.getContext().get("session");
         list = nr.findAll_XML(gt);
         for (Notificacion n : list) {

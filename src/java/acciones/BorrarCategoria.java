@@ -7,6 +7,7 @@ package acciones;
 
 import classes.Categoria;
 import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
@@ -18,15 +19,33 @@ import persistencia.CategoriaREST;
 public class BorrarCategoria extends ActionSupport {
     
     String nombreCategoria;
+    /////////////////////////////////////////////
     
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+    
+    
+    ///////////////////////////////////////
     public BorrarCategoria() {
     }
     
     public String execute() throws Exception {
         
-        CategoriaREST cr = new CategoriaREST();
-        cr.remove(nombreCategoria);
+        CategoriaREST categoriar = new CategoriaREST();
+         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         
+        
+        categoriar.remove(nombreCategoria);
+        
+       
         return SUCCESS;
     }
 
