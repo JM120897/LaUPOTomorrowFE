@@ -11,30 +11,28 @@ import classes.Notificacion;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.NoticiaREST;
-
-
 import persistencia.NotificacionREST;
 
 /**
  *
- * @author Juanma
+ * @author ferna
  */
-public class Indice extends ActionSupport {
-
-    List<Categoria> categorias;
+public class cambiarCategoriaIndex extends ActionSupport {
+    
+    public cambiarCategoriaIndex() {
+    }
+    
+     List<Categoria> categorias;
     String categoria;
     List<Noticia> lista;
-    List<Noticia> coincidencias;
-    public Indice() {
-
-    }
+    List<Noticia> coincidencias = new ArrayList();
+   
     
     List<Notificacion> list = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
@@ -42,20 +40,18 @@ public class Indice extends ActionSupport {
     List<Categoria> listaCat = new ArrayList();
  List<Categoria> listaCategoriaMenu = new ArrayList();
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
-    }
-
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
+    
+    String nombreCategoria;
+    
     public String execute() throws Exception {
-        
+        Map s = (Map) ActionContext.getContext().get("session");
+        String ca = nombreCategoria;
+         s.put("categoria", nombreCategoria);
         NoticiaREST nor = new NoticiaREST();
         GenericType<List<Noticia>> gt3 = new GenericType<List<Noticia>>(){};
-        coincidencias = nor.findAll_XML(gt3);
+        lista = nor.findAll_XML(gt3);
         
-        coincidencias.sort(new Comparator<Noticia>() {
+        lista.sort(new Comparator<Noticia>() {
                     public int compare(Noticia o1, Noticia o2) {
                         return o2.getFechaNoticia().compareTo(o1.getFechaNoticia());
                     }
@@ -83,11 +79,62 @@ public class Indice extends ActionSupport {
         }
         numNoti = listaNotifi.size();
        
+        for(Noticia n:lista){
+            if(n.getNombreCategoria().getNombreCategoria().equals((String)s.get("categoria"))){
+                coincidencias.add(n);
+            }
+        }
         
+       
         
         return SUCCESS;
     }
-    
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public List<Noticia> getLista() {
+        return lista;
+    }
+
+    public void setLista(List<Noticia> lista) {
+        this.lista = lista;
+    }
+
+    public List<Noticia> getCoincidencias() {
+        return coincidencias;
+    }
+
+    public void setCoincidencias(List<Noticia> coincidencias) {
+        this.coincidencias = coincidencias;
+    }
 
     public List<Notificacion> getList() {
         return list;
@@ -113,31 +160,12 @@ public class Indice extends ActionSupport {
         this.numNoti = numNoti;
     }
 
-    public List<Categoria> getCategorias() {
-        return categorias;
+    public List<Categoria> getListaCat() {
+        return listaCat;
     }
 
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public List<Noticia> getCoincidencias() {
-        return coincidencias;
-    }
-
-    public void setCoincidencias(List<Noticia> coincidencias) {
-        this.coincidencias = coincidencias;
+    public void setListaCat(List<Categoria> listaCat) {
+        this.listaCat = listaCat;
     }
     
-    
-
-
 }

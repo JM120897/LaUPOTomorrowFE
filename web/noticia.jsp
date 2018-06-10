@@ -66,16 +66,7 @@
         </div>
 
         <div class="row my-3">
-            <div class="col-md-2 mx-5">
-                <div class="card card-body bg-warning">
-                    <h4>Categorias</h4>
-                    <ul class="list-group">
-                        <s:iterator value="listaCategoriaMenu" var="nombreCategoria" >
-                            <li class="list-group-item"><s:property value="nombreCategoria"></s:property></li>
-                            </s:iterator>
-                    </ul>
-                </div>
-            </div>
+           
             <div class="col-md-6 mx-5">
                 <s:form theme="simple">
 

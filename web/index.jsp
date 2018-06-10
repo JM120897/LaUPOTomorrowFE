@@ -4,6 +4,8 @@
     Author     : Juanma
 --%>
 
+<%@page import="com.opensymphony.xwork2.ActionContext"%>
+<%@page import="java.util.Map"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!doctype html>
@@ -33,6 +35,7 @@
         <title>UPO Tomorrow</title>
     </head>
 
+    
     <body>
         <div class="container-fluid DarkBlue">
             <div class="container">
@@ -75,25 +78,26 @@
             </div>
         </div>
         <div class="row my-3">
-            <div class="col-md-2 mx-5">
+             <div class="col-md-2 mx-5">
                 <div class="card card-body bg-warning">
-                    <h4>Categorías</h4>
+                    <h4>Categorias</h4>
                     <ul class="list-group">
-                        <s:url action="irCategoria" var="nombreCategoria" >
-                            <s:param name="categoria"><s:property value="nombreCategoria"></s:property></s:param>
-                        </s:url>
-                        <s:iterator value="categorias" var="categoria">
-                            
+                        <s:iterator value="listaCategoriaMenu" var="nombreCategoria" >
+                         
+                           
                             <li class="list-group-item">
-                                <s:url action="irCategoria" var="idCategoria">
-                                    <s:param name="categoria"><s:property value="nombreCategoria"></s:property></s:param>
+                                <s:url action="cambiarCategoria" var="nombreCategoria">
+                                    <s:param name="nombreCategoria"><s:property value="nombreCategoria"></s:property></s:param>
                                 </s:url>
-                                <a href="<s:property value="#idCategoria" />" > <s:property value="nombreCategoria"></s:property> </a>
+                                <a href="<s:property value="#nombreCategoria" />" > <s:property value="nombreCategoria"></s:property> </a>
                             </li>
-                        </s:iterator>
+                            
+                            
+                            </s:iterator>
                     </ul>
                 </div>
             </div>
+           
             <div class="col-md-6 mx-5">
                 <s:form action="buscar" theme="simple">
                     <div class="row mb-3">

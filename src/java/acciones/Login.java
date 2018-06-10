@@ -75,6 +75,7 @@ public class Login extends ActionSupport {
                 Map session = (Map) ActionContext.getContext().get("session");
                 session.put("usuario", usuario);
                 session.put("rol", u.getRol());
+                session.put("categoria","portada");
                 return SUCCESS;
             } else {
                 mensajeError = "La contraseña no coincide";

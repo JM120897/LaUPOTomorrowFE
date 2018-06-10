@@ -161,7 +161,9 @@
                 <param name="actionName">irAdmin</param>
             </result>
         </action>
-            
+        <action name="cambiarCategoria" class="acciones.cambiarCategoriaIndex">
+            <result name="success">/index.jsp</result>
+        </action>
         
     </package>
 </struts>
