@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="row my-3">
+        <div class="row my-3 mx-0">
             <div class="col-md-2 mx-5">
                 <div class="card card-body bg-warning">
                     <h4>Categorías</h4>
@@ -150,9 +150,6 @@
                         </div>
                         <hr class="my-4">
                 </s:iterator>
-
-
-
             </div>
     </body>
 </html>
