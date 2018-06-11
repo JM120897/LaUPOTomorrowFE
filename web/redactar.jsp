@@ -32,6 +32,11 @@
         <title>UPO Tomorrow</title>
     </head>
     <body>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
         <div class="container-fluid DarkBlue">
             <div class="container">
                 <div class="row">
@@ -113,7 +118,10 @@
                             </s:select>
                         </div>
                         <s:hidden name="usuario" value="%{nombreUsuario}"></s:hidden>
-                        <s:submit value="Redactar"></s:submit>
+
+                            <button type="submit" class="btn btn-outline-success col-md-3" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios">
+                                <i class="fas fa-save"></i>
+                            </button>
                     </s:form>
                 </div>
             </div>

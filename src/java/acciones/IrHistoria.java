@@ -14,6 +14,7 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,13 @@ public class IrHistoria extends ActionSupport {
                listaNoticiasHistoria.add(n);
            }
        }
+       
+       listaNoticiasHistoria.sort(new Comparator<Noticia>() {
+            public int compare(Noticia o1, Noticia o2) {
+                return o1.getFechaNoticia().compareTo(o2.getFechaNoticia());
+            }
+        });
+       
        nombreUsuario=h.getNombreUsuario().getNombreUsuario();
         Map session = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();

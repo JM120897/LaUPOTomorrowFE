@@ -34,6 +34,11 @@
     </head>
 
     <body>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
         <div class="container-fluid DarkBlue">
             <div class="container">
                 <div class="row">
@@ -75,18 +80,7 @@
             </div>
         </div>
         <div class="container">
-            <div class="row my-3">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <s:form theme="simple">
-                        <div class="row">
-                            <s:textfield placeholder="Busca!" cssClass="form-control col-md-8 mx-1"/>
-                            <button type="submit" class="btn btn-outline-warning col-md-3 mx-1" ><i class="fas fa-search"></i></button>
-                        </div>
-                    </s:form>
-                </div>
-                <div class="col-md-3"></div>
-            </div>
+            
             <div class="container my-4">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
@@ -110,9 +104,6 @@
                                     <label>Historia</label>
                                 <s:select cssClass="form-control" name="historia" list="listaHistoriasUsuario" headerKey="%{idHistori}" headerValue="%{tituloHist}" listKey="%{idHistoria}" listValue="%{tituloHistoria}"  ></s:select>
                                 </div>
-                                    <br>
-                                <div class="text-muted"><s:property value="nombreUsuario"></s:property> - <s:property value="fechaNoticia"></s:property></div>
-                                <br>
                                 <div class="form-group">
                                     <label>Imagen</label>
                                 <s:textfield cssClass="form-control" name="imagen" value="%{imagen}"></s:textfield>
@@ -129,8 +120,9 @@
                                     <label>Localizacion</label>
                                 <s:textfield cssClass="form-control" name="localizacion" value="%{localizacion}"> </s:textfield>
                                 </div>
-                                <span class="badge badge-secondary"></span> 
-                            <s:submit name="modificar" value="Modificar Noticia"></s:submit>
+                                <button type="submit" class="btn btn-outline-success col-md-3" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios">
+                                    <i class="fas fa-save"></i>
+                                </button>
                         </s:form>
                     </div>
 

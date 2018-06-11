@@ -71,8 +71,10 @@ public class IrNoticia extends ActionSupport {
         this.imagen = n.getImagen();
         this.subtituloNoticia = n.getSubtituloNoticia();
         this.tituloNoticia = n.getTituloNoticia();
-        this.nombreRealUsuario=n.getNombreUsuario().getNombreReal();
-        this.nombreUsuario = n.getNombreUsuario().getNombreUsuario();
+        if(n.getNombreUsuario()!=null){
+            this.nombreRealUsuario=n.getNombreUsuario().getNombreReal();
+            this.nombreUsuario = n.getNombreUsuario().getNombreUsuario();
+            }
         if(n.getNombreCategoria() != null){
             this.nombreCategoria = n.getNombreCategoria().getNombreCategoria();
         }

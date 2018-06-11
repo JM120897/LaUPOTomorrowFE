@@ -33,6 +33,11 @@
     </head>
 
     <body>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
         <div class="container-fluid DarkBlue">
             <div class="container">
                 <div class="row">
@@ -87,7 +92,10 @@
                                 <label>Mensaje</label>
                             <s:textfield cssClass="form-control" label="Mensaje" name="mensaje" value="%{mensaje}"></s:textfield>
                             </div>
-                        <s:submit name="modCom" value="Modificar Comentario"></s:submit>
+                        
+                            <button type="submit" class="btn btn-outline-success col-md-3" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios">
+                                <i class="fas fa-save"></i>
+                            </button>
                     </s:form>
                 </div>
             </div>
