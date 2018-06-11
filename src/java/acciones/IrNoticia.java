@@ -8,16 +8,21 @@ package acciones;
 import classes.Categoria;
 import classes.Comentario;
 import classes.Noticia;
+import classes.Notificacion;
 import classes.Tag;
+import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.ComentarioREST;
 import persistencia.NoticiaREST;
+import persistencia.NotificacionREST;
 import persistencia.TagREST;
 
 /**
@@ -93,8 +98,52 @@ public class IrNoticia extends ActionSupport {
             }
         }
         idNoticia2 = idNoticia;
+        Map session = (Map) ActionContext.getContext().get("session");
+        NotificacionREST notifir = new NotificacionREST();
+        GenericType<List<Notificacion>> gtnotifi = new GenericType<List<Notificacion>>() {
+        };
+        listNot = notifir.findAll_XML(gtnotifi);
+        for (Notificacion not : listNot) {
+            if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
+                listaNotifi.add(not);
+            }
+
+        }
+        numNoti = listaNotifi.size();
+       
+        
+        
         return SUCCESS;
     }
+    
+    /////////////////
+      List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
+    
+    public List<Notificacion> getListaNotifi() {
+        return listaNotifi;
+    }
+
+    public void setListaNotifi(List<Notificacion> listaNotifi) {
+        this.listaNotifi = listaNotifi;
+    }
+
+    public int getNumNoti() {
+        return numNoti;
+    }
+
+    public void setNumNoti(int numNoti) {
+        this.numNoti = numNoti;
+    }
+     public List<Notificacion> getListNot() {
+        return listNot;
+    }
+
+    public void setList(List<Notificacion> listNot) {
+        this.listNot = listNot;
+    }
+    ////////////////////////////
 
     public Integer getIdNoticia2() {
         return idNoticia2;

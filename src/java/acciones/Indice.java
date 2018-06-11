@@ -22,7 +22,6 @@ import persistencia.CategoriaREST;
 import persistencia.HistoriaREST;
 import persistencia.NoticiaREST;
 
-
 import persistencia.NotificacionREST;
 import persistencia.TagREST;
 
@@ -37,12 +36,11 @@ public class Indice extends ActionSupport {
     List<Noticia> lista;
     List<Noticia> coincidencias = new ArrayList<>();
     List<Historia> coincidenciasHistoria = new ArrayList<>();
+
     public Indice() {
 
     }
-    
-    List<Notificacion> list = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
+
     int numNoti = 0;
     List<Categoria> listaCat = new ArrayList();
     List<Categoria> listaCategoriaMenu = new ArrayList();
@@ -54,64 +52,62 @@ public class Indice extends ActionSupport {
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
     }
+
     public String execute() throws Exception {
-        
-        
+
         HistoriaREST hr = new HistoriaREST();
-        GenericType<List<Historia>> gh = new GenericType<List<Historia>>() {};
+        GenericType<List<Historia>> gh = new GenericType<List<Historia>>() {
+        };
         List<Historia> historias = hr.findAll_XML(gh);
-        
+
         NoticiaREST nor = new NoticiaREST();
-        GenericType<List<Noticia>> gt3 = new GenericType<List<Noticia>>(){};
+        GenericType<List<Noticia>> gt3 = new GenericType<List<Noticia>>() {
+        };
         List<Noticia> noticias = nor.findAll_XML(gt3);
 
         noticias.sort(new Comparator<Noticia>() {
-                    public int compare(Noticia o1, Noticia o2) {
-                        return o2.getFechaNoticia().compareTo(o1.getFechaNoticia());
-                    }
-                });
-        
+            public int compare(Noticia o1, Noticia o2) {
+                return o2.getFechaNoticia().compareTo(o1.getFechaNoticia());
+            }
+        });
+
         historias.sort(new Comparator<Historia>() {
-                    public int compare(Historia o1, Historia o2) {
-                        return o2.getFechaHistoria().compareTo(o1.getFechaHistoria());
-                    }
-                });
-        
+            public int compare(Historia o1, Historia o2) {
+                return o2.getFechaHistoria().compareTo(o1.getFechaHistoria());
+            }
+        });
+
         reducirTam(noticias, historias);
-        
+
         CategoriaREST cr = new CategoriaREST();
-        GenericType<List<Categoria>> gt2 = new GenericType<List<Categoria>>(){};
-        categorias = cr.findAll_XML(gt2);
-        
-        NotificacionREST nr = new NotificacionREST();
-        GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
+        GenericType<List<Categoria>> gt2 = new GenericType<List<Categoria>>() {
         };
-         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        categorias = cr.findAll_XML(gt2);
+
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        Map session = (Map) ActionContext.getContext().get("session");
-        list = nr.findAll_XML(gt);
-        for (Notificacion n : list) {
-            if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
-                listaNotifi.add(n);
+
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        NotificacionREST notifir = new NotificacionREST();
+        GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
+        };
+        listNot = notifir.findAll_XML(gtnotificaciones);
+        for (Notificacion notificacion : listNot) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
+                listaNotifi.add(notificacion);
             }
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
 
-    public List<Notificacion> getList() {
-        return list;
-    }
-
-    public void setList(List<Notificacion> list) {
-        this.list = list;
-    }
+    /////////////////
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
 
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
@@ -127,6 +123,14 @@ public class Indice extends ActionSupport {
 
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
+    }
+
+    public List<Notificacion> getListNot() {
+        return listNot;
+    }
+
+    public void setList(List<Notificacion> listNot) {
+        this.listNot = listNot;
     }
 
     public List<Categoria> getCategorias() {
@@ -160,29 +164,24 @@ public class Indice extends ActionSupport {
     public void setCoincidenciasHistoria(List<Historia> coincidenciasHistoria) {
         this.coincidenciasHistoria = coincidenciasHistoria;
     }
-    
-    
 
     private void reducirTam(List<Noticia> noticias, List<Historia> historias) {
         int numNoticias = 20;
         int numHistorias = 10;
-        for(Noticia n : noticias){
-            if(numNoticias > 0){
+        for (Noticia n : noticias) {
+            if (numNoticias > 0) {
                 coincidencias.add(n);
                 numNoticias--;
             }
         }
-        
-        for(Historia h: historias){
-            if(numHistorias > 0){
+
+        for (Historia h : historias) {
+            if (numHistorias > 0) {
                 coincidenciasHistoria.add(h);
                 numHistorias--;
             }
         }
-        
-    }
-    
-    
 
+    }
 
 }

@@ -47,7 +47,9 @@
         </action>
         
         <action name="logout" class="acciones.Logout">
-            <result name="success">/index.jsp</result>
+            <result type="chain">
+                <param name="actionName">index</param>
+            </result>
         </action>
         <action name="irPerfil" class="acciones.IrPerfil">
             <result name="success">/perfil.jsp</result>
@@ -92,7 +94,7 @@
             </result>
         </action>
         
-        <action name="irCrearHistoria">
+        <action name="irCrearHistoria" class="acciones.irCrearHistoria">
             <result name="success">/crearHistoria.jsp</result>
         </action>
         <action name="crearHistoria" class="acciones.CrearHistoria">

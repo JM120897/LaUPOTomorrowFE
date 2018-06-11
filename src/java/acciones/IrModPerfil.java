@@ -6,6 +6,7 @@
 package acciones;
 
 import classes.Categoria;
+import classes.Notificacion;
 import classes.Usuario;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionContext;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
+import persistencia.NotificacionREST;
 import persistencia.UsuarioREST;
 
 /**
@@ -59,8 +61,52 @@ public class IrModPerfil extends ActionSupport {
         localizacion = usu.getLocalizacion();
         rol = usu.getRol();
         password = usu.getPassword();
+        
+        NotificacionREST notifir = new NotificacionREST();
+        GenericType<List<Notificacion>> gtnotifi = new GenericType<List<Notificacion>>() {
+        };
+        listNot = notifir.findAll_XML(gtnotifi);
+        for (Notificacion n : listNot) {
+            if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
+                listaNotifi.add(n);
+            }
+
+        }
+        numNoti = listaNotifi.size();
+       
+        
+        
         return SUCCESS;
     }
+    
+    /////////////////
+      List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
+    
+    public List<Notificacion> getListaNotifi() {
+        return listaNotifi;
+    }
+
+    public void setListaNotifi(List<Notificacion> listaNotifi) {
+        this.listaNotifi = listaNotifi;
+    }
+
+    public int getNumNoti() {
+        return numNoti;
+    }
+
+    public void setNumNoti(int numNoti) {
+        this.numNoti = numNoti;
+    }
+     public List<Notificacion> getListNot() {
+        return listNot;
+    }
+
+    public void setList(List<Notificacion> listNot) {
+        this.listNot = listNot;
+    }
+    ////////////////////////////
 
     public String getNombreUsuario() {
         return nombreUsuario;

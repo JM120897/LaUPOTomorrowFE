@@ -53,14 +53,23 @@
                     <div class="col-md-4 text-center align-self-end">
                         <div class="btn-group align-bottom mb-4">
                             <s:if test="%{#session.usuario == null}">
-                                <s:form action="irLogin"><button type="submit" class="btn btn-light">Login</button></s:form>
-                                <s:form action="irRegistro"><button type="submit" class="btn btn-dark">Registro</button></s:form>
+                                <s:form action="irLogin"><s:submit cssClass="btn btn-light" value="Login"></s:submit></s:form>
+                                <s:form action="irRegistro"><s:submit cssClass="btn btn-dark" value="Registro"></s:submit></s:form>
                             </s:if><s:else>
-                                <s:form action="irPerfil"><button type="submit" class="btn btn-light">Ver Perfil</button></s:form>
-                                <s:form action="logout"><button type="submit" class="btn btn-dark">Logout</button></s:form>
+                                <s:form action="irPerfil"><s:submit cssClass="btn btn-light" value="Ver Perfil"></s:submit></s:form>
+                                <s:form action="logout"><s:submit cssClass="btn btn-dark" value="Logout"></s:submit></s:form>
+                                <s:if test="%{#session.rol == \"redactor\"}">
+                                    <s:form action="irRedactar"><s:submit cssClass="btn btn-primary" value="Redactar"></s:submit></s:form>
+                                    <s:form action="irCrearHistoria"><s:submit cssClass="btn btn-primary" value="Crear Historia"></s:submit></s:form>
+                                    <s:form action="irNotificaciones"><s:submit cssClass="btn btn-warning" value="%{numNoti}"></s:submit></s:form>
+                                </s:if>
+                                <s:if test="%{#session.rol == \"admin\"}">
+                                    <s:form action="irAdmin"><s:submit cssClass="btn btn-light" value="Panel Administración"></s:submit></s:form>
+                                </s:if>
                             </s:else>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
