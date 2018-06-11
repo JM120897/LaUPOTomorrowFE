@@ -1,0 +1,42 @@
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+
+<validators>
+    <field name="tituloNoticia">
+        <field-validator type="requiredstring">
+            <message>El título de la noticia es obligatorio</message>
+        </field-validator>
+    </field>
+    <field name="subtituloNoticia">
+        <field-validator type="requiredstring">
+            <message>El subtítulo de la noticia es obligatorio</message>
+        </field-validator>
+    </field>
+    <field name="cuerpoNoticia">
+        <field-validator type="requiredstring">
+            <message>El cuerpo de la noticia es obligatorio</message>
+        </field-validator>
+    </field>
+    <field name="tag">
+        <field-validator type="requiredstring">
+            <message>El tag de la noticia es obligatorio</message>
+        </field-validator>
+    </field>
+    <field name="imagen">
+        <field-validator type="requiredstring">
+            <message>La imagen es necesaria</message>
+        </field-validator>
+        <field-validator type="url">
+            <message>La imagen debe de ser una URL</message>
+        </field-validator>
+    </field>
+    <field name="localizacion">
+        <field-validator type="requiredstring">
+            <message>La localizacion es obligatoria</message>
+        </field-validator>
+        <field-validator type="stringlength">
+            <param name="maxLength">100</param>
+            <message>La localización es demasiado larga</message>
+        </field-validator>
+    </field>
+</validators>

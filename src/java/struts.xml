@@ -91,9 +91,13 @@
         </action>
         
         <action name="nuevaNoticia" class="acciones.NuevaNoticia">
-            <result name="success">/index.jsp</result>
+            <result name="input">/redactar.jsp</result>
+            <result name="success" type="chain">
+                <param name="actionName">index</param>
+            </result>
         </action>
         <action name="comentar" class="acciones.Comentar">
+            <result name="input">/noticia.jsp</result>
             <result name="success" type="chain">
                 <param name="actionName">irNoticia</param>
             </result>

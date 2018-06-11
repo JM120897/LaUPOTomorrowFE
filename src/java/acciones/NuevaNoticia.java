@@ -8,6 +8,7 @@ package acciones;
 import classes.Categoria;
 import classes.Historia;
 import classes.Noticia;
+import classes.Notificacion;
 import classes.Tag;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionContext;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.HistoriaREST;
 import persistencia.NoticiaREST;
+import persistencia.NotificacionREST;
 import persistencia.TagREST;
 import persistencia.UsuarioREST;
 
@@ -28,6 +30,11 @@ import persistencia.UsuarioREST;
  * @author Juanma
  */
 public class NuevaNoticia extends ActionSupport {
+    
+    CategoriaREST cr1 = new CategoriaREST();
+    GenericType<List<Categoria>> gtc1 = new GenericType<List<Categoria>>(){};
+    HistoriaREST hr1 = new HistoriaREST();
+    GenericType<List<Historia>> gth1 = new GenericType<List<Historia>>(){};
     
     String tag;
     String imagen;
@@ -39,6 +46,8 @@ public class NuevaNoticia extends ActionSupport {
     String usuario;
     String localizacion;
     Date fecha;
+    List<Categoria> categorias = cr1.findAll_XML(gtc1);
+    List<Historia> historias = hr1.findAll_XML(gth1);
      
     List<Categoria> listaCategoriaMenu = new ArrayList();
 
@@ -54,6 +63,7 @@ public class NuevaNoticia extends ActionSupport {
     }
     
     public String execute() throws Exception {
+
         UsuarioREST ur = new UsuarioREST();
         GenericType<Usuario> gt = new GenericType<Usuario>(){};
          Map session = (Map) ActionContext.getContext().get("session");
@@ -67,6 +77,7 @@ public class NuevaNoticia extends ActionSupport {
          GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         
+        
         fecha = new Date();
         Noticia n = new Noticia();
         n.setTituloNoticia(tituloNoticia);
@@ -79,9 +90,12 @@ public class NuevaNoticia extends ActionSupport {
         n.setNombreCategoria(c);
         n.setIdHistoria(null);
         
+        HistoriaREST hr = new HistoriaREST();
+        GenericType<Historia> gt3 = new GenericType<Historia>(){};
+        GenericType<List<Historia>> gt6 = new GenericType<List<Historia>>(){};
+        
         if(historia.intValue() != -1){
-            HistoriaREST hr = new HistoriaREST();
-            GenericType<Historia> gt3 = new GenericType<Historia>(){};
+            
             Historia h = hr.find_XML(gt3, historia.toString());
             n.setIdHistoria(h);
         }
@@ -110,6 +124,9 @@ public class NuevaNoticia extends ActionSupport {
         }
         return SUCCESS;
     }
+    
+    
+    
 
     public String getTag() {
         return tag;
@@ -189,6 +206,22 @@ public class NuevaNoticia extends ActionSupport {
 
     public void setLocalizacion(String localizacion) {
         this.localizacion = localizacion;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public List<Historia> getHistorias() {
+        return historias;
+    }
+
+    public void setHistorias(List<Historia> historias) {
+        this.historias = historias;
     }
 
 }

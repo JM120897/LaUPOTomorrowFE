@@ -82,27 +82,33 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <h1 class="text-center">Redactar</h1>
-                    <s:form action="nuevaNoticia" theme="simple">
+                    <s:form action="nuevaNoticia" theme="simple" validate="true">
                         <div class="form-group">
+                            <s:fielderror fieldName="tituloNoticia" cssClass="alert alert-danger"/>
                             <label>Titulo</label>
                             <s:textfield cssClass="form-control" name="tituloNoticia"></s:textfield>  
                             </div>
+                            <s:fielderror fieldName="subtituloNoticia" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Subtitulo</label>
                             <s:textfield  cssClass="form-control" name="subtituloNoticia"></s:textfield>
                             </div>
+                            <s:fielderror fieldName="cuerpoNoticia" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Cuerpo</label>
                             <s:textarea  rows="10" cssClass="form-control" name="cuerpoNoticia"></s:textarea>
                             </div>
+                            <s:fielderror fieldName="imagen" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Imagen URL</label>
                             <s:textfield  cssClass="form-control" name="imagen"></s:textfield>
                             </div>
+                            <s:fielderror fieldName="tag" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Tag</label>
                             <s:textfield  cssClass="form-control" name="tag"></s:textfield>
                             </div>
+                            <s:fielderror fieldName="localizacion" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Localizacion</label>
                             <s:textfield  cssClass="form-control" name="localizacion"></s:textfield>

@@ -81,20 +81,24 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <h1 class="text-center">Modificar Perfil</h1>
-                    <s:form action="modPerfil" theme="simple">
+                    <s:form action="modPerfil" theme="simple" validate="true">
                         <s:hidden name="nombreUsuario" value="%{nombreUsuario}"> </s:hidden>
+                            <s:fielderror fieldName="nombreReal" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Nombre y Apellidos</label>
                             <s:textfield cssClass="form-control" key="Nombre y Apellidos" name="nombreReal" value="%{nombreReal}"> </s:textfield>
                             </div>
+                            <s:fielderror fieldName="password" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Contraseña</label>
-                            <s:textfield cssClass="form-control" key="Contraseña" name="password" value="%{password}"> </s:textfield>
+                            <s:textfield type="password" cssClass="form-control" key="Contraseña" name="password" value="%{password}"> </s:textfield>
                             </div>
+                            <s:fielderror fieldName="email" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Email</label>
                             <s:textfield cssClass="form-control" key="Email" name="email" value="%{email}"> </s:textfield>
                             </div>
+                            <s:fielderror fieldName="localizacion" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Localizacacion</label>
                             <s:textfield cssClass="form-control" key="Localizacacion" name="localizacion" value="%{localizacion}"> </s:textfield>

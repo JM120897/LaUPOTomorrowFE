@@ -115,7 +115,8 @@
                 <div class="mt-5">
                     <h4>Cometarios</h4>
                     <s:if test="%{#session.usuario != null}">
-                        <s:form action="comentar" theme="simple"> 
+                        
+                        <s:form action="comentar" theme="simple" validate="true"> 
                             <s:textarea placeholder="Comenta algo sobre la noticia..." cssClass="form-control" col="5" rows="5"  name="mensaje">
                             </s:textarea>
                             <s:hidden name="nombreUsuario" value="%{#session.usuario}"></s:hidden>
