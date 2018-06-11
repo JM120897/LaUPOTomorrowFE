@@ -73,48 +73,56 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <s:form action="buscar" theme="simple">
-                <div class="row mb-3">
-                    <s:textfield name="busqueda" placeholder="Busca!" cssClass="form-control col-md-8 mx-1"/>
-                    <s:submit cssClass="btn btn-outline-warning col-md-3 mx-1" value="Buscar"></s:submit>
+        <div class="row my-3">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 mx-5">
+                <s:form theme="simple">
+                    <div class="row">
+                        <s:textfield placeholder="Busca!" cssClass="form-control col-md-8 mx-1"/>
+                        <button type="submit" class="btn btn-outline-warning col-md-3 mx-1" ><i class="fas fa-search"></i></button>
                     </div>
-            </s:form>
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-                    <h2 class="my-3"><s:property value="tituloHistoria"></s:property>.</h2>
-                    <h4 class="my-3"><s:property value="subtituloHistoria"></s:property>.</h4>
-                    <h4 class="my-3"><s:property value="fechaHistoria"></s:property></h4>
-                    <s:if test="%{#session.usuario == nombreUsuario}">
-                        <s:form action="irModHis">
-                            <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
-                            <s:submit  value="Modificar Historia"></s:submit>
+                </s:form>
+                <h2>Historia: <s:property value="tituloHistoria"></s:property></h2>
+                    <h4 class="text-muted"><s:property value="subtituloHistoria"></s:property></h4>
+                        <s:if test="%{#session.usuario == nombreUsuario}">
+                            <s:form action="irModHis">
+                                <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
+                                <s:submit  value="Modificar Historia"></s:submit>
 
-                        </s:form>
-                        <s:form action="borrarHist">
-                            <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
-                            <s:submit  name="borrarNoticia" value="Borrar Historia"></s:submit>
+                            </s:form>
+                            <s:form action="borrarHist">
+                                <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
+                                <s:submit  name="borrarNoticia" value="Borrar Historia"></s:submit>
 
-                        </s:form>
-                    </s:if>
-                    <h2>Noticias</h2>
-                    <div class="col-md-1">
-
-                        <s:iterator value="listaNoticiasHistoria" var="historia" >
-
-                            <s:url action="irNoticia" var="idNoticia" >
-                                <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
-                            </s:url>
-                            <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
-                                <br>
-
-                        </s:iterator>
-                    </div>
-                </div>
-            </div>
-
-
-    </body>
-</html>
-
+                            </s:form>
+                        </s:if>
+                        <div class="row">
+                            <div class="col-md-2 bg-warning text-center">Fecha de Inicio: <s:property value="fechaHistoria"></s:property></div>
+                            <s:iterator value="listaNoticiasHistoria" var="historia" >
+                                <div class="w-100"></div>
+                                <div class="col-md-2 my-5">
+                                    <footer class="blockquote-footer text-right"><s:property value="nombreUsuario.nombreUsuario"></s:property><br><s:property value="fechaNoticia"></s:property></footer>
+                                        </div>
+                                        <div class="col-md-10 my-3">
+                                            <div class="card card-body bg-warning">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-6 text-center">
+                                                        <h6><s:url action="irNoticia" var="idNoticia" >
+                                                                <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                                                            </s:url>
+                                                            <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
+                                                                <br></h6>
+                                                        </div>
+                                                        <div class="col align-self-center">
+                                                            <image><img src = "<s:property value="imagen"></s:property>" width="100%"/></image>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </s:iterator>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </body>
+                    </html>
