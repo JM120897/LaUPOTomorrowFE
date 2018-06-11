@@ -63,6 +63,11 @@
             </result>
             <result name="input">/formModPerfil.jsp</result>
         </action>
+        <action name="borrarPerfil" class="acciones.BorrarPerfil">
+            <result type="chain">
+                <param name="actionName">logout</param>
+            </result>
+        </action>
         
         <action name="buscar" class="acciones.Busqueda">
             <result name="success">/index.jsp</result>
