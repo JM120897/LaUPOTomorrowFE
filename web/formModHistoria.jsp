@@ -9,8 +9,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
-          <!-- Required meta tags -->
+
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -75,7 +75,8 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container my-4">
+
             <div class="row my-3">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
@@ -88,21 +89,27 @@
                 </div>
                 <div class="col-md-3"></div>
             </div>
+
             <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-                    <s:form action="modHistoria">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="text-center">Modificar Historia</h1>
+                    <s:form action="modHistoria" theme="simple">
                         <s:hidden name="idHistoria" value="%{idHistoria}"> </s:hidden>
                         <s:hidden name="fechaHistoria" value="%{fechaHistoria}"> </s:hidden>
                         <s:hidden name="nombreUsuario" value="%{nombreUsuario}"> </s:hidden>
-                    <h2 class="my-3"> <s:textfield label="Titulo" name="tituloHistoria" value="%{tituloHistoria}"> </s:textfield></h2>
-                    <h4 class="my-3"><s:textfield label="Subtitulo" name="subtituloHistoria" value="%{subtituloHistoria}"> </s:textfield></h4>
-                   
-                        <span class="badge badge-secondary"></span> 
-                    <s:submit name="modificar" value="Modificar Noticia"></s:submit>
-                        </s:form>
-                    </div>
-                
+                            <div class="form-group">
+                                <label>Titulo</label>
+                            <s:textfield cssClass="form-control" label="Titulo" name="tituloHistoria" value="%{tituloHistoria}"> </s:textfield>
+                            </div>
+                            <div class="form-group">
+                                <label>Subtitulo</label>
+                            <s:textfield cssClass="form-control" label="Subtitulo" name="subtituloHistoria" value="%{subtituloHistoria}"> </s:textfield>
+                            </div>
+                            <span class="badge badge-secondary"></span> 
+                        <s:submit name="modificar" value="Modificar Noticia"></s:submit>
+                    </s:form>
+                </div>
+
                 <div class="col-md-1">
 
                 </div>

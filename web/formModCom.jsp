@@ -73,16 +73,24 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <s:form action="modCom">
-                <s:hidden name="idNoticia" value="%{idNoticia}"></s:hidden>
-                <s:hidden name="idPadre" value="%{idPadre}"></s:hidden>
-                <s:hidden name="fechaComentario" value="%{fechaComentario}"></s:hidden>
-                <s:hidden name="nombreUsuario" value="%{nombreUsuario}"></s:hidden>
-                <s:hidden name="idComentario" value="%{idComentario}"></s:hidden>
-                <s:textfield label="Mensaje" name="mensaje" value="%{mensaje}"></s:textfield>
-                <s:submit name="modCom" value="Modificar Comentario"></s:submit>
-            </s:form>
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="text-center">Modificar Comentario</h1>
+                    <s:form action="modCom" theme="simple">
+                        <s:hidden name="idNoticia" value="%{idNoticia}"></s:hidden>
+                        <s:hidden name="idPadre" value="%{idPadre}"></s:hidden>
+                        <s:hidden name="fechaComentario" value="%{fechaComentario}"></s:hidden>
+                        <s:hidden name="nombreUsuario" value="%{nombreUsuario}"></s:hidden>
+                        <s:hidden name="idComentario" value="%{idComentario}"></s:hidden>
+                            <div class="form-group">
+                                <label>Mensaje</label>
+                            <s:textfield cssClass="form-control" label="Mensaje" name="mensaje" value="%{mensaje}"></s:textfield>
+                            </div>
+                        <s:submit name="modCom" value="Modificar Comentario"></s:submit>
+                    </s:form>
+                </div>
+            </div>
         </div>
     </body>
 </html>

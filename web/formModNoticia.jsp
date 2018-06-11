@@ -9,8 +9,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
-         <!-- Required meta tags -->
+
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -87,29 +87,56 @@
                 </div>
                 <div class="col-md-3"></div>
             </div>
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-                    <s:form action="modNoticia">
-                        <s:hidden name="idNoticia" value="%{idNoticia}"> </s:hidden>
-                        <s:hidden name="fechaNoticia" value="%{fechaNoticia}"></s:hidden>
-                    <h2 class="my-3"> <s:textfield label="Titulo" name="tituloNoticia" value="%{tituloNoticia}"> </s:textfield></h2>
-                    <h4 class="my-3"><s:textfield label="Subtitulo" name="subtituloNoticia" value="%{subtituloNoticia}"> </s:textfield></h4>
-                    <h4 class="my-3"><s:select label="Categoria" name="nombreCategoria" list="listaCat" headerKey="%{nombreCat}" headerValue="%{nombreCat}" listKey="%{nombreCategoria}"  listValue="nombreCategoria"  ></s:select></h4>
-                   <h4 class="my-3"><s:select label="Historia" name="historia" list="listaHistoriasUsuario" headerKey="%{idHistori}" headerValue="%{tituloHist}" listKey="%{idHistoria}" listValue="%{tituloHistoria}"  ></s:select></h4>
-                    <div class="text-muted"><s:property value="nombreUsuario"></s:property> - <s:property value="fechaNoticia"></s:property></div>
-                    <s:textfield label="Imagen" name="imagen" value="%{imagen}"></s:textfield>
-                        <hr class="my-4">
-                            <p class="my-3"><s:textarea label="Cuerpo" name="cuerpoNoticia" value="%{cuerpoNoticia}"> </s:textarea></p>
-                    <h4 class="my-3"> <s:textfield label="Tag" name="tags" value="%{tags}"> </s:textfield></h4>
-                     <h4 class="my-3"> <s:textfield label="Localizacion" name="localizacion" value="%{localizacion}"> </s:textfield></h4>
-                        <span class="badge badge-secondary"></span> 
-                    <s:submit name="modificar" value="Modificar Noticia"></s:submit>
+            <div class="container my-4">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <h1 class="text-center">Modificar noticia</h1>
+                        <s:form action="modNoticia" theme="simple">
+                            <s:hidden name="idNoticia" value="%{idNoticia}"> </s:hidden>
+                            <s:hidden name="fechaNoticia" value="%{fechaNoticia}"></s:hidden>
+                                <div class="form-group">
+                                    <label>Titulo</label>
+                                <s:textfield cssClass="form-control" name="tituloNoticia" value="%{tituloNoticia}"> </s:textfield>
+                                </div>
+                                <div class="form-group">
+                                    <label>Subtitulo</label>
+                                <s:textfield cssClass="form-control" name="subtituloNoticia" value="%{subtituloNoticia}"> </s:textfield>
+                                </div>
+                                <div class="form-group">
+                                    <label>Categoria</label>
+                                <s:select cssClass="form-control" name="nombreCategoria" list="listaCat" headerKey="%{nombreCat}" headerValue="%{nombreCat}" listKey="%{nombreCategoria}"  listValue="nombreCategoria"  ></s:select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Historia</label>
+                                <s:select cssClass="form-control" name="historia" list="listaHistoriasUsuario" headerKey="%{idHistori}" headerValue="%{tituloHist}" listKey="%{idHistoria}" listValue="%{tituloHistoria}"  ></s:select>
+                                </div>
+                                    <br>
+                                <div class="text-muted"><s:property value="nombreUsuario"></s:property> - <s:property value="fechaNoticia"></s:property></div>
+                                <br>
+                                <div class="form-group">
+                                    <label>Imagen</label>
+                                <s:textfield cssClass="form-control" name="imagen" value="%{imagen}"></s:textfield>
+                                </div>
+                                <div class="form-group">
+                                    <label>Cuerpo</label>
+                                <s:textarea rows="10" cssClass="form-control" name="cuerpoNoticia" value="%{cuerpoNoticia}"> </s:textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tag</label>
+                                <s:textfield cssClass="form-control" name="tags" value="%{tags}"> </s:textfield>
+                                </div>
+                                <div class="form-group">
+                                    <label>Localizacion</label>
+                                <s:textfield cssClass="form-control" name="localizacion" value="%{localizacion}"> </s:textfield>
+                                </div>
+                                <span class="badge badge-secondary"></span> 
+                            <s:submit name="modificar" value="Modificar Noticia"></s:submit>
                         </s:form>
                     </div>
-                
-                <div class="col-md-1">
 
+                    <div class="col-md-1">
+
+                    </div>
                 </div>
             </div>
         </div>

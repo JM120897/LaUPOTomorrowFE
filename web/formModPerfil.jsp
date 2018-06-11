@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <!-- Required meta tags -->
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -72,14 +72,33 @@
                 </div>
             </div>
         </div>
-       <s:form action="modPerfil">
-            <s:hidden name="nombreUsuario" value="%{nombreUsuario}"> </s:hidden>
-            <s:textfield key="Nombre y Apellidos" name="nombreReal" value="%{nombreReal}"> </s:textfield>
-            <s:textfield key="Contraseña" name="password" value="%{password}"> </s:textfield>
-            <s:textfield key="Email" name="email" value="%{email}"> </s:textfield>
-            <s:textfield key="Localizacacion" name="localizacion" value="%{localizacion}"> </s:textfield>
-            <s:hidden name="rol" value="%{rol}"> </s:hidden>
-            <s:submit name="Modificar" value="Modificar"></s:submit>
-        </s:form>
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="text-center">Modificar Perfil</h1>
+                    <s:form action="modPerfil" theme="simple">
+                        <s:hidden name="nombreUsuario" value="%{nombreUsuario}"> </s:hidden>
+                            <div class="form-group">
+                                <label>Nombre y Apellidos</label>
+                            <s:textfield cssClass="form-control" key="Nombre y Apellidos" name="nombreReal" value="%{nombreReal}"> </s:textfield>
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                            <s:textfield cssClass="form-control" key="Contraseña" name="password" value="%{password}"> </s:textfield>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                            <s:textfield cssClass="form-control" key="Email" name="email" value="%{email}"> </s:textfield>
+                            </div>
+                            <div class="form-group">
+                                <label>Localizacacion</label>
+                            <s:textfield cssClass="form-control" key="Localizacacion" name="localizacion" value="%{localizacion}"> </s:textfield>
+                            </div>
+                        <s:hidden name="rol" value="%{rol}"> </s:hidden>
+                        <s:submit name="Modificar" value="Modificar"></s:submit>
+                    </s:form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

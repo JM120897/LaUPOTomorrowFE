@@ -27,7 +27,7 @@ public class modCom extends ActionSupport {
     }
     
     Integer idNoticia;
-    String mensaje;
+    String mensajes;
     Integer idPadre;
     Date fechaComentario;
     String nombreUsuario;
@@ -55,7 +55,7 @@ public class modCom extends ActionSupport {
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         
         
-        c.setMensaje(mensaje);
+        c.setMensaje(mensajes);
        
       
        
@@ -73,11 +73,11 @@ public class modCom extends ActionSupport {
     
    
     public String getMensaje() {
-        return mensaje;
+        return mensajes;
     }
     
     public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
+        this.mensajes = mensaje;
     }
     
     public Integer getIdPadre() {
