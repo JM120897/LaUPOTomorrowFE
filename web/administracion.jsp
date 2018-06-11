@@ -106,12 +106,16 @@
                                 <s:form action="irPerfil"><button type="submit" class="btn btn-light">Ver Perfil</button></s:form>
                                 <s:form action="logout"><button type="submit" class="btn btn-dark">Logout</button></s:form>
                             </s:else>
+                            <s:if test="%{#session.rol == \"admin\"}">
+                                <s:form action="irAdmin"><s:submit cssClass="btn btn-light" value="Panel Administración"></s:submit></s:form>
+                            </s:if>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container accordion mt-5">
+            <h1 class="text-center">Administración</h1>
             <div class="card">
                 <div class="card-header list-group-item-warning" id="headingTwo">
                     <h5 class="mb-0">
@@ -122,24 +126,33 @@
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
-                        <s:form action="crearCategoria">
-                            <s:textfield name="nombreCategoria"></s:textfield>
-                            <s:submit value="Crear"></s:submit>
+                        
+                        <s:form action="crearCategoria" theme="simple">
+                            <div class="form-inline my-3">
+                            <s:textfield placeholder="Nueva categoría" name="nombreCategoria" cssClass="form-control"></s:textfield>
+                                <button type="submit" class="btn btn-outline-success col-md-3 mx-3" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios">
+                                    <i class="fas fa-save"></i>
+                                </button>
+                                </div>
                         </s:form>
+                        
                         <table id="myTableCat" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">Nombre</th>
-                                    <th></th>
+                                    <th>Acción</th>
                                 </tr>
                             </thead> 
                             <s:iterator value="categorias" var="categoria">
                                 <tr>
                                     <td><s:property value="nombreCategoria"></s:property></td> 
-                                    <td><s:form action="borrarCategoria">
-                                            <s:hidden value="%{nombreCategoria}" name="nombreCategoria"></s:hidden>
-                                            <s:submit value="Borrar"></s:submit>
-                                        </s:form>
+                                        <td>
+                                        <s:url var="borrarCategoria" action="borrarCategoria">
+                                            <s:param name="nombreCategoria"><s:property value="nombreCategoria"></s:property></s:param>
+                                        </s:url>
+                                        <a href="<s:property value="#borrarCategoria" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar categoria">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </s:iterator>
@@ -160,11 +173,12 @@
                     </div>
                     <div id="collapseOne" class="collapse text-body" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
-                            <input type="text" id="myInput" onkeyup="busqueda()">
+                            <input type="text" id="myInput" class="my-3 form-control" placeholder="Filtrar usuarios" onkeyup="busqueda()">
                             <table id="myTable" class="table table-bordered table-hover">
                                 <thead>
                                 <th scope="col">Usuario</th>
                                 <th scope="col">Rol</th>
+                                <th scope="col">Acción</th>
                                 </tr>
                                 </thead>
                                 <s:iterator value="usuarios" var="usuario">
@@ -178,10 +192,11 @@
                                                         <select name="rol">
                                                             <option value="lector">Lector</option>
                                                             <option value="redactor">Redactor</option>
-                                                            <option value="admin">Admin</option>
                                                         </select>
                                                         <s:hidden value="%{nombreUsuario}" name="nombreUsuario"></s:hidden>
-                                                        <s:submit cssClass="col-md-3" value="Guardar"></s:submit>
+                                                            <button type="submit" class="btn btn-outline-success col-md-3 mx-3" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios">
+                                                                <i class="fas fa-save"></i>
+                                                            </button>
                                                     </s:form>
                                                 </div>
                                             </td>

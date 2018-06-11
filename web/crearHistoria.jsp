@@ -68,29 +68,32 @@
                             </s:else>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
-        <div class="container my-4">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <h1 class="text-center">Crear Historia</h1>
-                    <s:form action="crearHistoria" theme="simple">
-                        <div class="form-group">
-                            <div class="form-group">
-                                <label>Titulo</label>
-                                <s:textfield cssClass="form-control" name="tituloHistoria" ></s:textfield>
-                                </div>
-                                <div class="form-group">
-                                    <label>Subtitulo</label>
-                                <s:textfield  cssClass="form-control" name="subtituloHistoria" ></s:textfield>
-                                </div>
-                            <s:submit name="crearHistoria" value="Crear Historia"></s:submit>
-                            </div>
-                    </s:form>
-                </div>
+        <div class="row my-3">
+            <div class="col-md-2 mx-5"></div>
+            <div class="col-md-6 mx-5 my-5">
+                <h1 class="text-center">Crear Historia</h1>
+                <s:form theme="simple">
+                    <div class="form-group">
+                        <s:fielderror fieldName="tituloHistoria" cssClass="alert alert-danger"/>
+                        <label>Título</label>
+                        <input type="text" class="form-control" name="tituloHistoria" placeholder="Introduce Título">
+                    </div>
+                    <div class="form-group">
+                        <s:fielderror fieldName="subtituloHistoria" cssClass="alert alert-danger"/>
+                        <label>Subítulo</label>
+                        <input type="text" class="form-control" name="subtituloHistoria" placeholder="Introduce Subtítulo">
+                    </div>
+                    <s:url var="crearHistoria" action="crearHistoria">
+                        <s:param name="tituloHistoria"><s:property value="nombreUsuario"></s:property></s:param>
+                        <s:param name="subtituloHistoria"><s:property value="subtituloHistoria"></s:property></s:param>
+                    </s:url>
+                    <a href="<s:property value="#crearHistoria" />" class="btn btn-outline-success col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Crear Historia">
+                        <i class="fas fa-save"></i>
+                    </a>
+                </s:form>
             </div>
         </div>
     </body>
