@@ -122,7 +122,6 @@
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
-                      
                         <s:form action="crearCategoria">
                             <s:textfield name="nombreCategoria"></s:textfield>
                             <s:submit value="Crear"></s:submit>
@@ -138,23 +137,18 @@
                                 <tr>
                                     <td><s:property value="nombreCategoria"></s:property></td> 
                                     <td><s:form action="borrarCategoria">
-                                        <s:hidden value="%{nombreCategoria}" name="nombreCategoria"></s:hidden>
-                                        <s:submit value="Borrar"></s:submit>
-                                   </s:form>
-                                        </td>
+                                            <s:hidden value="%{nombreCategoria}" name="nombreCategoria"></s:hidden>
+                                            <s:submit value="Borrar"></s:submit>
+                                        </s:form>
+                                    </td>
                                 </tr>
-                                </s:iterator>
+                            </s:iterator>
                         </table>
-
                     </div> 
-
-
                 </div>
-
-
             </div>
         </div>
-        <div class="container accordion mt-5">
+        <div class="container accordion">
             <div class="">
                 <div class="card">
                     <div class="card-header list-group-item-warning" id="headingOne">
@@ -173,7 +167,6 @@
                                 <th scope="col">Rol</th>
                                 </tr>
                                 </thead>
-
                                 <s:iterator value="usuarios" var="usuario">
                                     <tr>
                                         <s:if test="%{rol != \"admin\"}">
@@ -181,21 +174,15 @@
                                             <td><s:property value="rol"></s:property><br/></td>
                                                 <td>
                                                     <div class="row">
-
                                                     <s:form cssClass="col-md-8" theme="simple" action="modRol">
-
                                                         <select name="rol">
                                                             <option value="lector">Lector</option>
                                                             <option value="redactor">Redactor</option>
                                                             <option value="admin">Admin</option>
                                                         </select>
                                                         <s:hidden value="%{nombreUsuario}" name="nombreUsuario"></s:hidden>
-
-
                                                         <s:submit cssClass="col-md-3" value="Guardar"></s:submit>
-
                                                     </s:form>
-
                                                 </div>
                                             </td>
                                         </s:if>
