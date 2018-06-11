@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <div class="row my-3">
+        <div class="row my-3 mx-0">
             <div class="col-md-2 mx-5"></div>
             <div class="col-md-6 mx-5 my-5">
                 <h1 class="text-center">Crear Historia</h1>
