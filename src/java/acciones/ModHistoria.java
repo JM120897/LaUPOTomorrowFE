@@ -84,8 +84,8 @@ public class ModHistoria extends ActionSupport {
     /////////////////
       List<Notificacion> listNot = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
+    int numNoti = GetNotifications.calcularNotificaciones();
+
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }

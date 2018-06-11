@@ -79,12 +79,12 @@
                     <div class="form-group">
                         <s:fielderror fieldName="tituloHistoria" cssClass="alert alert-danger"/>
                         <label>Título</label>
-                        <input type="text" class="form-control" name="tituloHistoria" placeholder="Introduce Título">
+                        <s:textfield type="text" cssClass="form-control" name="tituloHistoria" placeholder="Introduce Título"/>
                     </div>
                     <div class="form-group">
                         <s:fielderror fieldName="subtituloHistoria" cssClass="alert alert-danger"/>
                         <label>Subítulo</label>
-                        <input type="text" class="form-control" name="subtituloHistoria" placeholder="Introduce Subtítulo">
+                        <s:textfield type="text" cssClass="form-control" name="subtituloHistoria" placeholder="Introduce Subtítulo"/>
                     </div>
                     <s:url var="crearHistoria" action="crearHistoria">
                         <s:param name="tituloHistoria"><s:property value="nombreUsuario"></s:property></s:param>

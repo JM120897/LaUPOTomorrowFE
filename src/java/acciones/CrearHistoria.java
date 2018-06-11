@@ -61,6 +61,17 @@ public class CrearHistoria extends ActionSupport {
         hr.create_XML(h);
         return SUCCESS;
     }
+    
+    int numNoti = GetNotifications.calcularNotificaciones();
+
+
+    public int getNumNoti() {
+        return numNoti;
+    }
+
+    public void setNumNoti(int numNoti) {
+        this.numNoti = numNoti;
+    }
 
     public String getTituloHistoria() {
         return tituloHistoria;

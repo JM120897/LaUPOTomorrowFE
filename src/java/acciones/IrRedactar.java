@@ -60,7 +60,7 @@ public class IrRedactar extends ActionSupport {
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
             if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
-                listaNotifi.add(notificacion);
+                listaNotifi.add(notificacion);   
             }
 
         }
@@ -72,7 +72,7 @@ public class IrRedactar extends ActionSupport {
     }
     
     /////////////////
-      List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listNot = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
     int numNoti = 0;
     

@@ -97,10 +97,12 @@
                         <s:hidden name="idHistoria" value="%{idHistoria}"> </s:hidden>
                         <s:hidden name="fechaHistoria" value="%{fechaHistoria}"> </s:hidden>
                         <s:hidden name="nombreUsuario" value="%{nombreUsuario}"> </s:hidden>
+                            <s:fielderror fieldName="tituloHistoria" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Titulo</label>
                             <s:textfield cssClass="form-control" label="Titulo" name="tituloHistoria" value="%{tituloHistoria}"> </s:textfield>
                             </div>
+                            <s:fielderror fieldName="subtituloHistoria" cssClass="alert alert-danger"/>
                             <div class="form-group">
                                 <label>Subtitulo</label>
                             <s:textfield cssClass="form-control" label="Subtitulo" name="subtituloHistoria" value="%{subtituloHistoria}"> </s:textfield>

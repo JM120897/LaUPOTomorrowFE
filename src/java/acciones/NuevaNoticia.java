@@ -30,12 +30,14 @@ import persistencia.UsuarioREST;
  * @author Juanma
  */
 public class NuevaNoticia extends ActionSupport {
-    
+
     CategoriaREST cr1 = new CategoriaREST();
-    GenericType<List<Categoria>> gtc1 = new GenericType<List<Categoria>>(){};
+    GenericType<List<Categoria>> gtc1 = new GenericType<List<Categoria>>() {
+    };
     HistoriaREST hr1 = new HistoriaREST();
-    GenericType<List<Historia>> gth1 = new GenericType<List<Historia>>(){};
-    
+    GenericType<List<Historia>> gth1 = new GenericType<List<Historia>>() {
+    };
+
     String tag;
     String imagen;
     String tituloNoticia;
@@ -48,7 +50,7 @@ public class NuevaNoticia extends ActionSupport {
     Date fecha;
     List<Categoria> categorias = cr1.findAll_XML(gtc1);
     List<Historia> historias = hr1.findAll_XML(gth1);
-     
+
     List<Categoria> listaCategoriaMenu = new ArrayList();
 
     public List<Categoria> getListaCategoriaMenu() {
@@ -58,26 +60,28 @@ public class NuevaNoticia extends ActionSupport {
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
     }
-    
+
     public NuevaNoticia() {
     }
-    
+
     public String execute() throws Exception {
 
         UsuarioREST ur = new UsuarioREST();
-        GenericType<Usuario> gt = new GenericType<Usuario>(){};
-         Map session = (Map) ActionContext.getContext().get("session");
-        Usuario u = ur.find_XML(gt, (String)session.get("usuario"));
-        
+        GenericType<Usuario> gt = new GenericType<Usuario>() {
+        };
+        Map session = (Map) ActionContext.getContext().get("session");
+        Usuario u = ur.find_XML(gt, (String) session.get("usuario"));
+
         CategoriaREST cr = new CategoriaREST();
-        GenericType<Categoria> gt2 = new GenericType<Categoria>(){};
+        GenericType<Categoria> gt2 = new GenericType<Categoria>() {
+        };
         Categoria c = cr.find_XML(gt2, categoria);
-   
+
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
-        
+
         fecha = new Date();
         Noticia n = new Noticia();
         n.setTituloNoticia(tituloNoticia);
@@ -89,34 +93,38 @@ public class NuevaNoticia extends ActionSupport {
         n.setNombreUsuario(u);
         n.setNombreCategoria(c);
         n.setIdHistoria(null);
-        
+
         HistoriaREST hr = new HistoriaREST();
-        GenericType<Historia> gt3 = new GenericType<Historia>(){};
-        GenericType<List<Historia>> gt6 = new GenericType<List<Historia>>(){};
-        
-        if(historia.intValue() != -1){
-            
+        GenericType<Historia> gt3 = new GenericType<Historia>() {
+        };
+        GenericType<List<Historia>> gt6 = new GenericType<List<Historia>>() {
+        };
+
+        if (historia.intValue() != -1) {
+
             Historia h = hr.find_XML(gt3, historia.toString());
             n.setIdHistoria(h);
         }
-        
+
         NoticiaREST nr = new NoticiaREST();
-        GenericType<List<Noticia>> gt4 = new GenericType<List<Noticia>>(){};
+        GenericType<List<Noticia>> gt4 = new GenericType<List<Noticia>>() {
+        };
         nr.create_XML(n);
-        
+
         List<Noticia> noticias = nr.findAll_XML(gt4);
         Noticia n2 = null;
-        for(Noticia no : noticias){
-            if(no.getTituloNoticia().equals(tituloNoticia)){
+        for (Noticia no : noticias) {
+            if (no.getTituloNoticia().equals(tituloNoticia)) {
                 n2 = no;
             }
         }
-        
+
         TagREST tr = new TagREST();
-        GenericType<Tag> gt5 = new GenericType<Tag>(){};
- 
+        GenericType<Tag> gt5 = new GenericType<Tag>() {
+        };
+
         String[] tags = tag.split(" ");
-        for(String t : tags){
+        for (String t : tags) {
             Tag tg = new Tag();
             tg.setIdNoticia(n2);
             tg.setNombreTag(t);
@@ -124,9 +132,17 @@ public class NuevaNoticia extends ActionSupport {
         }
         return SUCCESS;
     }
-    
-    
-    
+
+    int numNoti = GetNotifications.calcularNotificaciones();
+
+
+    public int getNumNoti() {
+        return numNoti;
+    }
+
+    public void setNumNoti(int numNoti) {
+        this.numNoti = numNoti;
+    }
 
     public String getTag() {
         return tag;
@@ -223,5 +239,7 @@ public class NuevaNoticia extends ActionSupport {
     public void setHistorias(List<Historia> historias) {
         this.historias = historias;
     }
+
+    
 
 }
