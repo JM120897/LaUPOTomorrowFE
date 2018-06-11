@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-          <!-- Required meta tags -->
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -32,6 +32,12 @@
         <title>UPO Tomorrow</title>
     </head>
     <body>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+
         <div class="container-fluid DarkBlue">
             <div class="container">
                 <div class="row">
@@ -72,40 +78,133 @@
                 </div>
             </div>
         </div>
-            <div>
-                Nombre Usuario: <s:property value="nombreUsuario"></s:property>
-            Nombre y Apellidos: <s:property value="nombreReal"></s:property>
-            Email:<s:property value="email"></s:property>
-            Localizacion: <s:property value="localizacion"></s:property>
-            Rol: <s:property value="rol"></s:property>
+
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="text-center">Perfil</h1>
+                    <div class="container card">
+                        <div class="card-body">
+                            <h5>Nombre de usuario</h5>
+                            <s:property value="nombreUsuario"></s:property>
+                                <hr class="my-4">
+                                <h5>Nombre completo</h5>
+                            <s:property value="nombreReal"></s:property>
+                                <hr class="my-4">
+                                <h5>Email</h5>
+                            <s:property value="email"></s:property>
+                                <hr class="my-4">
+                                <h5>Dirección</h5>
+                            <s:property value="localizacion"></s:property>
+                            </div>
+                        </div>
+                        <div class="row justify-content-around mt-5">
+
+                        <s:url var="modPerfil" action="irModPerfil">
+                            <s:param name="nombreUsuario"><s:property value="nombreUsuario"></s:property></s:param>
+                        </s:url>
+                        <a href="<s:property value="#modPerfil" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Editar usuario">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+
+                        <s:url var="borrarPerfil" action="borrarPerfil">
+                            <s:param name="nombreUsuario"><s:property value="nombreUsuario"></s:property></s:param>
+                        </s:url>
+                        <a href="<s:property value="#borrarPerfil" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar usuario">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+
+
+                    </div>
+                    <s:if test="%{#session.rol=='redactor'}">
+                        <div class="mt-5">
+                            <h3>Noticias redactadas por ti:</h3>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Título</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <s:iterator value="listaNoticia" var="noticia" >
+                                        <tr>
+                                            <th scope="row"><s:property value="idNoticia"></s:property></th>
+                                                <td>
+                                                <s:url action="irNoticia" var="idNoticia" >
+                                                    <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                                                </s:url>
+                                                <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
+                                                </td>
+                                                <td><s:property value="fechaNoticia"></s:property></td>
+                                                <td>
+                                                    <div class="row justify-content-around">
+                                                    <s:url var="modNoticia" action="irModNot">
+                                                        <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                                                    </s:url>
+                                                    <s:url var="borrarNoticia" action="borrarNoticia">
+                                                        <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                                                    </s:url>
+                                                        <a href="<s:property value="#modNoticia" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Editar noticia">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </a>
+                                                        <a href="<s:property value="#borrarNoticia" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar noticia">
+                                                            <i class="fas fa-trash-alt" ></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                    </s:iterator>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="mt-5">
+                            <h3>Historias redactadas por ti:</h3>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Título</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <s:iterator value="listaHistoriasUsuario" var="historia" >
+                                        <tr>
+                                            <th scope="row"><s:property value="idHistoria"></s:property></th>
+                                            <td><s:url action="irHistoria" var="idHistoria" >
+                                                    <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                                                </s:url>
+                                                <a href="<s:property value="#idHistoria" />" > <s:property value="tituloHistoria"></s:property> </a></td>
+                                                <td><s:property value="fechaHistoria"></s:property></td>
+                                                <td>
+                                                    <s:url var="modHistoria" action="irModHis">
+                                                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                                                    </s:url>
+                                                    <s:url var="borrarHistoria" action="borrarHistoria">
+                                                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                                                    </s:url>
+                                                    <div class="row justify-content-around">
+                                                        <a href="<s:property value="#modHistoria" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Editar historia">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </a>
+                                                        <a href="<s:property value="#borrarHistoria" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar historia">
+                                                            <i class="fas fa-trash-alt" ></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                    </s:iterator>
+                                </tbody>
+                            </table>
+                        </div>
+                    </s:if>
+                </div>
             </div>
-            <div>
-            <s:if test="%{#session.rol=='redactor'}">
-                <h2>Noticias</h2>
-                <s:iterator value="listaNoticia" var="noticia" >
-                    
-                    <s:url action="irNoticia" var="idNoticia" >
-                        <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
-                    </s:url>
-                    <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
-                   <br>
-                    
-                   
-                </s:iterator>
-                   <h2>Historias</h2>
-               <s:iterator value="listaHistoriasUsuario" var="historia" >
-                    
-                    <s:url action="irHistoria" var="idHistoria" >
-                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
-                    </s:url>
-                    <a href="<s:property value="#idHistoria" />" > <s:property value="tituloHistoria"></s:property> </a>
-                   <br>
-                                       
-                </s:iterator>
-            </s:if>
         </div>
-
-
-
-    </body>
+</body>
 </html>
