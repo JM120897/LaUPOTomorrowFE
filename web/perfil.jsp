@@ -155,8 +155,6 @@
                         <a href="<s:property value="#borrarPerfil" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar usuario">
                             <i class="fas fa-trash-alt"></i>
                         </a>
-
-
                     </div>
                     <s:if test="%{#session.rol=='redactor'}">
                         <div class="mt-5">
