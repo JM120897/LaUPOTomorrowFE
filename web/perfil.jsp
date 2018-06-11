@@ -36,6 +36,48 @@
             $(document).ready(function () {
                 $('[data-toggle="tooltip"]').tooltip();
             });
+
+            function busqueda() {
+                // Declare variables 
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+
+            function busquedaHis() {
+                // Declare variables 
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("myInputHis");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTableHis");
+                tr = table.getElementsByTagName("tr");
+
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
         </script>
 
         <div class="container-fluid DarkBlue">
@@ -113,13 +155,12 @@
                         <a href="<s:property value="#borrarPerfil" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar usuario">
                             <i class="fas fa-trash-alt"></i>
                         </a>
-
-
                     </div>
                     <s:if test="%{#session.rol=='redactor'}">
                         <div class="mt-5">
                             <h3>Noticias redactadas por ti:</h3>
-                            <table class="table table-bordered table-hover">
+                            <input type="text" id="myInput" class="my-3 form-control" placeholder="Filtrar noticias" onkeyup="busqueda()">
+                            <table name="myTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -147,23 +188,24 @@
                                                     <s:url var="borrarNoticia" action="borrarNoticia">
                                                         <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
                                                     </s:url>
-                                                        <a href="<s:property value="#modNoticia" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Editar noticia">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        <a href="<s:property value="#borrarNoticia" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar noticia">
-                                                            <i class="fas fa-trash-alt" ></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    <a href="<s:property value="#modNoticia" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Editar noticia">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                    <a href="<s:property value="#borrarNoticia" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar noticia">
+                                                        <i class="fas fa-trash-alt" ></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </s:iterator>
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div class="mt-5">
                             <h3>Historias redactadas por ti:</h3>
-                            <table class="table table-bordered table-hover">
+                            <input type="text" id="myInputHis" class="my-3 form-control" placeholder="Filtrar noticias" onkeyup="busqueda()">
+                            <table name="myTableHis" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -180,24 +222,24 @@
                                                     <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
                                                 </s:url>
                                                 <a href="<s:property value="#idHistoria" />" > <s:property value="tituloHistoria"></s:property> </a></td>
-                                                <td><s:property value="fechaHistoria"></s:property></td>
+                                            <td><s:property value="fechaHistoria"></s:property></td>
                                                 <td>
-                                                    <s:url var="modHistoria" action="irModHis">
-                                                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
-                                                    </s:url>
-                                                    <s:url var="borrarHistoria" action="borrarHistoria">
-                                                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
-                                                    </s:url>
-                                                    <div class="row justify-content-around">
-                                                        <a href="<s:property value="#modHistoria" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Editar historia">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        <a href="<s:property value="#borrarHistoria" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar historia">
-                                                            <i class="fas fa-trash-alt" ></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                <s:url var="modHistoria" action="irModHis">
+                                                    <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                                                </s:url>
+                                                <s:url var="borrarHistoria" action="borrarHistoria">
+                                                    <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                                                </s:url>
+                                                <div class="row justify-content-around">
+                                                    <a href="<s:property value="#modHistoria" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Editar historia">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                    <a href="<s:property value="#borrarHistoria" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar historia">
+                                                        <i class="fas fa-trash-alt" ></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </s:iterator>
                                 </tbody>
                             </table>
@@ -206,5 +248,5 @@
                 </div>
             </div>
         </div>
-</body>
+    </body>
 </html>
