@@ -71,8 +71,6 @@
                 </div>
             </div>
         </div>
-        <div>
-        </div>
         <div class="row my-3">
             <div class="col-md-2 mx-5"></div>
             <div class="col-md-6 mx-5 my-5">
