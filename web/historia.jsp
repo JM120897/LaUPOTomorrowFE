@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-          <!-- Required meta tags -->
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -74,12 +74,12 @@
             </div>
         </div>
         <div class="container">
- <s:form action="buscar" theme="simple">
-                    <div class="row mb-3">
-                        <s:textfield name="busqueda" placeholder="Busca!" cssClass="form-control col-md-8 mx-1"/>
-                        <s:submit cssClass="btn btn-outline-warning col-md-3 mx-1" value="Buscar"></s:submit>
-                        </div>
-                </s:form>
+            <s:form action="buscar" theme="simple">
+                <div class="row mb-3">
+                    <s:textfield name="busqueda" placeholder="Busca!" cssClass="form-control col-md-8 mx-1"/>
+                    <s:submit cssClass="btn btn-outline-warning col-md-3 mx-1" value="Buscar"></s:submit>
+                    </div>
+            </s:form>
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
@@ -93,10 +93,10 @@
 
                         </s:form>
                         <s:form action="borrarHist">
-                        <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
-                        <s:submit  name="borrarNoticia" value="Borrar Historia"></s:submit>
+                            <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
+                            <s:submit  name="borrarNoticia" value="Borrar Historia"></s:submit>
 
-                    </s:form>
+                        </s:form>
                     </s:if>
                     <h2>Noticias</h2>
                     <div class="col-md-1">

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-          <!-- Required meta tags -->
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -72,15 +72,26 @@
                 </div>
             </div>
         </div>
-        <div>
-                        <s:form action="crearHistoria">
-                            <s:textfield name="tituloHistoria" label="Titulo"></s:textfield>
-                            <s:textfield name="subtituloHistoria" label="Subtitulo Historia"></s:textfield>
+
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="text-center">Crear Historia</h1>
+                    <s:form action="crearHistoria" theme="simple">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label>Titulo</label>
+                                <s:textfield cssClass="form-control" name="tituloHistoria" ></s:textfield>
+                                </div>
+                                <div class="form-group">
+                                    <label>Subtitulo</label>
+                                <s:textfield  cssClass="form-control" name="subtituloHistoria" ></s:textfield>
+                                </div>
                             <s:submit name="crearHistoria" value="Crear Historia"></s:submit>
-                        </s:form>
-                    </div>
-
-
-
+                            </div>
+                    </s:form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
