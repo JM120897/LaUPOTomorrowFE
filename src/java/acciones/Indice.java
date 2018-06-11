@@ -31,24 +31,17 @@ public class Indice extends ActionSupport {
     List<Categoria> categorias;
     String categoria;
     List<Noticia> lista;
-    List<Noticia> coincidencias;
+    List<Noticia> coincidencias; 
+  
+   
+    List<Categoria> listaCat = new ArrayList();
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+   
     public Indice() {
 
     }
-    
-    List<Notificacion> list = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    List<Categoria> listaCat = new ArrayList();
- List<Categoria> listaCategoriaMenu = new ArrayList();
-
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
-    }
-
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
+   
     public String execute() throws Exception {
         
         NoticiaREST nor = new NoticiaREST();
@@ -67,17 +60,19 @@ public class Indice extends ActionSupport {
         GenericType<List<Categoria>> gt2 = new GenericType<List<Categoria>>(){};
         categorias = cr.findAll_XML(gt2);
         
-        NotificacionREST nr = new NotificacionREST();
-        GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
-        };
+       
          CategoriaREST categoriar = new CategoriaREST();
          GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        Map session = (Map) ActionContext.getContext().get("session");
-        list = nr.findAll_XML(gt);
-        for (Notificacion n : list) {
-            if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
-                listaNotifi.add(n);
+        /////
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        NotificacionREST notifir = new NotificacionREST();
+        GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
+        };
+        listNot = notifir.findAll_XML(gtnotificaciones);
+        for (Notificacion notificacion : listNot) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
+                listaNotifi.add(notificacion);
             }
 
         }
@@ -88,15 +83,11 @@ public class Indice extends ActionSupport {
         return SUCCESS;
     }
     
-
-    public List<Notificacion> getList() {
-        return list;
-    }
-
-    public void setList(List<Notificacion> list) {
-        this.list = list;
-    }
-
+    /////////////////
+      List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
+    
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -112,6 +103,25 @@ public class Indice extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
+     public List<Notificacion> getListNot() {
+        return listNot;
+    }
+
+    public void setList(List<Notificacion> listNot) {
+        this.listNot = listNot;
+    }
+    ////////////////////////////
+ public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+    
+   
+
+    
 
     public List<Categoria> getCategorias() {
         return categorias;

@@ -7,14 +7,19 @@ package acciones;
 
 import classes.Categoria;
 import classes.Historia;
+import classes.Notificacion;
 import classes.Usuario;
+import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.HistoriaREST;
+import persistencia.NotificacionREST;
 import persistencia.UsuarioREST;
 
 /**
@@ -58,7 +63,50 @@ public class ModHistoria extends ActionSupport {
          GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         
+       Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        NotificacionREST notifir = new NotificacionREST();
+        GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
+        };
+        listNot = notifir.findAll_XML(gtnotificaciones);
+        for (Notificacion notificacion : listNot) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
+                listaNotifi.add(notificacion);
+            }
+
+        }
+        numNoti = listaNotifi.size();
+       
+        
+        
         return SUCCESS;
+    }
+    
+    /////////////////
+      List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
+    
+    public List<Notificacion> getListaNotifi() {
+        return listaNotifi;
+    }
+
+    public void setListaNotifi(List<Notificacion> listaNotifi) {
+        this.listaNotifi = listaNotifi;
+    }
+
+    public int getNumNoti() {
+        return numNoti;
+    }
+
+    public void setNumNoti(int numNoti) {
+        this.numNoti = numNoti;
+    }
+     public List<Notificacion> getListNot() {
+        return listNot;
+    }
+
+    public void setList(List<Notificacion> listNot) {
+        this.listNot = listNot;
     }
 
     public Integer getIdHistoria() {

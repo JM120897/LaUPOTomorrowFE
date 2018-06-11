@@ -29,7 +29,7 @@ public class irNotificaciones extends ActionSupport {
     List<String> nombres = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
  List<Categoria> listaCategoriaMenu = new ArrayList();
-
+int numNoti = 0;
     public List<Categoria> getListaCategoriaMenu() {
         return listaCategoriaMenu;
     }
@@ -54,7 +54,7 @@ public class irNotificaciones extends ActionSupport {
          GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         
-        
+         numNoti = listaNotifi.size();
         return SUCCESS;
 
     }
@@ -73,6 +73,14 @@ public class irNotificaciones extends ActionSupport {
 
     public void setListaNotifi(List<Notificacion> listaNotifi) {
         this.listaNotifi = listaNotifi;
+    }
+
+    public int getNumNoti() {
+        return numNoti;
+    }
+
+    public void setNumNoti(int numNoti) {
+        this.numNoti = numNoti;
     }
 
 }
