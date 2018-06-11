@@ -62,7 +62,6 @@
             </div>
         </div>
     </s:if>
-
         <div class="container my-4">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
@@ -102,6 +101,5 @@
                 </div>
             </div>
         </div>
-
-
     </body>
+</html>
