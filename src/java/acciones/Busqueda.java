@@ -6,6 +6,7 @@
 package acciones;
 
 import classes.Categoria;
+import classes.Historia;
 import classes.Noticia;
 import classes.Tag;
 import com.opensymphony.xwork2.ActionSupport;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
+import persistencia.HistoriaREST;
 import persistencia.NoticiaREST;
 import persistencia.TagREST;
 
@@ -30,8 +32,19 @@ public class Busqueda extends ActionSupport {
     String busqueda;
     String mensajeError;
     List<Noticia> coincidencias;
-    List<Categoria> listaCategoriaMenu = new ArrayList();
+    List<Historia> coincidenciasHistoria;
+    List<Categoria> listaCategoriaMenu = new ArrayList<>();
 
+    public List<Historia> getCoincidenciasHistoria() {
+        return coincidenciasHistoria;
+    }
+
+    public void setCoincidenciasHistoria(List<Historia> coincidenciasHistoria) {
+        this.coincidenciasHistoria = coincidenciasHistoria;
+    }
+
+    
+    
     public List<Categoria> getListaCategoriaMenu() {
         return listaCategoriaMenu;
     }
@@ -39,6 +52,7 @@ public class Busqueda extends ActionSupport {
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
     }
+
     public Busqueda() {
     }
 
@@ -50,6 +64,12 @@ public class Busqueda extends ActionSupport {
          CategoriaREST cr = new CategoriaREST();
          GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>(){};
         listaCategoriaMenu = cr.findAll_XML(gc);
+        HistoriaREST hr = new HistoriaREST();
+        GenericType<List<Historia>> gh = new GenericType<List<Historia>>() {};
+        List<Historia> historias = hr.findAll_XML(gh);
+        
+        coincidenciasHistoria = new ArrayList<>();
+   
         try {
             noticias = nr.findAll_XML(gt);
         } catch (javax.ws.rs.InternalServerErrorException E) {
@@ -61,15 +81,24 @@ public class Busqueda extends ActionSupport {
         }
         if (!error) {
             coincidencias = new ArrayList<>();
-            addCoincidencias(coincidencias, noticias);
+            addCoincidencias(coincidencias, noticias, coincidenciasHistoria, historias);
             if (coincidencias.size() == 0) {
                 mensajeError = "No se encontraron noticias relacionadas con su búsqueda";
+                error = true;
+            }else if(coincidenciasHistoria.size() == 0){
+                mensajeError += "\nNo se encontraron historias relacionadas con su búsqueda";
                 error = true;
             } else {
                 //ORDENAR POR FECHA.
                 coincidencias.sort(new Comparator<Noticia>() {
                     public int compare(Noticia o1, Noticia o2) {
                         return o2.getFechaNoticia().compareTo(o1.getFechaNoticia());
+                    }
+                });
+                
+                coincidenciasHistoria.sort(new Comparator<Historia>() {
+                    public int compare(Historia o1, Historia o2) {
+                        return o2.getFechaHistoria().compareTo(o1.getFechaHistoria());
                     }
                 });
             }
@@ -113,7 +142,8 @@ public class Busqueda extends ActionSupport {
         this.coincidencias = coincidencias;
     }
 
-    private void addCoincidencias(List<Noticia> coincidencias, List<Noticia> noticias) {
+    private void addCoincidencias(List<Noticia> coincidencias, List<Noticia> noticias, List<Historia> coincidenciasHistoria, List<Historia> historias) {
+
         String[] params = busqueda.split(" ");
         for (Noticia n : noticias) {
             for (String param : params) {
@@ -131,6 +161,7 @@ public class Busqueda extends ActionSupport {
                     if(!coincidencias.contains(n) && t.getIdNoticia().getIdNoticia() == n.getIdNoticia() && t.getNombreTag().equalsIgnoreCase(param)){
                         if(categoria == null){
                         coincidencias.add(n);
+
                         }else if(categoria != null && n.getNombreCategoria().getNombreCategoria().equalsIgnoreCase(categoria)){
                             coincidencias.add(n);
                         }
@@ -138,6 +169,17 @@ public class Busqueda extends ActionSupport {
                 }
             }
         }
+        
+        if(categoria == null){
+            for(Historia h : historias){
+                for(String param : params){
+                    if(h.getTituloHistoria().toLowerCase().contains(param.toLowerCase())){
+                            coincidenciasHistoria.add(h);
+                    }
+                }   
+            }
+        }
+        
     }
 
 }

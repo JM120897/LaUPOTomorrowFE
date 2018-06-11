@@ -6,8 +6,10 @@
 package acciones;
 
 import classes.Categoria;
+import classes.Historia;
 import classes.Noticia;
 import classes.Notificacion;
+import classes.Tag;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
@@ -17,10 +19,12 @@ import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
+import persistencia.HistoriaREST;
 import persistencia.NoticiaREST;
 
 
 import persistencia.NotificacionREST;
+import persistencia.TagREST;
 
 /**
  *
@@ -31,7 +35,8 @@ public class Indice extends ActionSupport {
     List<Categoria> categorias;
     String categoria;
     List<Noticia> lista;
-    List<Noticia> coincidencias;
+    List<Noticia> coincidencias = new ArrayList<>();
+    List<Historia> coincidenciasHistoria = new ArrayList<>();
     public Indice() {
 
     }
@@ -40,7 +45,7 @@ public class Indice extends ActionSupport {
     List<Notificacion> listaNotifi = new ArrayList();
     int numNoti = 0;
     List<Categoria> listaCat = new ArrayList();
- List<Categoria> listaCategoriaMenu = new ArrayList();
+    List<Categoria> listaCategoriaMenu = new ArrayList();
 
     public List<Categoria> getListaCategoriaMenu() {
         return listaCategoriaMenu;
@@ -51,17 +56,28 @@ public class Indice extends ActionSupport {
     }
     public String execute() throws Exception {
         
+        
+        HistoriaREST hr = new HistoriaREST();
+        GenericType<List<Historia>> gh = new GenericType<List<Historia>>() {};
+        List<Historia> historias = hr.findAll_XML(gh);
+        
         NoticiaREST nor = new NoticiaREST();
         GenericType<List<Noticia>> gt3 = new GenericType<List<Noticia>>(){};
-        coincidencias = nor.findAll_XML(gt3);
-        
-        coincidencias.sort(new Comparator<Noticia>() {
+        List<Noticia> noticias = nor.findAll_XML(gt3);
+
+        noticias.sort(new Comparator<Noticia>() {
                     public int compare(Noticia o1, Noticia o2) {
                         return o2.getFechaNoticia().compareTo(o1.getFechaNoticia());
                     }
                 });
         
+        historias.sort(new Comparator<Historia>() {
+                    public int compare(Historia o1, Historia o2) {
+                        return o2.getFechaHistoria().compareTo(o1.getFechaHistoria());
+                    }
+                });
         
+        reducirTam(noticias, historias);
         
         CategoriaREST cr = new CategoriaREST();
         GenericType<List<Categoria>> gt2 = new GenericType<List<Categoria>>(){};
@@ -135,6 +151,35 @@ public class Indice extends ActionSupport {
 
     public void setCoincidencias(List<Noticia> coincidencias) {
         this.coincidencias = coincidencias;
+    }
+
+    public List<Historia> getCoincidenciasHistoria() {
+        return coincidenciasHistoria;
+    }
+
+    public void setCoincidenciasHistoria(List<Historia> coincidenciasHistoria) {
+        this.coincidenciasHistoria = coincidenciasHistoria;
+    }
+    
+    
+
+    private void reducirTam(List<Noticia> noticias, List<Historia> historias) {
+        int numNoticias = 20;
+        int numHistorias = 10;
+        for(Noticia n : noticias){
+            if(numNoticias > 0){
+                coincidencias.add(n);
+                numNoticias--;
+            }
+        }
+        
+        for(Historia h: historias){
+            if(numHistorias > 0){
+                coincidenciasHistoria.add(h);
+                numHistorias--;
+            }
+        }
+        
     }
     
     

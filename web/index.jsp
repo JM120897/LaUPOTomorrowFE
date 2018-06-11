@@ -80,7 +80,7 @@
         <div class="row my-3">
              <div class="col-md-2 mx-5">
                 <div class="card card-body bg-warning">
-                    <h4>Categorias</h4>
+                    <h4>Categorías</h4>
                     <ul class="list-group">
                         <li class="list-group-item">
                             <s:a href="%{url}" cssStyle="text-decoration: none">
@@ -133,7 +133,25 @@
                     </div>
                     <hr class="my-4">
                 </s:iterator>
-
+                <s:iterator value="coincidenciasHistoria" var="noticia">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3 class="my-3">
+                                <s:url action="irHistoria" var="idHistoria">
+                                    <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                                </s:url>
+                                <a href="<s:property value="#idHistoria" />" > <s:property value="tituloHistoria"></s:property> </a>
+                                </h3><br/>
+                            <s:property value="fechaHistoria"></s:property>
+                            </div>
+                            <div class="col align-self-center">
+                                <i class="fas fa-book-open" style="font-size:98px;"></i>
+                            </div>
+                    </div>
+                    <hr class="my-4">
+                </s:iterator>
+                    
+                
 
 
                 </body>

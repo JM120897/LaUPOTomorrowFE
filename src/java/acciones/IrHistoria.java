@@ -59,7 +59,7 @@ public class IrHistoria extends ActionSupport {
        GenericType<List<Noticia>> gn = new GenericType<List<Noticia>>(){};
        listNoticias = nr.findAll_XML(gn);
        for(Noticia n :listNoticias){
-           if(n.getIdHistoria().getIdHistoria().equals(idHistoria)){
+           if(n.getIdHistoria()!= null && n.getIdHistoria().getIdHistoria().equals(idHistoria)){
                listaNoticiasHistoria.add(n);
            }
        }
