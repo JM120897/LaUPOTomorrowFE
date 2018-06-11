@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-          <!-- Required meta tags -->
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -72,8 +72,8 @@
                 </div>
             </div>
         </div>
-            <div>
-                Nombre Usuario: <s:property value="nombreUsuario"></s:property>
+        <div>
+            Nombre Usuario: <s:property value="nombreUsuario"></s:property>
             Nombre y Apellidos: <s:property value="nombreReal"></s:property>
             Email:<s:property value="email"></s:property>
             Localizacion: <s:property value="localizacion"></s:property>
@@ -83,24 +83,24 @@
             <s:if test="%{#session.rol=='redactor'}">
                 <h2>Noticias</h2>
                 <s:iterator value="listaNoticia" var="noticia" >
-                    
+
                     <s:url action="irNoticia" var="idNoticia" >
                         <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
                     </s:url>
                     <a href="<s:property value="#idNoticia" />" > <s:property value="tituloNoticia"></s:property> </a>
-                   <br>
-                    
-                   
+                        <br>
+
+
                 </s:iterator>
-                   <h2>Historias</h2>
-               <s:iterator value="listaHistoriasUsuario" var="historia" >
-                    
+                <h2>Historias</h2>
+                <s:iterator value="listaHistoriasUsuario" var="historia" >
+
                     <s:url action="irHistoria" var="idHistoria" >
                         <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
                     </s:url>
                     <a href="<s:property value="#idHistoria" />" > <s:property value="tituloHistoria"></s:property> </a>
-                   <br>
-                                       
+                        <br>
+
                 </s:iterator>
             </s:if>
         </div>

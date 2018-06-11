@@ -31,7 +31,7 @@ public class LimpiarNotificaciones extends ActionSupport {
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
     }
-    
+      int numNoti = 0;
     public LimpiarNotificaciones() {
     }
      List<String> nombres = new ArrayList();
@@ -51,6 +51,7 @@ public class LimpiarNotificaciones extends ActionSupport {
             }
 
         }
+        
        return SUCCESS;
     }
 
@@ -68,6 +69,14 @@ public class LimpiarNotificaciones extends ActionSupport {
 
     public void setListaNotifi(List<Notificacion> listaNotifi) {
         this.listaNotifi = listaNotifi;
+    }
+
+    public int getNumNoti() {
+        return numNoti;
+    }
+
+    public void setNumNoti(int numNoti) {
+        this.numNoti = numNoti;
     }
     
 }

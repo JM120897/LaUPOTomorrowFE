@@ -35,7 +35,7 @@
         <title>UPO Tomorrow</title>
     </head>
 
-    
+
     <body>
         <div class="container-fluid DarkBlue">
             <div class="container">
@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="row my-3">
-             <div class="col-md-2 mx-5">
+            <div class="col-md-2 mx-5">
                 <div class="card card-body bg-warning">
                     <h4>Categorías</h4>
                     <ul class="list-group">
@@ -86,22 +86,22 @@
                             <s:a href="%{url}" cssStyle="text-decoration: none">
                                 Portada
                             </s:a></li>
-                        <s:iterator value="listaCategoriaMenu" var="nombreCategoria" >
-                         
-                           
+                            <s:iterator value="listaCategoriaMenu" var="nombreCategoria" >
+
+
                             <li class="list-group-item">
                                 <s:url action="cambiarCategoria" var="nombreCategoria">
                                     <s:param name="nombreCategoria"><s:property value="nombreCategoria"></s:property></s:param>
                                 </s:url>
                                 <a href="<s:property value="#nombreCategoria" />" > <s:property value="nombreCategoria"></s:property> </a>
-                            </li>
-                            
-                            
-                            </s:iterator>
+                                </li>
+
+
+                        </s:iterator>
                     </ul>
                 </div>
             </div>
-           
+
             <div class="col-md-6 mx-5">
                 <s:form action="buscar" theme="simple">
                     <div class="row mb-3">
@@ -147,12 +147,12 @@
                             <div class="col align-self-center">
                                 <i class="fas fa-book-open" style="font-size:98px;"></i>
                             </div>
-                    </div>
-                    <hr class="my-4">
+                        </div>
+                        <hr class="my-4">
                 </s:iterator>
-                    
-                
+
+
 
             </div>
-                </body>
-                </html>
+    </body>
+</html>
