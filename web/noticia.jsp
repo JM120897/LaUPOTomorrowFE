@@ -78,11 +78,11 @@
         <div class="row my-3">
             <div class="col-md-3"></div>
             <div class="col-md-6 mx-5">
-                <s:form theme="simple">
-                    <div class="row">
-                        <s:textfield placeholder="Busca!" cssClass="form-control col-md-8 mx-1"/>
-                        <button type="submit" class="btn btn-outline-warning col-md-3 mx-1" ><i class="fas fa-search"></i></button>
-                    </div>
+                <s:form action="buscar" theme="simple">
+                    <div class="row mb-3">
+                        <s:textfield name="busqueda" placeholder="Busca!" cssClass="form-control col-md-8 mx-1"/>
+                        <s:submit cssClass="btn btn-outline-warning col-md-3 mx-1" value="Buscar"></s:submit>
+                        </div>
                 </s:form>
                 <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
                 <h2 class="my-3"><s:property value="tituloNoticia"></s:property>.</h2>

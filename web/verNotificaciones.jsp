@@ -15,15 +15,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- CSS -->
         <link rel="stylesheet" href="stylesheet.css">
+        <!-- Fuentes e iconos -->
         <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <!-- Bootstrap JavaScript -->
+        <script src="bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
+        <s:url id="url" action="index">
+        </s:url>
         <title>UPO Tomorrow</title>
     </head>
-
     <body>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
         <div class="container-fluid DarkBlue">
             <div class="container">
                 <div class="row">
@@ -67,18 +81,21 @@
         <s:if test="%{!listaNotifi.isEmpty()}">
 
             <div class="container my-5">
-                <div class="col-md-10">
-                    <form action="limpiarNotifi">
-                        <s:submit  cssClass="btn btn-outline-warning col-md-3 mx-1" name="limpiarNotifi" value="Limpiar Notificaciones"></s:submit>
-                        </form>
+                <div class="col-md-3"></div>
+                <div class="col-md-8">
+                    <s:form action="limpiarNotifi">
+                        
+                        <button type="submit" class="btn btn-outline-danger col-md-3 my-3" data-toggle="tooltip" data-placement="bottom" title="Limpiar notificaciones">
+                                    <i class="fas fa-broom"></i>
+                                </button>
+                        </s:form>
                     </div>
                     <div class="row">
                         <div class="col-md-9 mr-2">
                         <s:iterator value="listaNotifi" var="notificacion">
                             <div class="alert alert-warning">
-                                <s:property value="%{mensaje}"></s:property>
+                                <s:property value="%{mensaje}"></s:property> - Día
                                 <s:property value="%{fechaNotifiacion}"></s:property>
-
                                 </div>
                         </s:iterator>
                     </div>
@@ -86,7 +103,10 @@
             </div>
 
         </s:if><s:else>
-            No tienes notificaciones <b>PORQUE TUS NOTICIAS SON UNA MIERDA Y NO LE IMPORTAN A NADIE</b>
+            <div class="container">
+            <div class="my-3 alert alert-danger">
+                No hay notificaciones porque eres un Inda de la vida.
+            </div></div>
         </s:else>
 
 

@@ -32,7 +32,7 @@
         <title>UPO Tomorrow</title>
     </head>
     <body>
-        <script>
+        <script type="text/javascript">
             $(document).ready(function () {
                 $('[data-toggle="tooltip"]').tooltip();
             });
@@ -160,7 +160,7 @@
                         <div class="mt-5">
                             <h3>Noticias redactadas por ti:</h3>
                             <input type="text" id="myInput" class="my-3 form-control" placeholder="Filtrar noticias" onkeyup="busqueda()">
-                            <table name="myTable" class="table table-bordered table-hover">
+                            <table id="myTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -204,8 +204,8 @@
 
                         <div class="mt-5">
                             <h3>Historias redactadas por ti:</h3>
-                            <input type="text" id="myInputHis" class="my-3 form-control" placeholder="Filtrar noticias" onkeyup="busqueda()">
-                            <table name="myTableHis" class="table table-bordered table-hover">
+                            <input type="text" id="myInputHis" class="my-3 form-control" placeholder="Filtrar noticias" onkeyup="busquedaHis()">
+                            <table id="myTableHis" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>

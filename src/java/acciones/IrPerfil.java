@@ -79,7 +79,7 @@ public class IrPerfil extends ActionSupport {
             while (it.hasNext()) {
                 Noticia n = it.next();
                
-                if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
+                if (n.getNombreUsuario() != null && n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
                     
                     listaNoticia.add(n);
                 }
