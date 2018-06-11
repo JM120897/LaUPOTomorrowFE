@@ -80,7 +80,7 @@ public class cambiarCategoriaIndex extends ActionSupport {
         numNoti = listaNotifi.size();
        
         for(Noticia n:lista){
-            if(n.getNombreCategoria().getNombreCategoria().equals((String)s.get("categoria"))){
+            if(n.getNombreCategoria() != null && n.getNombreCategoria().getNombreCategoria().equals((String)s.get("categoria"))){
                 coincidencias.add(n);
             }
         }

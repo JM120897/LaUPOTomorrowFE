@@ -30,14 +30,14 @@ public class Busqueda extends ActionSupport {
     String busqueda;
     String mensajeError;
     List<Noticia> coincidencias;
-List<Categoria> listaCategoria = new ArrayList();
+    List<Categoria> listaCategoriaMenu = new ArrayList();
 
-    public List<Categoria> getListaCategoria() {
-        return listaCategoria;
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
     }
 
-    public void setListaCategoria(List<Categoria> listaCategoria) {
-        this.listaCategoria = listaCategoria;
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
     }
     public Busqueda() {
     }
@@ -49,7 +49,7 @@ List<Categoria> listaCategoria = new ArrayList();
         List<Noticia> noticias = null;
          CategoriaREST cr = new CategoriaREST();
          GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>(){};
-        listaCategoria = cr.findAll_XML(gc);
+        listaCategoriaMenu = cr.findAll_XML(gc);
         try {
             noticias = nr.findAll_XML(gt);
         } catch (javax.ws.rs.InternalServerErrorException E) {

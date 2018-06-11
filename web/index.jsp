@@ -82,6 +82,10 @@
                 <div class="card card-body bg-warning">
                     <h4>Categorias</h4>
                     <ul class="list-group">
+                        <li class="list-group-item">
+                            <s:a href="%{url}" cssStyle="text-decoration: none">
+                                Portada
+                            </s:a></li>
                         <s:iterator value="listaCategoriaMenu" var="nombreCategoria" >
                          
                            
