@@ -72,27 +72,53 @@
                 </div>
             </div>
         </div>
-        <h1>Hello World!</h1>
-        <s:form action="nuevaNoticia" theme="simple">
-            <h1>Titulo</h1>
-            <s:textfield name="tituloNoticia"></s:textfield><br/>
-            <h1>Subtitulo</h1>
-            <s:textfield name="subtituloNoticia"></s:textfield><br/>
-            <h1>Cuerpo</h1>
-            <s:textfield name="cuerpoNoticia"></s:textfield><br/>
-            <h1>URL IMATGE</h1>
-            <s:textfield name="imagen"></s:textfield><br/>
-            <h1>TAGS</h1>
-            <s:textfield name="tag"></s:textfield><br/>
-            <h1>LOCALIZACION</h1>
-            <s:textfield name="localizacion"></s:textfield><br/>
-            <s:select list="categorias" name="categoria" listValue="nombreCategoria" listKey="nombreCategoria" >
-            </s:select>
-            <s:select list="historias" name="historia" listValue="tituloHistoria" listKey="idHistoria" headerValue="Ninguna" headerKey="-1">
-            </s:select>
-            <s:hidden name="usuario" value="%{nombreUsuario}"></s:hidden>
-            <s:submit value="Enviar"></s:submit>
-        </s:form>
-    </body>
+
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="text-center">Redactar</h1>
+                    <s:form action="nuevaNoticia" theme="simple">
+                        <div class="form-group">
+                            <label>Titulo</label>
+                            <s:textfield cssClass="form-control" name="tituloNoticia"></s:textfield>  
+                            </div>
+                            <div class="form-group">
+                                <label>Subtitulo</label>
+                            <s:textfield  cssClass="form-control" name="subtituloNoticia"></s:textfield>
+                            </div>
+                            <div class="form-group">
+                                <label>Cuerpo</label>
+                            <s:textarea  rows="10" cssClass="form-control" name="cuerpoNoticia"></s:textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Imagen URL</label>
+                            <s:textfield  cssClass="form-control" name="imagen"></s:textfield>
+                            </div>
+                            <div class="form-group">
+                                <label>Tag</label>
+                            <s:textfield  cssClass="form-control" name="tag"></s:textfield>
+                            </div>
+                            <div class="form-group">
+                                <label>Localizacion</label>
+                            <s:textfield  cssClass="form-control" name="localizacion"></s:textfield>
+                            </div>
+                            <div class="form-group">
+                                <label>Categoria</label>
+                            <s:select cssClass="form-control"  list="categorias" name="categoria" listValue="nombreCategoria" listKey="nombreCategoria" >
+                            </s:select>
+                        </div>
+                        <div class="form-group">
+                            <label>Historia</label>
+                            <s:select  cssClass="form-control" list="historias" name="historia" listValue="tituloHistoria" listKey="idHistoria" headerValue="Ninguna" headerKey="-1">
+                            </s:select>
+                        </div>
+                        <s:hidden name="usuario" value="%{nombreUsuario}"></s:hidden>
+                        <s:submit value="Enviar"></s:submit>
+                    </s:form>
+                </div>
+            </div>
+        </div>
+
+
     </body>
 </html>
