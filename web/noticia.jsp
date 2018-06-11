@@ -70,9 +70,8 @@
                 </div>
             </div>
         </div>
-        <div class="container my-4" >
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
+        <div class="row my-3">
+           <div class="col-md-6 mx-5">
                     <s:form theme="simple">
                         <div class="row">
                             <s:textfield placeholder="Busca!" cssClass="form-control col-md-8 mx-1"/>
@@ -92,14 +91,19 @@
                     </s:iterator>
                     <div class="mt-5">
                         <s:if test="%{#session.usuario == nombreUsuario}">
-                            <s:form action="irModNot">
-                                <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
-                                <s:submit cssClass="btn btn-outline-warning mx-1" value="Modificar Noticia"></s:submit>
-                            </s:form>
-                            <s:form action="borrarNot">
-                                <s:hidden name="idNoticia"  value="%{idNoticia}"></s:hidden>
-                                <s:submit  cssClass="btn btn-outline-warning mx-1" name="borrarNoticia" value="Borrar Noticia"></s:submit>
-                            </s:form>
+                            <s:url var="irModNot" action="irModNot">
+                                <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                            </s:url>
+                            <a href="<s:property value="#irModNot" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Modificar noticia">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+
+                            <s:url var="borrarNot" action="borrarNot">
+                                <s:param name="idNoticia"><s:property value="idNoticia"></s:property></s:param>
+                            </s:url>
+                            <a href="<s:property value="#borrarNot" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar noticia">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
                         </s:if>
                     </div>
                     <div class="mt-5">
@@ -117,25 +121,38 @@
                             <s:iterator value="listaComentarios" var="comentario">
                                 <div class="card-body">
                                     <div class="text-muted">
-                                        <s:form action="irModCom">
-                                            <s:hidden name="idNoticia"  value="%{idNoticia2}"></s:hidden>
-                                            <s:hidden name="idComentario" value="%{idComentario}"></s:hidden>
-                                            <s:submit cssClass="btn btn-outline-warning mx-1" name="modComentario" value="Modificar Comentario"></s:submit>
-                                        </s:form>
-                                        <s:form action="borrarCom">
-                                            <s:hidden name="idNoticia"  value="%{idNoticia2}"></s:hidden>
-                                            <s:hidden name="idComentario" value="%{idComentario}"></s:hidden>
-                                            <s:submit cssClass="btn btn-outline-warning mx-1" name="borrarComentario" value="Borrar Comentario"></s:submit>
-                                        </s:form>
-                                        <s:property value="mensaje"></s:property></a> - <s:property value="fechaComentario"></s:property>
+                                        <s:property value="nombreUsuario"></s:property> -   <s:property value="fechaComentario"></s:property><br><br>
                                         </div>
-                                    </div>
-                                    <hr class="my-4">
-                            </s:iterator>
-                        </div>
+                                    <s:property value="mensaje"></s:property> <br>
+
+
+
+                                    <s:if test="%{#session.usuario == nombreUsuario}">
+                                        <s:url var="irModCom" action="irModCom">
+
+                                            <s:param name="idComentario"><s:property value="idComentario"></s:property></s:param>
+
+                                            <s:param name="idNoticia"><s:property value="idNoticia2"></s:property></s:param>
+                                        </s:url>
+                                        <a href="<s:property value="#irModCom" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Modificar comentario">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+
+                                        <s:url var="borrarCom" action="borrarCom">
+                                            <s:param name="idNoticia"><s:property value="idNoticia2"></s:property></s:param>
+                                            <s:param name="idComentario"><s:property value="idComentario"></s:property></s:param>
+                                        </s:url>
+                                        <a href="<s:property value="#borrarCom" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar comentario">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </s:if>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                        </s:iterator>
                     </div>
-                </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>
