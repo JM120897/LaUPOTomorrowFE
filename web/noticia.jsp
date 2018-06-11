@@ -148,8 +148,8 @@
                                     </a>
 
                                     <s:url var="borrarCom" action="borrarCom">
-                                        <s:param name="idNoticia"><s:property value="idNoticia2"></s:property></s:param>
                                         <s:param name="idComentario"><s:property value="idComentario"></s:property></s:param>
+                                        <s:param name="idNoticia"><s:property value="idNoticia2"></s:property></s:param>
                                     </s:url>
                                     <a href="<s:property value="#borrarCom" />" class="btn btn-outline-danger col-md-3 mx-1 my-3" data-toggle="tooltip" data-placement="bottom" title="Borrar comentario">
                                         <i class="fas fa-trash-alt"></i>

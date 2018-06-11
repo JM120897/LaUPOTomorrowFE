@@ -19,7 +19,9 @@ import persistencia.ComentarioREST;
  */
 public class borrarCom extends ActionSupport {
     
+    
     Integer idNoticia2;
+    Integer idNoticia = idNoticia2;
     Integer idComentario;
     public borrarCom() {
     }
@@ -39,8 +41,15 @@ public class borrarCom extends ActionSupport {
         CategoriaREST categoriar = new CategoriaREST();
          GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
         return SUCCESS;
+    }
+
+    public Integer getIdNoticia() {
+        return idNoticia;
+    }
+
+    public void setIdNoticia(Integer idNoticia) {
+        this.idNoticia = idNoticia;
     }
 
     public Integer getIdComentario() {
