@@ -65,20 +65,30 @@
             </div>
         </div>
         <s:if test="%{!listaNotifi.isEmpty()}">
-            <form action="limpiarNotifi">
-                <s:submit name="limpiarNotifi" value="Limpiar Notificaciones"></s:submit>
-                </form>
 
-            <s:iterator value="listaNotifi" var="notificacion">
-                <s:property value="%{mensaje}"></s:property>
-                <s:property value="%{fechaNotifiacion}"></s:property>
-                <br>
-            </s:iterator>
-                
+            <div class="container my-5">
+                <div class="col-md-10">
+                    <form action="limpiarNotifi">
+                        <s:submit  cssClass="btn btn-outline-warning col-md-3 mx-1" name="limpiarNotifi" value="Limpiar Notificaciones"></s:submit>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 mr-2">
+                        <s:iterator value="listaNotifi" var="notificacion">
+                            <div class="alert alert-warning">
+                                <s:property value="%{mensaje}"></s:property>
+                                <s:property value="%{fechaNotifiacion}"></s:property>
+
+                                </div>
+                        </s:iterator>
+                    </div>
+                </div>
+            </div>
+
         </s:if><s:else>
             No tienes notificaciones <b>PORQUE TUS NOTICIAS SON UNA MIERDA Y NO LE IMPORTAN A NADIE</b>
         </s:else>
-        
+
 
     </body>
 </html>
