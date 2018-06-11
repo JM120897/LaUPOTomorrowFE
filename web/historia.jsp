@@ -84,18 +84,24 @@
                 </s:form>
                 <h2>Historia: <s:property value="tituloHistoria"></s:property></h2>
                     <h4 class="text-muted"><s:property value="subtituloHistoria"></s:property></h4>
+                        
                         <s:if test="%{#session.usuario == nombreUsuario}">
-                            <s:form action="irModHis">
-                                <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
-                                <s:submit  value="Modificar Historia"></s:submit>
+                        <s:url var="irModHis" action="irModHis">
+                            <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                        </s:url>
+                        <a href="<s:property value="#irModHis" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Modificar historia">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
 
-                            </s:form>
-                            <s:form action="borrarHist">
-                                <s:hidden name="idHistoria"  value="%{idHistoria}"></s:hidden>
-                                <s:submit  name="borrarNoticia" value="Borrar Historia"></s:submit>
-
-                            </s:form>
-                        </s:if>
+                        <s:url var="borrarHist" action="borrarHist">
+                            <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                        </s:url>
+                        <a href="<s:property value="#borrarHist" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar historia">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </s:if>
+                            
+                        
                         <div class="row">
                             <div class="col-md-2 bg-warning text-center">Fecha de Inicio: <s:property value="fechaHistoria"></s:property></div>
                             <s:iterator value="listaNoticiasHistoria" var="historia" >
