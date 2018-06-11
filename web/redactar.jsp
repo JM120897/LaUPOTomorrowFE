@@ -113,7 +113,7 @@
                             </s:select>
                         </div>
                         <s:hidden name="usuario" value="%{nombreUsuario}"></s:hidden>
-                        <s:submit value="Enviar"></s:submit>
+                        <s:submit value="Redactar"></s:submit>
                     </s:form>
                 </div>
             </div>
