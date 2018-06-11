@@ -112,6 +112,7 @@
             </div>
         </div>
         <div class="container accordion mt-5">
+            <h1 class="text-center">Administración</h1>
             <div class="card">
                 <div class="card-header list-group-item-warning" id="headingTwo">
                     <h5 class="mb-0">

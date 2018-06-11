@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-          <!-- Required meta tags -->
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -68,19 +68,35 @@
                             </s:else>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
         <div>
-                        <s:form action="crearHistoria">
-                            <s:textfield name="tituloHistoria" label="Titulo"></s:textfield>
-                            <s:textfield name="subtituloHistoria" label="Subtitulo Historia"></s:textfield>
-                            <s:submit name="crearHistoria" value="Crear Historia"></s:submit>
-                        </s:form>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-2 mx-5"></div>
+            <div class="col-md-6 mx-5 my-5">
+                <h1 class="text-center">Crear Historia</h1>
+                <s:form theme="simple">
+                    <div class="form-group">
+                        <s:fielderror fieldName="tituloHistoria" cssClass="alert alert-danger"/>
+                        <label>Título</label>
+                        <input type="text" class="form-control" name="tituloHistoria" placeholder="Introduce Título">
                     </div>
-
-
-
+                    <div class="form-group">
+                        <s:fielderror fieldName="subtituloHistoria" cssClass="alert alert-danger"/>
+                        <label>Subítulo</label>
+                        <input type="text" class="form-control" name="subtituloHistoria" placeholder="Introduce Subtítulo">
+                    </div>
+                    <s:url var="crearHistoria" action="crearHistoria">
+                        <s:param name="tituloHistoria"><s:property value="nombreUsuario"></s:property></s:param>
+                        <s:param name="subtituloHistoria"><s:property value="subtituloHistoria"></s:property></s:param>
+                    </s:url>
+                    <a href="<s:property value="#crearHistoria" />" class="btn btn-outline-success col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Crear Historia">
+                        <i class="fas fa-save"></i>
+                    </a>
+                </s:form>
+            </div>
+        </div>
     </body>
 </html>
