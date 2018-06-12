@@ -85,9 +85,7 @@ public class Busqueda extends ActionSupport {
             if (coincidencias.size() == 0) {
                 mensajeError = "No se encontraron noticias relacionadas con su búsqueda";
                 error = true;
-            }else if(coincidenciasHistoria.size() == 0){
-                mensajeError += "\nNo se encontraron historias relacionadas con su búsqueda";
-                error = true;
+            
             } else {
                 //ORDENAR POR FECHA.
                 coincidencias.sort(new Comparator<Noticia>() {
