@@ -2,35 +2,29 @@
         "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
 
 <validators>
-    <field name="tituloNoticia">
-        <field-validator type="requiredstring">
-            <message>El título de la noticia es obligatorio</message>
-        </field-validator>
-    </field>
-    <field name="subtituloNoticia">
+    <field name="password">
         <field-validator type="requiredstring">
             <message>El subtítulo de la noticia es obligatorio</message>
         </field-validator>
     </field>
-    <field name="cuerpoNoticia">
+    <field name="nombreReal">
         <field-validator type="requiredstring">
             <message>El cuerpo de la noticia es obligatorio</message>
         </field-validator>
     </field>
-    <field name="tag">
+    <field name="email">
         <field-validator type="requiredstring">
-            <message>El tag de la noticia es obligatorio</message>
+            <message>El email es obligatorio</message>
+        </field-validator>
+        <field-validator type="stringlength">
+            <param name="maxLength">100</param>
+            <message>El email es demasiado largo</message>
+        </field-validator>
+        <field-validator type="email">
+            <message>El email tiene un formato erroneo</message>
         </field-validator>
     </field>
-    <field name="imagen">
-        <field-validator type="requiredstring">
-            <message>La imagen es necesaria</message>
-        </field-validator>
-        <field-validator type="url">
-            <message>La imagen debe de ser una URL</message>
-        </field-validator>
-    </field>
-    <field name="localizacion">
+   <field name="localizacion">
         <field-validator type="requiredstring">
             <message>La localizacion es obligatoria</message>
         </field-validator>

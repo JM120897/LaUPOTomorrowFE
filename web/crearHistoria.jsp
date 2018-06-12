@@ -75,7 +75,7 @@
             <div class="col-md-2 mx-5"></div>
             <div class="col-md-6 mx-5 my-5">
                 <h1 class="text-center">Crear Historia</h1>
-                <s:form theme="simple">
+                <s:form action="crearHistoria" theme="simple" >
                     <div class="form-group">
                         <s:fielderror fieldName="tituloHistoria" cssClass="alert alert-danger"/>
                         <label>Título</label>
@@ -86,13 +86,9 @@
                         <label>Subítulo</label>
                         <s:textfield type="text" cssClass="form-control" name="subtituloHistoria" placeholder="Introduce Subtítulo"/>
                     </div>
-                    <s:url var="crearHistoria" action="crearHistoria">
-                        <s:param name="tituloHistoria"><s:property value="nombreUsuario"></s:property></s:param>
-                        <s:param name="subtituloHistoria"><s:property value="subtituloHistoria"></s:property></s:param>
-                    </s:url>
-                    <a href="<s:property value="#crearHistoria" />" class="btn btn-outline-success col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Crear Historia">
-                        <i class="fas fa-save"></i>
-                    </a>
+                     <button type="submit" class="btn btn-outline-success col-md-3" data-toggle="tooltip" data-placement="bottom" title="Crear Historia">
+                                    <i class="fas fa-save"></i>
+                                </button>
                 </s:form>
             </div>
         </div>
