@@ -122,6 +122,8 @@ public class NuevaNoticia extends ActionSupport {
         TagREST tr = new TagREST();
         GenericType<Tag> gt5 = new GenericType<Tag>() {
         };
+        
+        
 
         String[] tags = tag.split(" ");
         for (String t : tags) {
@@ -130,10 +132,29 @@ public class NuevaNoticia extends ActionSupport {
             tg.setNombreTag(t);
             tr.create_XML(tg);
         }
+        
+        List<Notificacion> listNot = new ArrayList<>();
+        List<Notificacion> listaNotifi = new ArrayList<>();
+        
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        NotificacionREST notifir = new NotificacionREST();
+        GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
+        };
+        listNot = notifir.findAll_XML(gtnotificaciones);
+        for (Notificacion notificacion : listNot) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equalsIgnoreCase((String)sessionnotifi.get("usuario"))) {
+                listaNotifi.add(notificacion);
+            }
+
+        }
+        numNoti = listaNotifi.size();
+        
+        
+        
         return SUCCESS;
     }
 
-    int numNoti = GetNotifications.calcularNotificaciones();
+    int numNoti;
 
 
     public int getNumNoti() {

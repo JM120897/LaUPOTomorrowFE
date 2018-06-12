@@ -80,12 +80,6 @@
             <div class="row my-3">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <s:form theme="simple">
-                        <div class="row">
-                            <s:textfield placeholder="Busca!" cssClass="form-control col-md-8 mx-1"/>
-                            <button type="submit" class="btn btn-outline-warning col-md-3 mx-1" ><i class="fas fa-search"></i></button>
-                        </div>
-                    </s:form>
                 </div>
                 <div class="col-md-3"></div>
             </div>
@@ -93,7 +87,7 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <h1 class="text-center">Modificar Historia</h1>
-                    <s:form action="modHistoria" theme="simple">
+                    <s:form action="modHistoria" theme="simple" validate="true">
                         <s:hidden name="idHistoria" value="%{idHistoria}"> </s:hidden>
                         <s:hidden name="fechaHistoria" value="%{fechaHistoria}"> </s:hidden>
                         <s:hidden name="nombreUsuario" value="%{nombreUsuario}"> </s:hidden>
@@ -108,7 +102,9 @@
                             <s:textfield cssClass="form-control" label="Subtitulo" name="subtituloHistoria" value="%{subtituloHistoria}"> </s:textfield>
                             </div>
                             <span class="badge badge-secondary"></span> 
-                        <s:submit name="modificar" value="Modificar Noticia"></s:submit>
+                        <button type="submit" class="btn btn-outline-success col-md-3" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios">
+                                    <i class="fas fa-save"></i>
+                                </button>
                     </s:form>
                 </div>
 

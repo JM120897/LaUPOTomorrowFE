@@ -24,17 +24,18 @@ import persistencia.UsuarioREST;
 
 /**
  *
- * @author ferna
+ * @author Juanma
  */
 public class ModHistoria extends ActionSupport {
     
     public ModHistoria() {
     }
+    
     Integer idHistoria;
     String tituloHistoria;
-     String subtituloHistoria;
-     Date fechaHistoria;
-     String nombreUsuario;
+    String subtituloHistoria;
+    Date fechaHistoria;
+    String nombreUsuario;
       
     List<Categoria> listaCategoriaMenu = new ArrayList();
 
@@ -45,6 +46,11 @@ public class ModHistoria extends ActionSupport {
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
     }
+    
+    /////////////////
+    Integer numNoti;
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
     
     public String execute() throws Exception {
        Historia h = new Historia();
@@ -60,32 +66,25 @@ public class ModHistoria extends ActionSupport {
         hr.edit_XML(h, idHistoria.toString());
          
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         
-       Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
-            if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equalsIgnoreCase((String)sessionnotifi.get("usuario"))) {
                 listaNotifi.add(notificacion);
             }
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
-    /////////////////
-      List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = GetNotifications.calcularNotificaciones();
-
+   
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -94,11 +93,11 @@ public class ModHistoria extends ActionSupport {
         this.listaNotifi = listaNotifi;
     }
 
-    public int getNumNoti() {
+    public Integer getNumNoti() {
         return numNoti;
     }
 
-    public void setNumNoti(int numNoti) {
+    public void setNumNoti(Integer numNoti) {
         this.numNoti = numNoti;
     }
      public List<Notificacion> getListNot() {

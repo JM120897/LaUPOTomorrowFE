@@ -82,28 +82,14 @@
                         <button type="submit" class="btn btn-outline-warning col-md-3 mx-1" ><i class="fas fa-search"></i></button>
                     </div>
                 </s:form>
-                <h2>Historia: <s:property value="tituloHistoria"></s:property></h2>
-                <h4 class="text-muted"><s:property value="subtituloHistoria"></s:property></h4>
+                <h2 class="my-3 text-center"><s:property value="tituloHistoria"></s:property></h2>
+                <h4 class="text-muted text-center"><s:property value="subtituloHistoria"></s:property></h4>
 
-                <s:if test="%{#session.usuario == nombreUsuario}">
-                    <s:url var="irModHis" action="irModHis">
-                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
-                    </s:url>
-                    <a href="<s:property value="#irModHis" />" class="btn btn-outline-warning col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Modificar historia">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>
-
-                    <s:url var="borrarHist" action="borrarHist">
-                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
-                    </s:url>
-                    <a href="<s:property value="#borrarHist" />" class="btn btn-outline-danger col-md-3 mx-1" data-toggle="tooltip" data-placement="bottom" title="Borrar historia">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                </s:if>
+                
 
 
                 <div class="row">
-                    <div class="col-md-2 bg-warning text-center">Fecha de Inicio: <s:property value="fechaHistoria"></s:property></div>
+                    <div class="col-md-2 bg-warning text-center my-3 rounded">Fecha de Inicio de la Historia: <s:property value="fechaHistoria"></s:property></div>
                     <s:iterator value="listaNoticiasHistoria" var="historia" >
                         <div class="w-100"></div>
                         <div class="col-md-2 my-5">
@@ -127,6 +113,24 @@
                             </div>
                     </s:iterator>
                 </div>
+                    <s:if test="%{#session.usuario == nombreUsuario}">
+                    <s:url var="irModHis" action="irModHis">
+                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                    </s:url>
+                    <a href="<s:property value="#irModHis" />" class="btn btn-outline-warning col-md-3 mx-1 my-3" data-toggle="tooltip" data-placement="bottom" title="Modificar historia">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+
+                    <s:url var="borrarHist" action="borrarHist">
+                        <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
+                    </s:url>
+                    <a href="<s:property value="#borrarHist" />" class="btn btn-outline-danger col-md-3 mx-1 my-3" data-toggle="tooltip" data-placement="bottom" title="Borrar historia">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </s:if>
+                    
+                    
+                    
             </div>
 
         </div>

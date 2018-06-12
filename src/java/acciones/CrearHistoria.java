@@ -7,6 +7,7 @@ package acciones;
 
 import classes.Categoria;
 import classes.Historia;
+import classes.Notificacion;
 import classes.Usuario;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -17,6 +18,7 @@ import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.HistoriaREST;
+import persistencia.NotificacionREST;
 import persistencia.UsuarioREST;
 
 /**
@@ -54,15 +56,34 @@ public class CrearHistoria extends ActionSupport {
         h.setNombreUsuario(usu);
         h.setSubtituloHistoria(subtituloHistoria);
         h.setTituloHistoria(tituloHistoria);
- CategoriaREST categoriar = new CategoriaREST();
+        CategoriaREST categoriar = new CategoriaREST();
          GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         HistoriaREST hr = new HistoriaREST();
         hr.create_XML(h);
+        
+        
+        List<Notificacion> listNot = new ArrayList<>();
+        List<Notificacion> listaNotifi = new ArrayList<>();
+        
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        NotificacionREST notifir = new NotificacionREST();
+        GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
+        };
+        listNot = notifir.findAll_XML(gtnotificaciones);
+        for (Notificacion notificacion : listNot) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equalsIgnoreCase((String)sessionnotifi.get("usuario"))) {
+                listaNotifi.add(notificacion);
+            }
+
+        }
+        numNoti = listaNotifi.size();
+        
+        
         return SUCCESS;
     }
     
-    int numNoti = GetNotifications.calcularNotificaciones();
+    int numNoti;
 
 
     public int getNumNoti() {
