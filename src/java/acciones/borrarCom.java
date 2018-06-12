@@ -6,9 +6,12 @@
 package acciones;
 
 import classes.Categoria;
+import classes.Comentario;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.ComentarioREST;
@@ -20,8 +23,7 @@ import persistencia.ComentarioREST;
 public class borrarCom extends ActionSupport {
     
     
-    Integer idNoticia2;
-    Integer idNoticia = idNoticia2;
+    Integer idNoticia;
     Integer idComentario;
     public borrarCom() {
     }
@@ -36,11 +38,17 @@ public class borrarCom extends ActionSupport {
         this.listaCategoriaMenu = listaCategoriaMenu;
     }
     public String execute() throws Exception {
+        
         ComentarioREST cr= new ComentarioREST();
-        cr.remove(idComentario.toString());    
+        GenericType<Comentario> gc = new GenericType<Comentario>(){};
+        
+        Comentario c = cr.find_XML(gc, idComentario.toString());
+        idNoticia = c.getIdNoticia().getIdNoticia();
+        cr.remove(idComentario.toString());
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        
         return SUCCESS;
     }
 
@@ -58,14 +66,6 @@ public class borrarCom extends ActionSupport {
 
     public void setIdComentario(Integer idComentario) {
         this.idComentario = idComentario;
-    }
-
-    public Integer getIdNoticia2() {
-        return idNoticia2;
-    }
-
-    public void setIdNoticia2(Integer idNoticia2) {
-        this.idNoticia2 = idNoticia2;
     }
     
 }
