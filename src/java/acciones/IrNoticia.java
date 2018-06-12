@@ -106,7 +106,7 @@ public class IrNoticia extends ActionSupport {
         };
         listNot = notifir.findAll_XML(gtnotifi);
         for (Notificacion not : listNot) {
-            if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
+            if (n.getNombreUsuario()!= null && n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
                 listaNotifi.add(not);
             }
 

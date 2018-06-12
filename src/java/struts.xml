@@ -58,10 +58,10 @@
             <result name="success">/formModPerfil.jsp</result>
         </action>
         <action name="modPerfil" class="acciones.ModPerfil">
+            <result name="input">/formModPerfil.jsp</result>
             <result type="chain">
                 <param name="actionName">irPerfil</param>
             </result>
-            <result name="input">/formModPerfil.jsp</result>
         </action>
         <action name="borrarPerfil" class="acciones.BorrarPerfil">
             <result type="chain">

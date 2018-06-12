@@ -81,7 +81,7 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <h1 class="text-center">Modificar Perfil</h1>
-                    <s:form action="modPerfil" theme="simple" validate="true">
+                    <s:form action="modPerfil" theme="simple">
                         <s:hidden name="nombreUsuario" value="%{nombreUsuario}"> </s:hidden>
                             <s:fielderror fieldName="nombreReal" cssClass="alert alert-danger"/>
                             <div class="form-group">
@@ -105,8 +105,8 @@
                             </div>
                         <s:hidden name="rol" value="%{rol}"> </s:hidden>
                         <button type="submit" class="btn btn-outline-success col-md-3" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios">
-                                    <i class="fas fa-save"></i>
-                                </button>
+                            <i class="fas fa-save"></i>
+                        </button>
                     </s:form>
                 </div>
             </div>
