@@ -14,7 +14,6 @@ import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.UsuarioREST;
 
-
 /**
  *
  * @author Juanma
@@ -27,20 +26,12 @@ public class Registrar extends ActionSupport {
     String nombre_real;
     String localizacion;
     String mensajeError;
+    List<Categoria> listaCategoriaMenu = new ArrayList();
 
     public Registrar() {
 
     }
 
-    List<Categoria> listaCategoriaMenu = new ArrayList();
-
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
-    }
-
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
     public String execute() throws Exception {
         boolean error = false;
         Usuario u1 = new Usuario();
@@ -51,54 +42,65 @@ public class Registrar extends ActionSupport {
         u1.setLocalizacion(localizacion);
         u1.setRol("lector");
         Usuario u2 = null;
-           
+
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
+
         //Primero hay que ver si no existe el usuario ya
         UsuarioREST ur = new UsuarioREST();
-        GenericType<Usuario> gt = new GenericType<Usuario>(){};
-        try{
-            u2 = ur.find_XML(gt,nombre_usuario);
-        }catch(javax.ws.rs.InternalServerErrorException E){
+        GenericType<Usuario> gt = new GenericType<Usuario>() {
+        };
+        try {
+            //Consume el servicio REST para encontrar un usuario segun su nombre de usuario
+            u2 = ur.find_XML(gt, nombre_usuario);
+        } catch (javax.ws.rs.InternalServerErrorException E) {
             error = true;
             mensajeError = "Internal server error: contactar con el admin";
-        }catch(javax.ws.rs.NotFoundException E){
+        } catch (javax.ws.rs.NotFoundException E) {
             error = true;
             mensajeError = "El usuario no existe";
         }
-        
+
         if (u2 != null) {
             error = true;
             mensajeError = "Ese usuario ya existe";
         }
 
         if (error) {
-            
+
             return ERROR;
-            
+
         } else {
 
-            try{
+            try {
+                //Consume el servicio REST para crear un nuevo usuario
                 ur.create_XML(u1);
-            }catch(javax.ws.rs.InternalServerErrorException E){
+            } catch (javax.ws.rs.InternalServerErrorException E) {
                 error = true;
                 mensajeError = "Internal server error: contactar con el admin";
-            }catch(javax.ws.rs.NotFoundException E){
+            } catch (javax.ws.rs.NotFoundException E) {
                 error = true;
                 mensajeError = "El usuario no existe";
             }
 
-            
-            if(!error){
+            if (!error) {
                 return SUCCESS;
-            }else{
+            } else {
                 return ERROR;
             }
 
         }
 
+    }
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
     }
 
     public String getNombre_usuario() {
@@ -148,6 +150,5 @@ public class Registrar extends ActionSupport {
     public void setMensajeError(String mensajeError) {
         this.mensajeError = mensajeError;
     }
-   
 
 }

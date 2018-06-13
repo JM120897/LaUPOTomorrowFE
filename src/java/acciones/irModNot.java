@@ -14,9 +14,7 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
@@ -26,24 +24,15 @@ import persistencia.NoticiaREST;
 import persistencia.NotificacionREST;
 import persistencia.TagREST;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 /**
  *
  * @author ferna
  */
 public class irModNot extends ActionSupport {
 
-    public irModNot() {
-    } 
-    List<Categoria> listaCategoriaMenu = new ArrayList();
-
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
-    }
-
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
     Integer idNoticia;
     String imagen;
     String localizacion;
@@ -61,12 +50,20 @@ public class irModNot extends ActionSupport {
     String tags = "";
     List<Historia> listaHistoriasUsuario = new ArrayList();
     String tituloHist;
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
+
+    public irModNot() {
+    }
 
     public String execute() throws Exception {
         NoticiaREST nr = new NoticiaREST();
         GenericType<Noticia> gt = new GenericType<Noticia>() {
         };
         Map session = (Map) ActionContext.getContext().get("session");
+        //Consume el servicio REST para encontrar una noticia segun su id
         Noticia n = nr.find_XML(gt, idNoticia.toString());
         this.cuerpoNoticia = n.getCuerpoNoticia();
         this.fechaNoticia = n.getFechaNoticia();
@@ -75,18 +72,21 @@ public class irModNot extends ActionSupport {
         this.tituloNoticia = n.getTituloNoticia();
         this.nombreRealUsuario = n.getNombreUsuario().getNombreReal();
         this.nombreUsuario = n.getNombreUsuario().getNombreUsuario();
-        if(n.getNombreCategoria() != null){
+        if (n.getNombreCategoria() != null) {
             this.nombreCat = n.getNombreCategoria().getNombreCategoria();
         }
         this.localizacion = n.getLocalizacion();
-   CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las noticias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
+
         CategoriaREST nc = new CategoriaREST();
 
         GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>() {
         };
+        //Consume el servicio REST para coger todas las categorias
         listaCat = nc.findAll_XML(gc);
         int i = -1;
         for (Categoria c : listaCat) {
@@ -115,6 +115,7 @@ public class irModNot extends ActionSupport {
         HistoriaREST hr = new HistoriaREST();
         GenericType<List<Historia>> gh = new GenericType<List<Historia>>() {
         };
+        //Consume el servicio REST para coger todas las historias
         listaHistoriasUsuario = hr.findAll_XML(gh);
         int j = -1;
 
@@ -130,11 +131,10 @@ public class irModNot extends ActionSupport {
             listaHistoriasUsuario.remove(j);
         }
 
-        
-
         TagREST tr = new TagREST();
         GenericType<List<Tag>> gtag = new GenericType<List<Tag>>() {
         };
+        //Consume el servicio REST para coger todos los tags
         List<Tag> listaTags = tr.findAll_XML(gtag);
 
         for (Tag tg : listaTags) {
@@ -143,10 +143,11 @@ public class irModNot extends ActionSupport {
             }
         }
 
-       Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
+        //Consume el servicio REST para coger todas las notificaciones
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
             if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
@@ -155,17 +156,18 @@ public class irModNot extends ActionSupport {
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
-    /////////////////
-      List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -181,7 +183,8 @@ public class irModNot extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
-     public List<Notificacion> getListNot() {
+
+    public List<Notificacion> getListNot() {
         return listNot;
     }
 

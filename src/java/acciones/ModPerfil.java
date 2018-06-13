@@ -24,9 +24,6 @@ import persistencia.UsuarioREST;
  * @author ferna
  */
 public class ModPerfil extends ActionSupport {
-    
-   public ModPerfil() {
-    }
 
     private String nombreUsuario;
     private String password;
@@ -34,27 +31,23 @@ public class ModPerfil extends ActionSupport {
     private String email;
     private String localizacion;
     private String rol;
-  
     List<Categoria> listaCategoriaMenu = new ArrayList();
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
+    public ModPerfil() {
     }
 
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
     public String execute() throws Exception {
         UsuarioREST ur = new UsuarioREST();
-       
-      
+
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
-      
-      
+
         Usuario usu = new Usuario();
         usu.setEmail(email);
         usu.setLocalizacion(localizacion);
@@ -62,12 +55,14 @@ public class ModPerfil extends ActionSupport {
         usu.setNombreUsuario(nombreUsuario);
         usu.setPassword(password);
         usu.setRol(rol);
+        //Consume el REST para editar un usuario
         ur.edit_XML(usu, nombreUsuario);
 
         Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
+        //Consume el REST para coger todas las notificaciones
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
             if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
@@ -76,17 +71,18 @@ public class ModPerfil extends ActionSupport {
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
-    /////////////////
-      List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -102,7 +98,8 @@ public class ModPerfil extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
-     public List<Notificacion> getListNot() {
+
+    public List<Notificacion> getListNot() {
         return listNot;
     }
 
@@ -158,5 +155,4 @@ public class ModPerfil extends ActionSupport {
         this.rol = rol;
     }
 
-    
 }

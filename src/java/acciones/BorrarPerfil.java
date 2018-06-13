@@ -5,24 +5,26 @@
  */
 package acciones;
 
-import classes.Usuario;
 import com.opensymphony.xwork2.ActionSupport;
-import javax.ws.rs.core.GenericType;
 import persistencia.UsuarioREST;
+
+import classes.Usuario;
+import javax.ws.rs.core.GenericType;
 
 /**
  *
  * @author Juanma
  */
 public class BorrarPerfil extends ActionSupport {
-    
+
     String nombreUsuario;
-    
+
     public BorrarPerfil() {
     }
-    
+
     public String execute() throws Exception {
         UsuarioREST ur = new UsuarioREST();
+        //Consume el servicio REST para eliminar un usuario
         ur.remove(nombreUsuario);
         return SUCCESS;
     }
@@ -34,7 +36,4 @@ public class BorrarPerfil extends ActionSupport {
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
-    
-    
-    
 }

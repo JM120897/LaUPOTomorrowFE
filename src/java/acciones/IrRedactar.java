@@ -24,11 +24,51 @@ import persistencia.NotificacionREST;
  * @author Juanma
  */
 public class IrRedactar extends ActionSupport {
-    
+
     List<Categoria> categorias;
     List<Historia> historias;
- 
     List<Categoria> listaCategoriaMenu = new ArrayList();
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
+
+    public IrRedactar() {
+
+    }
+
+    public String execute() throws Exception {
+        GenericType<List<Categoria>> gt = new GenericType<List<Categoria>>() {
+        };
+        CategoriaREST cr = new CategoriaREST();
+        GenericType<List<Historia>> gt2 = new GenericType<List<Historia>>() {
+        };
+        HistoriaREST hr = new HistoriaREST();
+
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        //Consume el servicio REST para coger todas las categorias
+        categorias = cr.findAll_XML(gt);
+        //Consume el servicio REST para coger todas las historias
+        historias = hr.findAll_XML(gt2);
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        NotificacionREST notifir = new NotificacionREST();
+        GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
+        };
+        //Consume el servicio REST para coger todas las notificaciones
+        listNot = notifir.findAll_XML(gtnotificaciones);
+        for (Notificacion notificacion : listNot) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
+                listaNotifi.add(notificacion);
+            }
+
+        }
+        numNoti = listaNotifi.size();
+
+        return SUCCESS;
+    }
 
     public List<Categoria> getListaCategoriaMenu() {
         return listaCategoriaMenu;
@@ -37,45 +77,7 @@ public class IrRedactar extends ActionSupport {
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
     }
-    
-    public IrRedactar() {
-        
-    }
-    
-    public String execute() throws Exception {
-        GenericType<List<Categoria>> gt = new GenericType<List<Categoria>>(){};
-        CategoriaREST cr = new CategoriaREST();
-        GenericType<List<Historia>> gt2 = new GenericType<List<Historia>>(){};
-        HistoriaREST hr = new HistoriaREST();
-         
-        CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
-        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        categorias = cr.findAll_XML(gt);
-        historias = hr.findAll_XML(gt2);
-       Map sessionnotifi = (Map) ActionContext.getContext().get("session");
-        NotificacionREST notifir = new NotificacionREST();
-        GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
-        };
-        listNot = notifir.findAll_XML(gtnotificaciones);
-        for (Notificacion notificacion : listNot) {
-            if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
-                listaNotifi.add(notificacion);   
-            }
 
-        }
-        numNoti = listaNotifi.size();
-       
-        
-        
-        return SUCCESS;
-    }
-    
-    /////////////////
-    List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -91,7 +93,8 @@ public class IrRedactar extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
-     public List<Notificacion> getListNot() {
+
+    public List<Notificacion> getListNot() {
         return listNot;
     }
 
@@ -114,7 +117,4 @@ public class IrRedactar extends ActionSupport {
     public void setHistorias(List<Historia> historias) {
         this.historias = historias;
     }
-    
-    
-    
 }

@@ -18,26 +18,23 @@ import persistencia.HistoriaREST;
  * @author ferna
  */
 public class BorrarHistoria extends ActionSupport {
+
+    Integer idHistoria;
+    List<Categoria> listaCategoria = new ArrayList();
+
+    public String execute() throws Exception {
+        HistoriaREST hr = new HistoriaREST();
+        //Consume el servicio REST para eliminar una historia
+        hr.remove(idHistoria.toString());
+        CategoriaREST cr = new CategoriaREST();
+        GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
+        listaCategoria = cr.findAll_XML(gc);
+        return SUCCESS;
+    }
     
     public BorrarHistoria() {
-    }
-    Integer idHistoria;
-     List<Categoria> listaCategoria = new ArrayList();
-
-    public List<Categoria> getListaCategoria() {
-        return listaCategoria;
-    }
-
-    public void setListaCategoria(List<Categoria> listaCategoria) {
-        this.listaCategoria = listaCategoria;
-    }
-    public String execute() throws Exception {
-      HistoriaREST hr = new HistoriaREST();
-      hr.remove(idHistoria.toString());
-       CategoriaREST cr = new CategoriaREST();
-        GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>(){};
-        listaCategoria = cr.findAll_XML(gc);
-      return SUCCESS;
     }
 
     public Integer getIdHistoria() {
@@ -48,4 +45,11 @@ public class BorrarHistoria extends ActionSupport {
         this.idHistoria = idHistoria;
     }
     
+    public List<Categoria> getListaCategoria() {
+        return listaCategoria;
+    }
+
+    public void setListaCategoria(List<Categoria> listaCategoria) {
+        this.listaCategoria = listaCategoria;
+    }
 }

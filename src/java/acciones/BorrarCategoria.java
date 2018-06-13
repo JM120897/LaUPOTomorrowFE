@@ -17,35 +17,22 @@ import persistencia.CategoriaREST;
  * @author Juanma
  */
 public class BorrarCategoria extends ActionSupport {
-    
+
     String nombreCategoria;
-    /////////////////////////////////////////////
-    
     List<Categoria> listaCategoriaMenu = new ArrayList();
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
-    }
-
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
-    
-    ///////////////////////////////////////
     public BorrarCategoria() {
     }
-    
+
     public String execute() throws Exception {
-        
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
-        
+        //Consume el servicio REST para eliminar una categoria
         categoriar.remove(nombreCategoria);
-        
-       
+
         return SUCCESS;
     }
 
@@ -56,7 +43,12 @@ public class BorrarCategoria extends ActionSupport {
     public void setNombreCategoria(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
     }
-    
-    
-    
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
 }

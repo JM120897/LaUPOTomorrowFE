@@ -32,40 +32,28 @@ import persistencia.TagREST;
  */
 public class ModNoticia extends ActionSupport {
 
-    public ModNoticia() {
-    }
-
     Integer idNoticia;
     String tituloNoticia;
     String subtituloNoticia;
-
     Categoria categoria;
     String nombreCategoria;
-
     Integer historia;
     Historia h;
-
     String nombreUsuario;
     Date fechaNoticia;
     String imagen;
     String cuerpoNoticia;
-
     String tag;
-
     String tags;
-
     String localizacion;
-  
     List<Categoria> listaCategoriaMenu = new ArrayList();
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
+    public ModNoticia() {
     }
 
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
     public String execute() throws Exception {
         NoticiaREST nr = new NoticiaREST();
         Map session = (Map) ActionContext.getContext().get("session");
@@ -75,72 +63,81 @@ public class ModNoticia extends ActionSupport {
         n.setSubtituloNoticia(subtituloNoticia);
 
         CategoriaREST cr = new CategoriaREST();
-        GenericType<Categoria> gt2 = new GenericType<Categoria>(){};
+        GenericType<Categoria> gt2 = new GenericType<Categoria>() {
+        };
+        //Consume el REST para encontrar una categoria segun su nombre
         Categoria c = cr.find_XML(gt2, nombreCategoria);
-         
+
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
-        
+
         n.setNombreCategoria(c);
 
         UsuarioREST ur = new UsuarioREST();
         GenericType<Usuario> gt = new GenericType<Usuario>() {
         };
         Usuario usu;
+        //Consume el REST para encontrar un usuario segun su nombre
         usu = ur.find_XML(gt, (String) session.get("usuario"));
         n.setNombreUsuario(usu);
-      
+
         n.setFechaNoticia(fechaNoticia);
         n.setCuerpoNoticia(cuerpoNoticia);
         n.setImagen(imagen);
 
         n.setLocalizacion(localizacion);
 
+        //Si el valor de la historia es -1 significa que no pertenece a ninguna historia
         if (historia != -1) {
             HistoriaREST hr = new HistoriaREST();
             GenericType<Historia> gh = new GenericType<Historia>() {
             };
+            //Consume el REST para encontrar una historia segun su id
             Historia h = hr.find_XML(gh, historia.toString());
             n.setIdHistoria(h);
+            //Si es distinto de -1 indica el id de la historia a la que pertenece
         } else {
             n.setIdHistoria(null);
         }
-       
+
+        //Consume el REST para encontrar una nnoticia segun su nombre
         nr.edit_XML(n, idNoticia.toString());
-        
+
         TagREST tar = new TagREST();
         GenericType<List<Tag>> glt = new GenericType<List<Tag>>() {
         };
         List<Tag> lt = new ArrayList();
+        //Consume el REST para coger todos los tags
         lt = tar.findAll_XML(glt);
         List<Tag> tagsNoticia = new ArrayList();
-        for(Tag t: lt){
-            if(t.getIdNoticia().getIdNoticia()==idNoticia){
+        for (Tag t : lt) {
+            if (t.getIdNoticia().getIdNoticia() == idNoticia) {
                 tagsNoticia.add(t);
             }
         }
-        
-        for(Tag te:tagsNoticia){
+
+        for (Tag te : tagsNoticia) {
+            //Consume el servicio REST para eliminar un tag
             tar.remove(te.getIdTag().toString());
         }
-        
-        String[] listaTags = tags.split(" ");
-       for(String tag: listaTags){
-           Tag taga = new Tag();
-           taga.setIdNoticia(n);
-           taga.setNombreTag(tag);
-           tar.create_XML(taga);
-       }
-           
-            
-        
 
-       Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        String[] listaTags = tags.split(" ");
+        for (String tag : listaTags) {
+            Tag taga = new Tag();
+            taga.setIdNoticia(n);
+            taga.setNombreTag(tag);
+            //Consume el REST para crear un tag
+            tar.create_XML(taga);
+        }
+
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
+        //Consume el REST
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
             if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
@@ -149,17 +146,18 @@ public class ModNoticia extends ActionSupport {
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
-    /////////////////
-      List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -175,7 +173,8 @@ public class ModNoticia extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
-     public List<Notificacion> getListNot() {
+
+    public List<Notificacion> getListNot() {
         return listNot;
     }
 

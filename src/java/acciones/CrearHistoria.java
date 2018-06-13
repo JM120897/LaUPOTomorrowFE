@@ -27,71 +27,57 @@ import persistencia.UsuarioREST;
  */
 public class CrearHistoria extends ActionSupport {
 
-    public CrearHistoria() {
-    }
-
     String tituloHistoria;
     String subtituloHistoria;
     String nombreUsuario;
     Integer idHistoria;
     Date fechaHistoria;
- List<Categoria> listaCategoriaMenu = new ArrayList();
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+    int numNoti;
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
+    public CrearHistoria() {
     }
 
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
     public String execute() throws Exception {
         Map session = (Map) ActionContext.getContext().get("session");
         nombreUsuario = (String) session.get("usuario");
         Historia h = new Historia();
         h.setFechaHistoria(new Date());
         UsuarioREST ur = new UsuarioREST();
-        GenericType<Usuario> gu = new GenericType<Usuario>(){};
+        GenericType<Usuario> gu = new GenericType<Usuario>() {
+        };
+        //Consume el servicio REST para encontrar un usuario según su nombre de usuario
         Usuario usu = ur.find_XML(gu, nombreUsuario);
         h.setNombreUsuario(usu);
         h.setSubtituloHistoria(subtituloHistoria);
         h.setTituloHistoria(tituloHistoria);
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         HistoriaREST hr = new HistoriaREST();
+        //Consume el servicio REST para crear una historia
         hr.create_XML(h);
-        
-        
+
         List<Notificacion> listNot = new ArrayList<>();
         List<Notificacion> listaNotifi = new ArrayList<>();
-        
+
         Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
+        //Consume el servicio REST para coger todas las notificaciones
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
-            if (notificacion.getNombreUsuario().getNombreUsuario().equalsIgnoreCase((String)sessionnotifi.get("usuario"))) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equalsIgnoreCase((String) sessionnotifi.get("usuario"))) {
                 listaNotifi.add(notificacion);
             }
 
         }
         numNoti = listaNotifi.size();
-        
-        
+
         return SUCCESS;
-    }
-    
-    int numNoti;
-
-
-    public int getNumNoti() {
-        return numNoti;
-    }
-
-    public void setNumNoti(int numNoti) {
-        this.numNoti = numNoti;
     }
 
     public String getTituloHistoria() {
@@ -132,6 +118,22 @@ public class CrearHistoria extends ActionSupport {
 
     public void setFechaHistoria(Date fechaHistoria) {
         this.fechaHistoria = fechaHistoria;
+    }
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
+    public int getNumNoti() {
+        return numNoti;
+    }
+
+    public void setNumNoti(int numNoti) {
+        this.numNoti = numNoti;
     }
 
 }

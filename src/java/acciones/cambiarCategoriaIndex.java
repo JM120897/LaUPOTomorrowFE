@@ -24,52 +24,53 @@ import persistencia.NotificacionREST;
  * @author ferna
  */
 public class cambiarCategoriaIndex extends ActionSupport {
-    
-    public cambiarCategoriaIndex() {
-    }
-    
-     List<Categoria> categorias;
+
+    List<Categoria> categorias;
     String categoria;
     List<Noticia> lista;
     List<Noticia> coincidencias = new ArrayList();
-   
-    
     List<Notificacion> list = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
     int numNoti = 0;
     List<Categoria> listaCat = new ArrayList();
- List<Categoria> listaCategoriaMenu = new ArrayList();
-
-    
+    List<Categoria> listaCategoriaMenu = new ArrayList();
     String nombreCategoria;
-    
+
+    public cambiarCategoriaIndex() {
+    }
+
     public String execute() throws Exception {
         Map s = (Map) ActionContext.getContext().get("session");
         String ca = nombreCategoria;
-         s.put("categoria", nombreCategoria);
+        s.put("categoria", nombreCategoria);
         NoticiaREST nor = new NoticiaREST();
-        GenericType<List<Noticia>> gt3 = new GenericType<List<Noticia>>(){};
+        GenericType<List<Noticia>> gt3 = new GenericType<List<Noticia>>() {
+        };
+        //Consume el servicio REST para coger todas las noticias
         lista = nor.findAll_XML(gt3);
-        
+
         lista.sort(new Comparator<Noticia>() {
-                    public int compare(Noticia o1, Noticia o2) {
-                        return o2.getFechaNoticia().compareTo(o1.getFechaNoticia());
-                    }
-                });
-        
-        
-        
+            public int compare(Noticia o1, Noticia o2) {
+                return o2.getFechaNoticia().compareTo(o1.getFechaNoticia());
+            }
+        });
+
         CategoriaREST cr = new CategoriaREST();
-        GenericType<List<Categoria>> gt2 = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> gt2 = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         categorias = cr.findAll_XML(gt2);
-        
+
         NotificacionREST nr = new NotificacionREST();
         GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
         };
-         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         Map session = (Map) ActionContext.getContext().get("session");
+        //Consume el servicio REST para coger todas las notificaciones
         list = nr.findAll_XML(gt);
         for (Notificacion n : list) {
             if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
@@ -78,17 +79,16 @@ public class cambiarCategoriaIndex extends ActionSupport {
 
         }
         numNoti = listaNotifi.size();
-       
-        for(Noticia n:lista){
-            if(n.getNombreCategoria() != null && n.getNombreCategoria().getNombreCategoria().equals((String)s.get("categoria"))){
+
+        for (Noticia n : lista) {
+            if (n.getNombreCategoria() != null && n.getNombreCategoria().getNombreCategoria().equals((String) s.get("categoria"))) {
                 coincidencias.add(n);
             }
         }
-        
-       
-        
+
         return SUCCESS;
     }
+
     public List<Categoria> getListaCategoriaMenu() {
         return listaCategoriaMenu;
     }
@@ -96,6 +96,7 @@ public class cambiarCategoriaIndex extends ActionSupport {
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
     }
+
     public String getNombreCategoria() {
         return nombreCategoria;
     }
@@ -167,5 +168,5 @@ public class cambiarCategoriaIndex extends ActionSupport {
     public void setListaCat(List<Categoria> listaCat) {
         this.listaCat = listaCat;
     }
-    
+
 }

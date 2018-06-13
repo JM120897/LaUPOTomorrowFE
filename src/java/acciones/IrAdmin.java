@@ -19,35 +19,33 @@ import persistencia.UsuarioREST;
  * @author Juanma
  */
 public class IrAdmin extends ActionSupport {
-    
+
     List<Categoria> categorias;
     List<Usuario> usuarios;
-    
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
     public IrAdmin() {
-        
-    }
-    
-     List<Categoria> listaCategoriaMenu = new ArrayList();
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
     }
 
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
     public String execute() throws Exception {
         CategoriaREST cr = new CategoriaREST();
-        GenericType<List<Categoria>> gt = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> gt = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         categorias = cr.findAll_XML(gt);
-         
+
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         UsuarioREST ur = new UsuarioREST();
-        GenericType<List<Usuario>> gt2 = new GenericType<List<Usuario>>(){};
+        GenericType<List<Usuario>> gt2 = new GenericType<List<Usuario>>() {
+        };
+        //Consume el servicio REST para coger todos los usuarios
         usuarios = ur.findAll_XML(gt2);
-        
+
         return SUCCESS;
     }
 
@@ -66,7 +64,12 @@ public class IrAdmin extends ActionSupport {
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
-    
-    
-    
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
 }

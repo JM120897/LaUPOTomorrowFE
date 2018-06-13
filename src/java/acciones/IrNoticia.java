@@ -14,7 +14,6 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +24,13 @@ import persistencia.NoticiaREST;
 import persistencia.NotificacionREST;
 import persistencia.TagREST;
 
+import java.util.Collection;
+
 /**
  *
  * @author ferna
  */
 public class IrNoticia extends ActionSupport {
-
-    public IrNoticia() {
-    }
 
     Integer idNoticia;
     Integer idNoticia2;
@@ -46,52 +44,54 @@ public class IrNoticia extends ActionSupport {
     String nombreUsuario;
     String nombreCategoria;
     List<Tag> tags = new ArrayList();
-     
     List<Categoria> listaCategoriaMenu = new ArrayList();
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
+    public IrNoticia() {
     }
 
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
-    List<Comentario> listaComentarios = new ArrayList();
     public String execute() throws Exception {
         NoticiaREST nr = new NoticiaREST();
         GenericType<Noticia> gt = new GenericType<Noticia>() {
         };
-         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        //Consume el servicio REST para encontrar una noticia segun su id
         Noticia n = nr.find_XML(gt, idNoticia.toString());
         this.cuerpoNoticia = n.getCuerpoNoticia();
         this.fechaNoticia = n.getFechaNoticia();
         this.imagen = n.getImagen();
         this.subtituloNoticia = n.getSubtituloNoticia();
         this.tituloNoticia = n.getTituloNoticia();
-        if(n.getNombreUsuario()!=null){
-            this.nombreRealUsuario=n.getNombreUsuario().getNombreReal();
+        if (n.getNombreUsuario() != null) {
+            this.nombreRealUsuario = n.getNombreUsuario().getNombreReal();
             this.nombreUsuario = n.getNombreUsuario().getNombreUsuario();
-            }
-        if(n.getNombreCategoria() != null){
+        }
+        if (n.getNombreCategoria() != null) {
             this.nombreCategoria = n.getNombreCategoria().getNombreCategoria();
         }
-        this.localizacion =n.getLocalizacion();
-       
+        this.localizacion = n.getLocalizacion();
+
         ComentarioREST cr = new ComentarioREST();
-        GenericType<List<Comentario>> gc = new GenericType<List<Comentario>>(){};
+        GenericType<List<Comentario>> gc = new GenericType<List<Comentario>>() {
+        };
+        //Consume el servicio REST para coger todos los comentarios
         List<Comentario> list = cr.findAll_XML(gc);
-        
-        for(Comentario c: list){
-            if(c.getIdNoticia().getIdNoticia().equals(idNoticia)){
+
+        for (Comentario c : list) {
+            if (c.getIdNoticia().getIdNoticia().equals(idNoticia)) {
                 listaComentarios.add(c);
             }
         }
         TagREST tr = new TagREST();
         GenericType<List<Tag>> gtag = new GenericType<List<Tag>>() {
         };
+        //Consume el servicio REST para coger todos los tags
         List<Tag> listaTags = tr.findAll_XML(gtag);
 
         for (Tag tg : listaTags) {
@@ -104,25 +104,37 @@ public class IrNoticia extends ActionSupport {
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotifi = new GenericType<List<Notificacion>>() {
         };
+        //Consume el servicio REST para coger todas las notificaciones
         listNot = notifir.findAll_XML(gtnotifi);
         for (Notificacion not : listNot) {
-            if (n.getNombreUsuario()!= null && n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
+            if (n.getNombreUsuario() != null && n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
                 listaNotifi.add(not);
             }
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
-    /////////////////
-      List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
+
+    public Integer getIdNoticia() {
+        return idNoticia;
+    }
+
+    public void setIdNoticia(Integer idNoticia) {
+        this.idNoticia = idNoticia;
+    }
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
+    List<Comentario> listaComentarios = new ArrayList();
+
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -138,14 +150,14 @@ public class IrNoticia extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
-     public List<Notificacion> getListNot() {
+
+    public List<Notificacion> getListNot() {
         return listNot;
     }
 
     public void setList(List<Notificacion> listNot) {
         this.listNot = listNot;
     }
-    ////////////////////////////
 
     public Integer getIdNoticia2() {
         return idNoticia2;
@@ -193,14 +205,6 @@ public class IrNoticia extends ActionSupport {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
-    }
-
-    public Integer getIdNoticia() {
-        return idNoticia;
-    }
-
-    public void setIdNoticia(Integer idNoticia) {
-        this.idNoticia = idNoticia;
     }
 
     public String getImagen() {

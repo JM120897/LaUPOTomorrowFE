@@ -18,27 +18,23 @@ import persistencia.CategoriaREST;
  * @author Juanma
  */
 public class CrearCategoria extends ActionSupport {
-    
+
     String nombreCategoria;
     List<Categoria> listaCategoriaMenu = new ArrayList();
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
-    }
-
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
     public CrearCategoria() {
     }
-    
+
     public String execute() throws Exception {
         Categoria c = new Categoria(nombreCategoria);
-        
+
         CategoriaREST cr = new CategoriaREST();
+        //Consume el servicio REST para crear una categoria
         cr.create_XML(c);
-           CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         return SUCCESS;
     }
@@ -50,7 +46,13 @@ public class CrearCategoria extends ActionSupport {
     public void setNombreCategoria(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
     }
-    
-    
-    
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
 }

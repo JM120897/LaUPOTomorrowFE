@@ -24,47 +24,46 @@ import persistencia.UsuarioREST;
  * @author ferna
  */
 public class IrModPerfil extends ActionSupport {
-    
-   public IrModPerfil() {
-    }
-    
-     private String nombreUsuario;
-     private String password;
-     private String nombreReal;
-     private String email;
-     private String localizacion;
-     private String rol;
-     
+
+    private String nombreUsuario;
+    private String password;
+    private String nombreReal;
+    private String email;
+    private String localizacion;
+    private String rol;
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
     List<Categoria> listaCategoriaMenu = new ArrayList();
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
+    public IrModPerfil() {
     }
 
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
     public String execute() throws Exception {
-          CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
+
         UsuarioREST ur = new UsuarioREST();
         Map session = (Map) ActionContext.getContext().get("session");
-       GenericType<Usuario> gt = new GenericType<Usuario>(){};
-       Usuario usu;
-       usu = ur.find_XML(gt, (String) session.get("usuario"));
+        GenericType<Usuario> gt = new GenericType<Usuario>() {
+        };
+        Usuario usu;
+        //Consume el servicio REST para encontrar un usuario según su nombre de usuario
+        usu = ur.find_XML(gt, (String) session.get("usuario"));
         nombreUsuario = usu.getNombreUsuario();
         nombreReal = usu.getNombreReal();
         email = usu.getEmail();
         localizacion = usu.getLocalizacion();
         rol = usu.getRol();
         password = usu.getPassword();
-        
+
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotifi = new GenericType<List<Notificacion>>() {
         };
+        //Consume el servicio REST para coger todas las notificaciones
         listNot = notifir.findAll_XML(gtnotifi);
         for (Notificacion n : listNot) {
             if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
@@ -73,40 +72,9 @@ public class IrModPerfil extends ActionSupport {
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
-    /////////////////
-      List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
-    public List<Notificacion> getListaNotifi() {
-        return listaNotifi;
-    }
-
-    public void setListaNotifi(List<Notificacion> listaNotifi) {
-        this.listaNotifi = listaNotifi;
-    }
-
-    public int getNumNoti() {
-        return numNoti;
-    }
-
-    public void setNumNoti(int numNoti) {
-        this.numNoti = numNoti;
-    }
-     public List<Notificacion> getListNot() {
-        return listNot;
-    }
-
-    public void setList(List<Notificacion> listNot) {
-        this.listNot = listNot;
-    }
-    ////////////////////////////
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -155,5 +123,37 @@ public class IrModPerfil extends ActionSupport {
     public void setRol(String rol) {
         this.rol = rol;
     }
-    
+
+    public List<Notificacion> getListNot() {
+        return listNot;
+    }
+
+    public void setList(List<Notificacion> listNot) {
+        this.listNot = listNot;
+    }
+
+    public List<Notificacion> getListaNotifi() {
+        return listaNotifi;
+    }
+
+    public void setListaNotifi(List<Notificacion> listaNotifi) {
+        this.listaNotifi = listaNotifi;
+    }
+
+    public int getNumNoti() {
+        return numNoti;
+    }
+
+    public void setNumNoti(int numNoti) {
+        this.numNoti = numNoti;
+    }
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
 }

@@ -37,7 +37,6 @@ public class NuevaNoticia extends ActionSupport {
     HistoriaREST hr1 = new HistoriaREST();
     GenericType<List<Historia>> gth1 = new GenericType<List<Historia>>() {
     };
-
     String tag;
     String imagen;
     String tituloNoticia;
@@ -50,16 +49,8 @@ public class NuevaNoticia extends ActionSupport {
     Date fecha;
     List<Categoria> categorias = cr1.findAll_XML(gtc1);
     List<Historia> historias = hr1.findAll_XML(gth1);
-
     List<Categoria> listaCategoriaMenu = new ArrayList();
-
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
-    }
-
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
+    int numNoti;
 
     public NuevaNoticia() {
     }
@@ -70,16 +61,19 @@ public class NuevaNoticia extends ActionSupport {
         GenericType<Usuario> gt = new GenericType<Usuario>() {
         };
         Map session = (Map) ActionContext.getContext().get("session");
+        //Consume el REST para encontrar un usuario segun su nombre
         Usuario u = ur.find_XML(gt, (String) session.get("usuario"));
 
         CategoriaREST cr = new CategoriaREST();
         GenericType<Categoria> gt2 = new GenericType<Categoria>() {
         };
+        //Consume el REST para encontrar una categoria segun su nombre
         Categoria c = cr.find_XML(gt2, categoria);
 
         CategoriaREST categoriar = new CategoriaREST();
         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
         };
+        //Consume el REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
 
         fecha = new Date();
@@ -100,8 +94,9 @@ public class NuevaNoticia extends ActionSupport {
         GenericType<List<Historia>> gt6 = new GenericType<List<Historia>>() {
         };
 
+        //Si el valor de la historia es -1 indica que no pertenece a ninguna historia
         if (historia.intValue() != -1) {
-
+            //Consume el REST para encontrar una historia segun su id
             Historia h = hr.find_XML(gt3, historia.toString());
             n.setIdHistoria(h);
         }
@@ -109,6 +104,7 @@ public class NuevaNoticia extends ActionSupport {
         NoticiaREST nr = new NoticiaREST();
         GenericType<List<Noticia>> gt4 = new GenericType<List<Noticia>>() {
         };
+        //Consume el REST para crear una noticia
         nr.create_XML(n);
 
         List<Noticia> noticias = nr.findAll_XML(gt4);
@@ -122,40 +118,43 @@ public class NuevaNoticia extends ActionSupport {
         TagREST tr = new TagREST();
         GenericType<Tag> gt5 = new GenericType<Tag>() {
         };
-        
-        
 
         String[] tags = tag.split(" ");
         for (String t : tags) {
             Tag tg = new Tag();
             tg.setIdNoticia(n2);
             tg.setNombreTag(t);
+            //Consume el servicio REST para crear un tag nuevo
             tr.create_XML(tg);
         }
-        
+
         List<Notificacion> listNot = new ArrayList<>();
         List<Notificacion> listaNotifi = new ArrayList<>();
-        
+
         Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
+        //Consume el REST para coger todas las notificaciones
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
-            if (notificacion.getNombreUsuario().getNombreUsuario().equalsIgnoreCase((String)sessionnotifi.get("usuario"))) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equalsIgnoreCase((String) sessionnotifi.get("usuario"))) {
                 listaNotifi.add(notificacion);
             }
 
         }
         numNoti = listaNotifi.size();
-        
-        
-        
+
         return SUCCESS;
     }
 
-    int numNoti;
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
 
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
 
     public int getNumNoti() {
         return numNoti;
@@ -260,7 +259,5 @@ public class NuevaNoticia extends ActionSupport {
     public void setHistorias(List<Historia> historias) {
         this.historias = historias;
     }
-
-    
 
 }

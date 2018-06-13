@@ -30,9 +30,6 @@ import persistencia.UsuarioREST;
  */
 public class IrPerfil extends ActionSupport {
 
-    public IrPerfil() {
-    }
-
     String nombreUsuario;
     String password;
     String nombreReal;
@@ -40,18 +37,15 @@ public class IrPerfil extends ActionSupport {
     String localizacion;
     String rol;
     List<Noticia> listaNoticia = new ArrayList<Noticia>();
-     List<Historia> listaHistoriasUsuario = new ArrayList();
-     
+    List<Historia> listaHistoriasUsuario = new ArrayList();
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
     List<Categoria> listaCategoriaMenu = new ArrayList();
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
+    public IrPerfil() {
     }
 
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
     public String execute() throws Exception {
 
         Map session = (Map) ActionContext.getContext().get("session");
@@ -59,9 +53,12 @@ public class IrPerfil extends ActionSupport {
         GenericType<Usuario> gt = new GenericType<Usuario>() {
         };
         Usuario usu;
+        //Consume el servicio REST para encontrar un usuario seguun su nombre de usuario
         usu = ur.find_XML(gt, (String) session.get("usuario"));
- CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
         nombreUsuario = usu.getNombreUsuario();
         nombreReal = usu.getNombreReal();
@@ -69,38 +66,44 @@ public class IrPerfil extends ActionSupport {
         localizacion = usu.getLocalizacion();
         rol = usu.getRol();
 
+        //Comprobamos que el usuario en la sesion tiene el rol redactor
         if (session.get("rol").equals("redactor")) {
             List<Noticia> l;
             NoticiaREST nr = new NoticiaREST();
-            GenericType<List<Noticia>> gtn = new GenericType<List<Noticia>>(){};
+            GenericType<List<Noticia>> gtn = new GenericType<List<Noticia>>() {
+            };
+            //Consume el servicio REST para coger todas las noticias
             l = nr.findAll_XML(gtn);
             Iterator<Noticia> it = l.iterator();
-           
+
             while (it.hasNext()) {
                 Noticia n = it.next();
-               
+
                 if (n.getNombreUsuario() != null && n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
-                    
+
                     listaNoticia.add(n);
                 }
             }
 
             List<Historia> listaHistoria;
             HistoriaREST hr = new HistoriaREST();
-            GenericType<List<Historia>> gth = new GenericType<List<Historia>>(){};
-            listaHistoria=hr.findAll_XML(gth);
-            
-            for(Historia h: listaHistoria){
-                if(h.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))){
+            GenericType<List<Historia>> gth = new GenericType<List<Historia>>() {
+            };
+            //Consume el servicio REST para coger todas las historias
+            listaHistoria = hr.findAll_XML(gth);
+
+            for (Historia h : listaHistoria) {
+                if (h.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
                     listaHistoriasUsuario.add(h);
                 }
             }
-            
+
         }
-       Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
+        //Consume el servicio REST para coger todas las notificaciiones
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
             if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
@@ -109,17 +112,18 @@ public class IrPerfil extends ActionSupport {
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
-    /////////////////
-      List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -135,7 +139,8 @@ public class IrPerfil extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
-     public List<Notificacion> getListNot() {
+
+    public List<Notificacion> getListNot() {
         return listNot;
     }
 
@@ -150,8 +155,6 @@ public class IrPerfil extends ActionSupport {
     public void setListaHistoriasUsuario(List<Historia> listaHistoriasUsuario) {
         this.listaHistoriasUsuario = listaHistoriasUsuario;
     }
-
-    
 
     public List<Noticia> getListaNoticia() {
         return listaNoticia;

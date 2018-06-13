@@ -6,7 +6,6 @@
 package acciones;
 
 import classes.Categoria;
-import classes.Noticia;
 import classes.Notificacion;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -15,8 +14,10 @@ import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
-import persistencia.NoticiaREST;
 import persistencia.NotificacionREST;
+
+import classes.Noticia;
+import persistencia.NoticiaREST;
 
 /**
  *
@@ -24,25 +25,20 @@ import persistencia.NotificacionREST;
  */
 public class irNotificaciones extends ActionSupport {
 
-    public irNotificaciones() {
-    }
     List<String> nombres = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
- List<Categoria> listaCategoriaMenu = new ArrayList();
-int numNoti = 0;
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+    int numNoti = 0;
+
+    public irNotificaciones() {
     }
 
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
     public String execute() throws Exception {
         NotificacionREST nr = new NotificacionREST();
         GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
         };
         Map session = (Map) ActionContext.getContext().get("session");
+        //Consume el servicio REST para coger todas las notificaciones
         List<Notificacion> list = nr.findAll_XML(gt);
         for (Notificacion n : list) {
             if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
@@ -51,12 +47,22 @@ int numNoti = 0;
 
         }
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
-         numNoti = listaNotifi.size();
+
+        numNoti = listaNotifi.size();
         return SUCCESS;
 
+    }
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
     }
 
     public List<String> getNombres() {

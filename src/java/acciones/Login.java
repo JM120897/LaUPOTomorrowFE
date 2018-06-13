@@ -16,66 +16,58 @@ import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.UsuarioREST;
 
-
 /**
  *
  * @author Juanma
  */
 public class Login extends ActionSupport {
-    
+
     String usuario;
     String password;
     String mensajeError;
-     
     List<Categoria> listaCategoriaMenu = new ArrayList();
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
-    }
-
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
     public Login() {
     }
-    
+
     public String execute() throws Exception {
         boolean error = false;
         UsuarioREST ur = new UsuarioREST();
-        GenericType<Usuario> gt = new GenericType<Usuario>(){};
+        GenericType<Usuario> gt = new GenericType<Usuario>() {
+        };
         Usuario u = null;
-          
+
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
-        
-        try{ 
+
+        try {
+            //Consume el REST para encontrar un usuario segun su nombre de usuario
             u = ur.find_XML(gt, usuario);
-        }catch(javax.ws.rs.InternalServerErrorException E){
+        } catch (javax.ws.rs.InternalServerErrorException E) {
             error = true;
             mensajeError = "Internal server error: contactar con el admin";
-        }catch(javax.ws.rs.NotFoundException E){
+        } catch (javax.ws.rs.NotFoundException E) {
             error = true;
             mensajeError = "El usuario no existe";
         }
-       
-                
-        
-        if(!error && u == null){
+
+        if (!error && u == null) {
             error = true;
             mensajeError = "El usuario no existe";
         }
-        
+
         if (error) {
             return ERROR;
         } else {
+            //Comprobamos que coincidan las credenciales
             if (password.equals(u.getPassword())) {
                 Map session = (Map) ActionContext.getContext().get("session");
                 session.put("usuario", usuario);
                 session.put("rol", u.getRol());
-                session.put("categoria","portada");
+                session.put("categoria", "portada");
                 return SUCCESS;
             } else {
                 mensajeError = "La contraseña no coincide";
@@ -83,6 +75,14 @@ public class Login extends ActionSupport {
             }
         }
 
+    }
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
     }
 
     public String getUsuario() {
@@ -108,8 +108,4 @@ public class Login extends ActionSupport {
     public void setMensajeError(String mensajeError) {
         this.mensajeError = mensajeError;
     }
-    
-    
-    
-    
 }

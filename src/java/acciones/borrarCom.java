@@ -7,27 +7,47 @@ package acciones;
 
 import classes.Categoria;
 import classes.Comentario;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import persistencia.CategoriaREST;
 import persistencia.ComentarioREST;
+
+import java.util.Map;
+import com.opensymphony.xwork2.ActionContext;
 
 /**
  *
  * @author ferna
  */
 public class borrarCom extends ActionSupport {
-    
-    
+
     Integer idNoticia;
     Integer idComentario;
+
     public borrarCom() {
     }
-    
+
+    public String execute() throws Exception {
+
+        ComentarioREST cr = new ComentarioREST();
+        GenericType<Comentario> gc = new GenericType<Comentario>() {
+        };
+        //Consume el servicio REST para encontrar un comentario segun su id
+        Comentario c = cr.find_XML(gc, idComentario.toString());
+        idNoticia = c.getIdNoticia().getIdNoticia();
+        //Consume el servicio REST para eliminar un comentario
+        cr.remove(idComentario.toString());
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+
+        return SUCCESS;
+    }
+
     List<Categoria> listaCategoriaMenu = new ArrayList();
 
     public List<Categoria> getListaCategoriaMenu() {
@@ -36,20 +56,6 @@ public class borrarCom extends ActionSupport {
 
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    public String execute() throws Exception {
-        
-        ComentarioREST cr= new ComentarioREST();
-        GenericType<Comentario> gc = new GenericType<Comentario>(){};
-        
-        Comentario c = cr.find_XML(gc, idComentario.toString());
-        idNoticia = c.getIdNoticia().getIdNoticia();
-        cr.remove(idComentario.toString());
-        CategoriaREST categoriar = new CategoriaREST();
-        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
-        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
-        return SUCCESS;
     }
 
     public Integer getIdNoticia() {
@@ -67,5 +73,5 @@ public class borrarCom extends ActionSupport {
     public void setIdComentario(Integer idComentario) {
         this.idComentario = idComentario;
     }
-    
+
 }

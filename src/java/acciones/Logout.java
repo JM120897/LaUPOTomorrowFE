@@ -19,11 +19,25 @@ import persistencia.CategoriaREST;
  * @author ferna
  */
 public class Logout extends ActionSupport {
-    
+
+    List<Categoria> listaCategoriaMenu = new ArrayList();
+
     public Logout() {
     }
-     
-    List<Categoria> listaCategoriaMenu = new ArrayList();
+
+    public String execute() throws Exception {
+        Map session = (Map) ActionContext.getContext().get("session");
+        session.put("usuario", null);
+        session.put("rol", null);
+
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el REST para coger todas las categorias
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+
+        return SUCCESS;
+    }
 
     public List<Categoria> getListaCategoriaMenu() {
         return listaCategoriaMenu;
@@ -32,17 +46,5 @@ public class Logout extends ActionSupport {
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
     }
-    
-    public String execute() throws Exception {
-        Map session = (Map) ActionContext.getContext().get("session");
-        session.put("usuario", null);
-         session.put("rol", null);
-           
-        CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
-        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
-        return SUCCESS;
-    }
-    
+
 }

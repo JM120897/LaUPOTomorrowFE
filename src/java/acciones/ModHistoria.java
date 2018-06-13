@@ -27,55 +27,50 @@ import persistencia.UsuarioREST;
  * @author Juanma
  */
 public class ModHistoria extends ActionSupport {
-    
-    public ModHistoria() {
-    }
-    
+
     Integer idHistoria;
     String tituloHistoria;
     String subtituloHistoria;
     Date fechaHistoria;
     String nombreUsuario;
-      
     List<Categoria> listaCategoriaMenu = new ArrayList();
-
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
-    }
-
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
-    /////////////////
     Integer numNoti;
     List<Notificacion> listNot = new ArrayList();
     List<Notificacion> listaNotifi = new ArrayList();
-    
+
+    public ModHistoria() {
+    }
+
     public String execute() throws Exception {
-       Historia h = new Historia();
+        Historia h = new Historia();
         HistoriaREST hr = new HistoriaREST();
         h.setFechaHistoria(fechaHistoria);
         h.setIdHistoria(idHistoria);
         UsuarioREST ur = new UsuarioREST();
-        GenericType<Usuario> gu = new GenericType<Usuario>(){};
-       Usuario usu= ur.find_XML(gu,nombreUsuario);
+        GenericType<Usuario> gu = new GenericType<Usuario>() {
+        };
+        //Consume el REST para encontrar un usuario segun su nombre
+        Usuario usu = ur.find_XML(gu, nombreUsuario);
         h.setNombreUsuario(usu);
         h.setSubtituloHistoria(subtituloHistoria);
         h.setTituloHistoria(tituloHistoria);
+        //Consume el REST
         hr.edit_XML(h, idHistoria.toString());
-         
+
         CategoriaREST categoriar = new CategoriaREST();
-        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
+
         Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
+        //Consume el REST para coger todas las notificaciones
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
-            if (notificacion.getNombreUsuario().getNombreUsuario().equalsIgnoreCase((String)sessionnotifi.get("usuario"))) {
+            if (notificacion.getNombreUsuario().getNombreUsuario().equalsIgnoreCase((String) sessionnotifi.get("usuario"))) {
                 listaNotifi.add(notificacion);
             }
 
@@ -84,7 +79,15 @@ public class ModHistoria extends ActionSupport {
 
         return SUCCESS;
     }
-   
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -100,7 +103,8 @@ public class ModHistoria extends ActionSupport {
     public void setNumNoti(Integer numNoti) {
         this.numNoti = numNoti;
     }
-     public List<Notificacion> getListNot() {
+
+    public List<Notificacion> getListNot() {
         return listNot;
     }
 
@@ -147,5 +151,5 @@ public class ModHistoria extends ActionSupport {
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
-    
+
 }

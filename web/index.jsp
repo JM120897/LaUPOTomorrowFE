@@ -35,7 +35,6 @@
         <title>UPO Tomorrow</title>
     </head>
 
-
     <body>
         <div class="container-fluid DarkBlue">
             <div class="container">

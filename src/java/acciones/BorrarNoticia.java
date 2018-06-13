@@ -18,29 +18,25 @@ import persistencia.NoticiaREST;
  * @author ferna
  */
 public class BorrarNoticia extends ActionSupport {
-    
-    public BorrarNoticia() {
-    }
-    
+
     Integer idNoticia;
     List<Categoria> listaCategoria = new ArrayList();
 
-    public List<Categoria> getListaCategoria() {
-        return listaCategoria;
+    public BorrarNoticia() {
     }
 
-    public void setListaCategoria(List<Categoria> listaCategoria) {
-        this.listaCategoria = listaCategoria;
-    }
     public String execute() throws Exception {
         NoticiaREST nr = new NoticiaREST();
-        
+
+        //Consume el servicio REST para eliminar una noticia
         nr.remove(idNoticia.toString());
-        
-         CategoriaREST cr = new CategoriaREST();
-         GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>(){};
+
+        CategoriaREST cr = new CategoriaREST();
+        GenericType<List<Categoria>> gc = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categoria
         listaCategoria = cr.findAll_XML(gc);
-        
+
         return SUCCESS;
     }
 
@@ -51,6 +47,12 @@ public class BorrarNoticia extends ActionSupport {
     public void setIdNoticia(Integer idNoticia) {
         this.idNoticia = idNoticia;
     }
-    
-    
+
+    public List<Categoria> getListaCategoria() {
+        return listaCategoria;
+    }
+
+    public void setListaCategoria(List<Categoria> listaCategoria) {
+        this.listaCategoria = listaCategoria;
+    }
 }

@@ -21,8 +21,37 @@ import persistencia.NotificacionREST;
  * @author ferna
  */
 public class LimpiarNotificaciones extends ActionSupport {
-     
+
     List<Categoria> listaCategoriaMenu = new ArrayList();
+    int numNoti = 0;
+    List<String> nombres = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+
+    public LimpiarNotificaciones() {
+    }
+
+    public String execute() throws Exception {
+        NotificacionREST nr = new NotificacionREST();
+        GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
+        };
+        CategoriaREST categoriar = new CategoriaREST();
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el REST para coger todas las categorias
+        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
+        Map session = (Map) ActionContext.getContext().get("session");
+        //Consume el REST para coger todas las notificaciones
+        List<Notificacion> list = nr.findAll_XML(gt);
+        for (Notificacion n : list) {
+            if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
+                //Consume el REST para eliminar una notificacion
+                nr.remove(n.getIdNotificacion().toString());
+            }
+
+        }
+
+        return SUCCESS;
+    }
 
     public List<Categoria> getListaCategoriaMenu() {
         return listaCategoriaMenu;
@@ -30,29 +59,6 @@ public class LimpiarNotificaciones extends ActionSupport {
 
     public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
         this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-      int numNoti = 0;
-    public LimpiarNotificaciones() {
-    }
-     List<String> nombres = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    public String execute() throws Exception {
-         NotificacionREST nr = new NotificacionREST();
-        GenericType<List<Notificacion>> gt = new GenericType<List<Notificacion>>() {
-        };
-         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
-        listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        Map session = (Map) ActionContext.getContext().get("session");
-        List<Notificacion> list = nr.findAll_XML(gt);
-        for (Notificacion n : list) {
-            if (n.getNombreUsuario().getNombreUsuario().equals(session.get("usuario"))) {
-               nr.remove(n.getIdNotificacion().toString());
-            }
-
-        }
-        
-       return SUCCESS;
     }
 
     public List<String> getNombres() {
@@ -78,5 +84,5 @@ public class LimpiarNotificaciones extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
-    
+
 }

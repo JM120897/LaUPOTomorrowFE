@@ -20,15 +20,20 @@ import persistencia.NotificacionREST;
  * @author ferna
  */
 public class irCrearHistoria extends ActionSupport {
-    
+
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
+
     public irCrearHistoria() {
     }
-    
+
     public String execute() throws Exception {
-       Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
+        //Consume el servicio REST para coger todas las notificaciones
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
             if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
@@ -37,17 +42,10 @@ public class irCrearHistoria extends ActionSupport {
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
-    /////////////////
-      List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
+
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -63,12 +61,13 @@ public class irCrearHistoria extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
-     public List<Notificacion> getListNot() {
+
+    public List<Notificacion> getListNot() {
         return listNot;
     }
 
     public void setList(List<Notificacion> listNot) {
         this.listNot = listNot;
     }
-    
+
 }

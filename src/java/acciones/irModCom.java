@@ -7,7 +7,6 @@ package acciones;
 
 import classes.Categoria;
 import classes.Comentario;
-import classes.Noticia;
 import classes.Notificacion;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionContext;
@@ -21,40 +20,38 @@ import persistencia.CategoriaREST;
 import persistencia.ComentarioREST;
 import persistencia.NotificacionREST;
 
+import classes.Noticia;
 /**
  *
  * @author ferna
  */
 public class irModCom extends ActionSupport {
 
-    public irModCom() {
-    }
-    
     Integer idNoticia;
     String mensaje;
     Integer idPadre;
     Date fechaComentario;
     String nombreUsuario;
     Integer idComentario;
- 
     List<Categoria> listaCategoriaMenu = new ArrayList();
+    List<Notificacion> listNot = new ArrayList();
+    List<Notificacion> listaNotifi = new ArrayList();
+    int numNoti = 0;
 
-    public List<Categoria> getListaCategoriaMenu() {
-        return listaCategoriaMenu;
+    public irModCom() {
     }
 
-    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
-        this.listaCategoriaMenu = listaCategoriaMenu;
-    }
-    
     public String execute() throws Exception {
         ComentarioREST cr = new ComentarioREST();
         GenericType<Comentario> lc = new GenericType<Comentario>() {
-        }; 
+        };
         CategoriaREST categoriar = new CategoriaREST();
-         GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>(){};
+        GenericType<List<Categoria>> genericCat = new GenericType<List<Categoria>>() {
+        };
+        //Consume el servicio REST para coger todas las categorias
         listaCategoriaMenu = categoriar.findAll_XML(genericCat);
-        
+
+        //Consume el servicio REST para coger todos los comentarios
         Comentario c = cr.find_XML(lc, idComentario.toString());
         mensaje = c.getMensaje();
         idPadre = c.getIdPadre();
@@ -62,10 +59,11 @@ public class irModCom extends ActionSupport {
         nombreUsuario = c.getNombreUsuario();
         idComentario = c.getIdComentario();
         idNoticia = c.getIdNoticia().getIdNoticia();
-       Map sessionnotifi = (Map) ActionContext.getContext().get("session");
+        Map sessionnotifi = (Map) ActionContext.getContext().get("session");
         NotificacionREST notifir = new NotificacionREST();
         GenericType<List<Notificacion>> gtnotificaciones = new GenericType<List<Notificacion>>() {
         };
+        //Consume el servicio REST para coger todas las notificaciones
         listNot = notifir.findAll_XML(gtnotificaciones);
         for (Notificacion notificacion : listNot) {
             if (notificacion.getNombreUsuario().getNombreUsuario().equals(sessionnotifi.get("usuario"))) {
@@ -74,17 +72,18 @@ public class irModCom extends ActionSupport {
 
         }
         numNoti = listaNotifi.size();
-       
-        
-        
+
         return SUCCESS;
     }
-    
-    /////////////////
-      List<Notificacion> listNot = new ArrayList();
-    List<Notificacion> listaNotifi = new ArrayList();
-    int numNoti = 0;
-    
+
+    public List<Categoria> getListaCategoriaMenu() {
+        return listaCategoriaMenu;
+    }
+
+    public void setListaCategoriaMenu(List<Categoria> listaCategoriaMenu) {
+        this.listaCategoriaMenu = listaCategoriaMenu;
+    }
+
     public List<Notificacion> getListaNotifi() {
         return listaNotifi;
     }
@@ -100,7 +99,8 @@ public class irModCom extends ActionSupport {
     public void setNumNoti(int numNoti) {
         this.numNoti = numNoti;
     }
-     public List<Notificacion> getListNot() {
+
+    public List<Notificacion> getListNot() {
         return listNot;
     }
 
@@ -115,8 +115,6 @@ public class irModCom extends ActionSupport {
     public void setIdNoticia2(Integer idNoticia2) {
         this.idNoticia = idNoticia2;
     }
-
- 
 
     public String getMensaje() {
         return mensaje;

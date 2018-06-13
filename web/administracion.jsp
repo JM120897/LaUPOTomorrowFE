@@ -34,6 +34,10 @@
 
     <body>
         <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+            
             function busqueda() {
                 // Declare variables 
                 var input, filter, table, tr, td, i;
@@ -54,10 +58,6 @@
                     }
                 }
             }
-
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
         </script>
         <div class="container-fluid DarkBlue">
             <div class="container">
