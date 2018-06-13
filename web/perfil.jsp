@@ -227,7 +227,7 @@
                                                 <s:url var="modHistoria" action="irModHis">
                                                     <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
                                                 </s:url>
-                                                <s:url var="borrarHistoria" action="borrarHistoria">
+                                                <s:url var="borrarHistoria" action="borrarHist">
                                                     <s:param name="idHistoria"><s:property value="idHistoria"></s:property></s:param>
                                                 </s:url>
                                                 <div class="row justify-content-around">
