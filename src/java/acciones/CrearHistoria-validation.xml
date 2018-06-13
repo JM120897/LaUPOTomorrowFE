@@ -1,0 +1,15 @@
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+
+<validators>
+    <field name="tituloHistoria">
+        <field-validator type="requiredstring">
+            <message>El título de la historia es obligatorio</message>
+        </field-validator>
+    </field>
+    <field name="subtituloHistoria">
+        <field-validator type="requiredstring">
+            <message>El subtítulo de la historia es obligatorio</message>
+        </field-validator>
+    </field>
+</validators>
